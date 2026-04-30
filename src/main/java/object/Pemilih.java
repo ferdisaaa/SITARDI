@@ -4,65 +4,60 @@
  */
 package object;
 
-/**
- *
- * @author MyBook Hype
- */
 public class Pemilih {
-    private String uidRfid;
-    private String idPemilih;
-    private String namaLengkap;
-    private String Alamat;
 
-    public Pemilih (){
-        
-    }
-    
-    public Pemilih (String uidRfid, String idPemilih, String namaLengkap, String Alamat) {
-        this.uidRfid = uidRfid;
-        this.idPemilih = idPemilih;
-        this.namaLengkap = namaLengkap;
-        this.Alamat= Alamat;
+    private String UserID;
+    private String NIK;
+    private String Nama;
+    private String Domisili;
+    private String TanggalLahir;
+    private String StatusPemilih;
+
+    public String getUserID() {
+        return UserID;
     }
 
-    public String getDepartemen() {
-        return Alamat;
+    public void setUserID(String UserID) {
+        this.UserID = UserID;
     }
 
-    public void setDepartemen(String Alamat) {
-        this.Alamat = Alamat;
+    public String getNIK() {
+        return NIK;
     }
 
-    public String getUidRfid() {
-        return uidRfid;
+    public void setNIK(String NIK) {
+        this.NIK = NIK;
     }
 
-    public void setUidRfid(String uidRfid) {
-        this.uidRfid = uidRfid;
+    public String getNama() {
+        return Nama;
     }
 
-    public String getIdKaryawan() {
-        return idPemilih;
+    public void setNama(String Nama) {
+        this.Nama = Nama;
     }
 
-    public void setIdKaryawan(String idKaryawan) {
-        this.idPemilih = idKaryawan;
+    public String getDomisili() {
+        return Domisili;
     }
 
-    public String getNamaLengkap() {
-        return namaLengkap;
+    public void setDomisili(String Domisili) {
+        this.Domisili = Domisili;
     }
 
-    public void setNamaLengkap(String namaLengkap) {
-        this.namaLengkap = namaLengkap;
+    public String getTanggalLahir() {
+        return TanggalLahir;
     }
 
-    @Override
-    public String toString() {
-        return "Pemilih{" + 
-                "uidRfid=" + uidRfid + 
-                ", idKaryawan=" + idPemilih+ 
-                ", namaLengkap=" + namaLengkap + 
-                ", Alamat=" + Alamat+ '}';
+    public void setTanggalLahir(String TanggalLahir) {
+        this.TanggalLahir = TanggalLahir;
+    }
+
+    public String getStatusPemilih() {
+        return StatusPemilih;
+    }
+
+    public void setStatusPemilih(String StatusPemilih) {
+        this.StatusPemilih = StatusPemilih;
     }
 }
