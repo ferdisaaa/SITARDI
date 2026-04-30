@@ -46,7 +46,7 @@ public class Pemilih {
     }
 
     public void setIdKaryawan(String idKaryawan) {
-        this.idPemilih = idKaryawan;
+        this.idPemilih = idPemilih;
     }
 
     public String getNamaLengkap() {
