@@ -13,40 +13,41 @@ import java.time.LocalDateTime;
 public class LogAbsensi {
 
     private String LogID;
-    private String UserID;
+    private String NIK;
     private LocalDateTime Masuk;
     private LocalDateTime Keluar;
 
-    public String getLogId() {
+    public String getLogID() {
         return LogID;
     }
 
-    public void setLogId(String logId) {
-        this.LogID = logId;
+    public void setLogID(String LogID) {
+        this.LogID = LogID;
     }
 
-    public String getUidrfid() {
-        return UserID;
+    public String getNIK() {
+        return NIK;
     }
 
-    public void setUidrfid(String uidrfid) {
-        this.UserID = uidrfid;
+    public void setNIK(String NIK) {
+        this.NIK = NIK;
     }
 
     public LocalDateTime getMasuk() {
         return Masuk;
     }
 
-    public void setMasuk(LocalDateTime masuk) {
-        this.Masuk = masuk;
+    public void setMasuk(LocalDateTime Masuk) {
+        this.Masuk = Masuk;
     }
 
     public LocalDateTime getKeluar() {
         return Keluar;
     }
 
-    public void setKeluar(LocalDateTime keluar) {
-        this.Keluar = keluar;
+    public void setKeluar(LocalDateTime Keluar) {
+        this.Keluar = Keluar;
     }
+
 
 }

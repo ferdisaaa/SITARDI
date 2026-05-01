@@ -6,20 +6,12 @@ package object;
 
 public class Pemilih {
 
-    private String UserID;
     private String NIK;
     private String Nama;
     private String Domisili;
     private String TanggalLahir;
     private String StatusPemilih;
-
-    public String getUserID() {
-        return UserID;
-    }
-
-    public void setUserID(String UserID) {
-        this.UserID = UserID;
-    }
+    private String Jeniskelamin;
 
     public String getNIK() {
         return NIK;
@@ -59,5 +51,13 @@ public class Pemilih {
 
     public void setStatusPemilih(String StatusPemilih) {
         this.StatusPemilih = StatusPemilih;
+    }
+
+    public String getJeniskelamin() {
+        return Jeniskelamin;
+    }
+
+    public void setJeniskelamin(String Jeniskelamin) {
+        this.Jeniskelamin = Jeniskelamin;
     }
 }
