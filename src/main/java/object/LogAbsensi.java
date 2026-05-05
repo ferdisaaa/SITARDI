@@ -16,6 +16,7 @@ public class LogAbsensi {
     private String NIK;
     private LocalDateTime Masuk;
     private LocalDateTime Keluar;
+    private String Status;
 
     public String getLogID() {
         return LogID;
@@ -47,6 +48,14 @@ public class LogAbsensi {
 
     public void setKeluar(LocalDateTime Keluar) {
         this.Keluar = Keluar;
+    }
+
+    public String getStatus() {
+        return Status;
+    }
+
+    public void setStatus(String Status) {
+        this.Status = Status;
     }
 
 
