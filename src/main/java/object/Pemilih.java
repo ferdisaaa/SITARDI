@@ -39,6 +39,8 @@ public class Pemilih {
 
     public String getTanggalLahir() {
         return TanggalLahir;
+    public void setIdKaryawan(String idKaryawan) {
+        this.idPemilih = idPemilih;
     }
 
     public void setTanggalLahir(String TanggalLahir) {

@@ -52,7 +52,6 @@ public class Dashboard extends javax.swing.JFrame {
         jPanel7 = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(1280, 720));
         getContentPane().setLayout(new java.awt.GridBagLayout());
 
         jPanel2.setBackground(new java.awt.Color(254, 254, 254));
@@ -84,7 +83,7 @@ public class Dashboard extends javax.swing.JFrame {
         btnDashboard.setForeground(new java.awt.Color(254, 254, 254));
         btnDashboard.setText("Dashboard");
         btnDashboard.setBorder(null);
-        btnDashboard.setOpaque(true);
+        btnDashboard.setContentAreaFilled(false);
         btnDashboard.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnDashboardActionPerformed(evt);
