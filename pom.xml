@@ -10,4 +10,12 @@
         <maven.compiler.release>24</maven.compiler.release>
         <exec.mainClass>com.sitardi.sitardi.SITARDI</exec.mainClass>
     </properties>
+    <!-- Driver NoSQL MongoDB (Pertemuan 5) -->
+    <dependencies>
+        <dependency>
+            <groupId>org.mongodb</groupId>
+            <artifactId>mongodb-driver-sync</artifactId>
+            <version>5.0.0</version>
+        </dependency>
+    </dependencies>
 </project>
