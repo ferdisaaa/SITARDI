@@ -12,6 +12,7 @@ public class Pemilih {
     private String TanggalLahir;
     private String StatusPemilih;
     private String Jeniskelamin;
+    private String idPemilih;
 
     public String getNIK() {
         return NIK;
@@ -39,7 +40,8 @@ public class Pemilih {
 
     public String getTanggalLahir() {
         return TanggalLahir;
-    public void setIdKaryawan(String idKaryawan) {
+    }
+    public void setIdPemilih(String idPemilih) {
         this.idPemilih = idPemilih;
     }
 
