@@ -41,9 +41,6 @@ public class Pemilih {
     public String getTanggalLahir() {
         return TanggalLahir;
     }
-    public void setIdPemilih(String idPemilih) {
-        this.idPemilih = idPemilih;
-    }
 
     public void setTanggalLahir(String TanggalLahir) {
         this.TanggalLahir = TanggalLahir;
