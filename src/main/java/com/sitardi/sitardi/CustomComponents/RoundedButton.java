@@ -42,9 +42,9 @@ public class RoundedButton extends JButton {
 
         // Efek saat tombol ditekan (sedikit lebih gelap)
         if (getModel().isPressed()) {
-            g2.setColor(getBackground().darker());
-        } else if (getModel().isRollover()) {
             g2.setColor(getBackground().brighter());
+        } else if (getModel().isRollover()) {
+            g2.setColor(getBackground().darker());
         } else {
             g2.setColor(getBackground());
         }

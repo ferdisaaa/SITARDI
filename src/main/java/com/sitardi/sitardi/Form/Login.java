@@ -17,6 +17,8 @@ public class Login extends javax.swing.JFrame {
      */
     public Login() {
         initComponents();
+        
+        setLocationRelativeTo(null);
     }
 
     /**
@@ -31,10 +33,10 @@ public class Login extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         lblLogin = new javax.swing.JLabel();
         inptUsername = new com.sitardi.sitardi.CustomComponents.RoundedTextField();
-        inptPassword = new com.sitardi.sitardi.CustomComponents.RoundedTextField();
         lblUsername = new javax.swing.JLabel();
         lblPassword = new javax.swing.JLabel();
         btnLogin = new com.sitardi.sitardi.CustomComponents.RoundedButton();
+        inptPassword = new com.sitardi.sitardi.CustomComponents.CustomPasswordField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setPreferredSize(new java.awt.Dimension(1000, 595));
@@ -47,14 +49,10 @@ public class Login extends javax.swing.JFrame {
         lblLogin.setText("LOGIN");
 
         inptUsername.setBackground(new java.awt.Color(254, 254, 254));
+        inptUsername.setBorder(null);
         inptUsername.setForeground(new java.awt.Color(13, 13, 13));
         inptUsername.setText("roundedTextField2");
-        inptUsername.setFont(new java.awt.Font("Futura Bk BT", 0, 32)); // NOI18N
-
-        inptPassword.setBackground(new java.awt.Color(254, 254, 254));
-        inptPassword.setForeground(new java.awt.Color(13, 13, 13));
-        inptPassword.setText("Mba Tukam suka Mas Okis");
-        inptPassword.setFont(new java.awt.Font("Futura Bk BT", 0, 32)); // NOI18N
+        inptUsername.setFont(new java.awt.Font("Futura Bk BT", 0, 24)); // NOI18N
 
         lblUsername.setFont(new java.awt.Font("Futura Bk BT", 1, 24)); // NOI18N
         lblUsername.setForeground(new java.awt.Color(254, 254, 254));
@@ -70,6 +68,12 @@ public class Login extends javax.swing.JFrame {
         btnLogin.setBorderColor(new java.awt.Color(229, 178, 120));
         btnLogin.setFont(new java.awt.Font("Futura Md BT", 1, 28)); // NOI18N
 
+        inptPassword.setBackground(new java.awt.Color(254, 254, 254));
+        inptPassword.setBorder(null);
+        inptPassword.setForeground(new java.awt.Color(13, 13, 13));
+        inptPassword.setText("customPasswordField1");
+        inptPassword.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -78,16 +82,16 @@ public class Login extends javax.swing.JFrame {
                 .addContainerGap(281, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(lblLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(422, 422, 422))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(lblUsername, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(lblPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(inptUsername, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(inptPassword, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btnLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 455, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(264, 264, 264))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(lblLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(422, 422, 422))))
+                            .addComponent(btnLogin, javax.swing.GroupLayout.DEFAULT_SIZE, 455, Short.MAX_VALUE)
+                            .addComponent(inptPassword, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(264, 264, 264))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -100,9 +104,9 @@ public class Login extends javax.swing.JFrame {
                 .addComponent(inptUsername, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(42, 42, 42)
                 .addComponent(lblPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(inptPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(57, 57, 57)
+                .addGap(18, 18, 18)
+                .addComponent(inptPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(46, 46, 46)
                 .addComponent(btnLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(79, Short.MAX_VALUE))
         );
@@ -139,7 +143,7 @@ public class Login extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private com.sitardi.sitardi.CustomComponents.RoundedButton btnLogin;
-    private com.sitardi.sitardi.CustomComponents.RoundedTextField inptPassword;
+    private com.sitardi.sitardi.CustomComponents.CustomPasswordField inptPassword;
     private com.sitardi.sitardi.CustomComponents.RoundedTextField inptUsername;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel lblLogin;

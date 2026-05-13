@@ -11,7 +11,7 @@ package object;
 public class User {
 
     private String UserId;
-    private String Usrname;
+    private String Username;
     private String Name;
     private String Email;
     private String Password;
@@ -26,11 +26,11 @@ public class User {
     }
 
     public String getUsrname() {
-        return Usrname;
+        return Username;
     }
 
-    public void setUsrname(String Usrname) {
-        this.Usrname = Usrname;
+    public void setUsrname(String Username) {
+        this.Username = Username;
     }
 
     public String getName() {

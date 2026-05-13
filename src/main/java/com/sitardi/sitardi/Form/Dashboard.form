@@ -177,7 +177,7 @@
                   <Color blue="78" green="b2" red="e5" type="rgb"/>
                 </Property>
                 <Property name="horizontalAlignment" type="int" value="0"/>
-                <Property name="text" type="java.lang.String" value="Username"/>
+                <Property name="text" type="java.lang.String" value="Mba Tukam"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JButton" name="btnDashboard">

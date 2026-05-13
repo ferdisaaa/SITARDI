@@ -17,23 +17,21 @@ import org.bson.codecs.pojo.PojoCodecProvider;
  * @author ASUS
  */
 class MongoManager {
-     private static MongoClient mongoClient;
+
+    private static MongoClient mongoClient;
     private static final String DATABASE_NAME = "SITARDI";
-    
-    
+
     public static MongoDatabase getDatabase() {
         if (mongoClient == null) {
             CodecRegistry pojoCodecRegistry = CodecRegistries.fromRegistries(
                     MongoClientSettings.getDefaultCodecRegistry(),
                     CodecRegistries.fromProviders(PojoCodecProvider.builder().automatic(true).build())
             );
-                    
-        
-        
-                mongoClient = MongoClients.create("mongodb://localhost:27017");
 
-                return mongoClient.getDatabase(DATABASE_NAME).withCodecRegistry(pojoCodecRegistry);
+            mongoClient = MongoClients.create("mongodb://localhost:27017");
+
+            return mongoClient.getDatabase(DATABASE_NAME).withCodecRegistry(pojoCodecRegistry);
         }
         return mongoClient.getDatabase(DATABASE_NAME);
-    } 
+    }
 }

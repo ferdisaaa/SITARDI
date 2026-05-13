@@ -4,6 +4,7 @@
  */
 package com.sitardi.sitardi.Form;
 
+import com.sitardi.sitardi.Panels.DataUser;
 import com.sitardi.sitardi.Panels.InfoTerkini;
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -23,6 +24,7 @@ public class Dashboard extends javax.swing.JFrame {
     public Dashboard() {
         initComponents();
         AddViews(new InfoTerkini());
+        setLocationRelativeTo(null);
     }
 
     /**
@@ -71,7 +73,7 @@ public class Dashboard extends javax.swing.JFrame {
         lblUsername.setFont(new java.awt.Font("Futura Bk BT", 0, 20)); // NOI18N
         lblUsername.setForeground(new java.awt.Color(229, 178, 120));
         lblUsername.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblUsername.setText("Username");
+        lblUsername.setText("Mba Tukam");
 
         btnDashboard.setBackground(new java.awt.Color(96, 2, 0));
         btnDashboard.setFont(new java.awt.Font("Futura Bk BT", 0, 20)); // NOI18N
@@ -217,9 +219,9 @@ public class Dashboard extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnDashboardActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDashboardActionPerformed
-        lblUsername.setText("Mba Tukam");
         btnDashboard.setForeground(Color.decode("#E5B278"));
         btnDataPetugas.setForeground(Color.decode("#FEFEFE"));
+                AddViews(new InfoTerkini());
 // TODO add your handling code here:
     }//GEN-LAST:event_btnDashboardActionPerformed
 
@@ -231,6 +233,7 @@ public class Dashboard extends javax.swing.JFrame {
         // TODO add your handling code here:
         btnDashboard.setForeground(Color.decode("#FEFEFE"));
         btnDataPetugas.setForeground(Color.decode("#E5B278"));
+        AddViews(new DataUser());
     }//GEN-LAST:event_btnDataPetugasActionPerformed
 
     private void btnPengaturanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPengaturanActionPerformed
