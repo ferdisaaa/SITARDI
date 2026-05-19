@@ -4,61 +4,90 @@
  */
 package object;
 
+import java.util.Date;
+
 public class Pemilih {
-
-    private String NIK;
-    private String Nama;
-    private String Domisili;
-    private String TanggalLahir;
-    private String StatusPemilih;
-    private String Jeniskelamin;
-    private String idPemilih;
-
-    public String getNIK() {
-        return NIK;
+    
+    private String nik;
+    private String nama_Lengkap;
+    private String domisili;
+    private Date tanggal_Lahir;
+    private String statusPemilih;
+    private String jenis_kelamin;
+  
+  
+    
+    
+    public Pemilih(){
+    }
+    
+    public Pemilih( String nik, String nama_lengkap, String domisili, Date tanggal_lahir, String status_pemilih, String jenis_kelamin) {
+        this.nik = nik;
+        this.nama_Lengkap = nama_lengkap;
+        this.domisili = domisili;
+        this.tanggal_Lahir = tanggal_lahir;
+        this.statusPemilih = status_pemilih;
+        this.jenis_kelamin = jenis_kelamin;
+    }
+    
+    @Override
+    public String toString() {
+        return "Pemilih{" + 
+                ", nik=" + nik + 
+                ", nama_lengkap=" + nama_Lengkap + 
+                ", domisili=" + domisili + 
+                ", tanggal_lahir=" + tanggal_Lahir + 
+                ", status_pemilih=" + statusPemilih + 
+                ", jenis_kelamin=" + jenis_kelamin + '}';
+    }
+    
+    
+    public String getNik() {
+        return nik;
     }
 
-    public void setNIK(String NIK) {
-        this.NIK = NIK;
+    public void setNik(String nik) {
+        this.nik = nik;
     }
 
-    public String getNama() {
-        return Nama;
+    public String getNama_Lengkap() {
+        return nama_Lengkap;
     }
 
-    public void setNama(String Nama) {
-        this.Nama = Nama;
+    public void setNama_Lengkap(String nama_lengkap) {
+        this.nama_Lengkap = nama_lengkap;
     }
 
     public String getDomisili() {
-        return Domisili;
+        return domisili;
     }
 
-    public void setDomisili(String Domisili) {
-        this.Domisili = Domisili;
+    public void setDomisili(String domisili) {
+        this.domisili = domisili;
     }
 
-    public String getTanggalLahir() {
-        return TanggalLahir;
+    public Date getTanggal_Lahir() {
+        return tanggal_Lahir;
     }
 
-    public void setTanggalLahir(String TanggalLahir) {
-        this.TanggalLahir = TanggalLahir;
+    public void setTanggal_Lahir(java.util.Date tanggal_lahir) {
+        this.tanggal_Lahir = tanggal_lahir;
     }
 
     public String getStatusPemilih() {
-        return StatusPemilih;
+        return statusPemilih;
     }
 
-    public void setStatusPemilih(String StatusPemilih) {
-        this.StatusPemilih = StatusPemilih;
+    public void setStatusPemilih(String status_pemilih) {
+        this.statusPemilih = status_pemilih;
     }
 
-    public String getJeniskelamin() {
-        return Jeniskelamin;
+    public String getJenisKelamin() {
+        return jenis_kelamin;
     }
 
-    public void setJeniskelamin(String Jeniskelamin) {
-        this.Jeniskelamin = Jeniskelamin;
+    public void setJenisKelamin(String jenis_kelamin) {
+        this.jenis_kelamin = jenis_kelamin;
     }
 }
+
