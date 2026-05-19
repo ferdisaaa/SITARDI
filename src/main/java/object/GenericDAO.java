@@ -12,6 +12,7 @@ import org.bson.conversions.Bson;
 /**
  *
  * @author MyBook Hype
+ * @param <T>
  */
 public class GenericDAO<T> implements BaseDAO<T> {
     private final MongoCollection<T> collection;
