@@ -9,10 +9,10 @@ import java.util.Date;
 public class Pemilih {
     
     private String nik;
-    private String nama_Lengkap;
+    private String nama_lengkap;
     private String domisili;
-    private Date tanggal_Lahir;
-    private String statusPemilih;
+    private Date tanggal_lahir;
+    private String status_pemilih;
     private String jenis_kelamin;
   
   
@@ -23,10 +23,10 @@ public class Pemilih {
     
     public Pemilih( String nik, String nama_lengkap, String domisili, Date tanggal_lahir, String status_pemilih, String jenis_kelamin) {
         this.nik = nik;
-        this.nama_Lengkap = nama_lengkap;
+        this.nama_lengkap = nama_lengkap;
         this.domisili = domisili;
-        this.tanggal_Lahir = tanggal_lahir;
-        this.statusPemilih = status_pemilih;
+        this.tanggal_lahir = tanggal_lahir;
+        this.status_pemilih = status_pemilih;
         this.jenis_kelamin = jenis_kelamin;
     }
     
@@ -34,10 +34,10 @@ public class Pemilih {
     public String toString() {
         return "Pemilih{" + 
                 ", nik=" + nik + 
-                ", nama_lengkap=" + nama_Lengkap + 
+                ", nama_lengkap=" + nama_lengkap + 
                 ", domisili=" + domisili + 
-                ", tanggal_lahir=" + tanggal_Lahir + 
-                ", status_pemilih=" + statusPemilih + 
+                ", tanggal_lahir=" + tanggal_lahir + 
+                ", status_pemilih=" + status_pemilih + 
                 ", jenis_kelamin=" + jenis_kelamin + '}';
     }
     
@@ -51,11 +51,11 @@ public class Pemilih {
     }
 
     public String getNama_Lengkap() {
-        return nama_Lengkap;
+        return nama_lengkap;
     }
 
     public void setNama_Lengkap(String nama_lengkap) {
-        this.nama_Lengkap = nama_lengkap;
+        this.nama_lengkap = nama_lengkap;
     }
 
     public String getDomisili() {
@@ -67,19 +67,19 @@ public class Pemilih {
     }
 
     public Date getTanggal_Lahir() {
-        return tanggal_Lahir;
+        return tanggal_lahir;
     }
 
     public void setTanggal_Lahir(java.util.Date tanggal_lahir) {
-        this.tanggal_Lahir = tanggal_lahir;
+        this.tanggal_lahir = tanggal_lahir;
     }
 
     public String getStatusPemilih() {
-        return statusPemilih;
+        return status_pemilih;
     }
 
     public void setStatusPemilih(String status_pemilih) {
-        this.statusPemilih = status_pemilih;
+        this.status_pemilih = status_pemilih;
     }
 
     public String getJenisKelamin() {
