@@ -217,30 +217,38 @@ public class PemilihService {
 
     
     /**
-     * 3.READ (One): Mencari satu karyawan spesifik berdasarkan UID RFID [5],
-     * [6] Sangat krusial untuk alur Tap Kartu pada Pertemuan 14 [8].
+     * 3.READ (One): Mencari satu Pemilih spesifik berdasarkan Nama [5],
+     * 
      *
      * @param key
      * @return
      */
     public List<Pemilih> cariPemilih(String key) {
         List<Bson> filters = new ArrayList<>();
-        
-        for (Field field : Pemilih.class.getDeclaredFields()) {
-            // Skip the uidRfid field and non-string fields if necessary
-            if (field.getName().equals("nama")) {
-                continue;
-            } else {
-            }
-            filters.add(Filters.regex(field.getName(), key, "i"));
+
+        if (key == null || key.trim().isEmpty()) {
+            return DAO.findAll();
         }
-        // Search and return Karyawan objects directly
-        List<Pemilih> results = DAO.findMany(Filters.or(filters));
-        return results;
+
+        for (Field field : Pemilih.class.getDeclaredFields()) {
+            if (field.isSynthetic()) {
+                continue;
+            }
+
+            if (field.getType().equals(String.class)) {
+                filters.add(Filters.regex(field.getName(), key, "i"));
+            }
+        }
+
+        if (filters.isEmpty()) {
+            return DAO.findAll();
+        }
+
+        return DAO.findMany(Filters.or(filters));
     }
 
     /**
-     * 4.UPDATE: Memperbarui data karyawan menggunakan filter Bson [5], [6]
+     * 4.UPDATE: Memperbarui data Pemilih menggunakan filter Bson
      *
      * @param newP
      */
@@ -255,7 +263,7 @@ public class PemilihService {
     }
 
     /**
-     * 5.DELETE: Menghapus data karyawan dari database [5], [6]
+     * 5.DELETE: Menghapus data Pemilih dari database [5], [6]
      *
      * @param NikP
      */
