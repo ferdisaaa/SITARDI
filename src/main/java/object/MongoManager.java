@@ -23,15 +23,13 @@ class MongoManager {
 
     public static MongoDatabase getDatabase() {
         if (mongoClient == null) {
-            CodecRegistry pojoCodecRegistry = CodecRegistries.fromRegistries(
-                    MongoClientSettings.getDefaultCodecRegistry(),
-                    CodecRegistries.fromProviders(PojoCodecProvider.builder().automatic(true).build())
-            );
-
             mongoClient = MongoClients.create("mongodb://localhost:27017");
-
-            return mongoClient.getDatabase(DATABASE_NAME).withCodecRegistry(pojoCodecRegistry);
         }
-        return mongoClient.getDatabase(DATABASE_NAME);
+        CodecRegistry pojoCodecRegistry = CodecRegistries.fromRegistries(
+                MongoClientSettings.getDefaultCodecRegistry(),
+                CodecRegistries.fromProviders(PojoCodecProvider.builder().automatic(true).build())
+            );
+                return mongoClient.getDatabase(DATABASE_NAME).withCodecRegistry(pojoCodecRegistry);
     }
 }
+

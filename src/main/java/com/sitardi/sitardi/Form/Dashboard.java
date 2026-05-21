@@ -4,11 +4,15 @@
  */
 package com.sitardi.sitardi.Form;
 
+
+import com.sitardi.sitardi.Panels.DataPemilih;
 import com.sitardi.sitardi.Panels.DataUser;
+
 import com.sitardi.sitardi.Panels.InfoTerkini;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import javax.swing.JPanel;
+import services.PemilihService;
 
 /**
  *
@@ -187,7 +191,7 @@ public class Dashboard extends javax.swing.JFrame {
                 .addComponent(btnDataPemilih)
                 .addGap(40, 40, 40)
                 .addComponent(btnPengaturan)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 145, Short.MAX_VALUE)
+                .addGap(145, 145, 145)
                 .addComponent(btnLogout)
                 .addGap(67, 67, 67))
         );
@@ -221,27 +225,35 @@ public class Dashboard extends javax.swing.JFrame {
     private void btnDashboardActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDashboardActionPerformed
         btnDashboard.setForeground(Color.decode("#E5B278"));
         btnDataPetugas.setForeground(Color.decode("#FEFEFE"));
+
                 AddViews(new InfoTerkini());
+
+        btnDataPemilih.setForeground(Color.decode("#FEFEFE"));
+
 // TODO add your handling code here:
     }//GEN-LAST:event_btnDashboardActionPerformed
 
     private void btnLogoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLogoutActionPerformed
         // TODO add your handling code here:
+        Login fromLogin = new Login();
+        fromLogin.setLocationRelativeTo(null);
+        fromLogin.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_btnLogoutActionPerformed
 
     private void btnDataPetugasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDataPetugasActionPerformed
         // TODO add your handling code here:
-        btnDashboard.setForeground(Color.decode("#FEFEFE"));
-        btnDataPetugas.setForeground(Color.decode("#E5B278"));
         AddViews(new DataUser());
     }//GEN-LAST:event_btnDataPetugasActionPerformed
 
     private void btnPengaturanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPengaturanActionPerformed
         // TODO add your handling code here:
+        
     }//GEN-LAST:event_btnPengaturanActionPerformed
 
     private void btnDataPemilihActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDataPemilihActionPerformed
         // TODO add your handling code here:
+        AddViews(new DataPemilih());
     }//GEN-LAST:event_btnDataPemilihActionPerformed
 
     /**
@@ -278,12 +290,16 @@ public class Dashboard extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel lblUsername;
     private javax.swing.JPanel main;
-    private javax.swing.JPanel pnlKonten;
+    private static javax.swing.JPanel pnlKonten;
     private com.sitardi.sitardi.CustomComponents.RoundImage roundImage1;
     private com.sitardi.sitardi.CustomComponents.RoundPanel roundPanel1;
     private javax.swing.JPanel sidePanel;
     // End of variables declaration//GEN-END:variables
-
+    
+    public static void showData(String key) {
+        PemilihService P = new PemilihService();
+        P.tampilPemilih(pnlKonten, key);
+    }
     private void AddViews(JPanel Dt) {
         if (pnlKonten.getComponentCount() > 0) {
             pnlKonten.removeAll();
@@ -292,5 +308,6 @@ public class Dashboard extends javax.swing.JFrame {
         pnlKonten.revalidate();
         pnlKonten.repaint();
     }
+    
 
 }

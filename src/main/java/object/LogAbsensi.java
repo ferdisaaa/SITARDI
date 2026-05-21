@@ -8,54 +8,80 @@ import java.time.LocalDateTime;
 
 /**
  *
- * @author MyBook Hype
+ * @author 
  */
 public class LogAbsensi {
 
-    private String LogID;
-    private String NIK;
-    private LocalDateTime Masuk;
-    private LocalDateTime Keluar;
-    private String Status;
-
-    public String getLogID() {
-        return LogID;
+    private String log_id;
+    private String nik;
+    private LocalDateTime masuk;
+    private LocalDateTime keluar;
+    private String status;
+    
+    public LogAbsensi(){
     }
 
-    public void setLogID(String LogID) {
-        this.LogID = LogID;
+     public LogAbsensi(String log_id, String nik, LocalDateTime masuk, LocalDateTime keluar, String status) {
+        this.log_id = log_id;
+        this.nik = nik;
+        this.masuk = masuk;
+        this.keluar = keluar;
+        this.status = status;
+    }
+    public String getlog_id() {
+        return log_id;
+    }
+
+    public void setlog_id(String log_id) {
+        this.log_id = log_id;
+    }
+
+    public String getnik() {
+        return nik;
+    }
+
+    public void setNik(String nik) {
+        this.nik = nik;
+    }
+
+    public String getLog_ID() {
+        return log_id;
+    }
+
+    public void setLog_ID(String Log_id) {
+        this.log_id = Log_id;
     }
 
     public String getNIK() {
-        return NIK;
+        return nik;
     }
 
-    public void setNIK(String NIK) {
-        this.NIK = NIK;
+    public void setNIK(String nik) {
+        this.nik = nik;
     }
 
-    public LocalDateTime getMasuk() {
-        return Masuk;
+    public LocalDateTime getmasuk() {
+        return masuk;
     }
 
-    public void setMasuk(LocalDateTime Masuk) {
-        this.Masuk = Masuk;
+    public void setMasuk(LocalDateTime masuk) {
+        this.masuk = masuk;
     }
 
-    public LocalDateTime getKeluar() {
-        return Keluar;
+    public LocalDateTime getkeluar() {
+        return keluar;
     }
 
     public void setKeluar(LocalDateTime Keluar) {
-        this.Keluar = Keluar;
+        this.keluar = Keluar;
     }
 
     public String getStatus() {
-        return Status;
+        return status;
     }
 
     public void setStatus(String Status) {
-        this.Status = Status;
+        this.status = Status;
     }
 
 
