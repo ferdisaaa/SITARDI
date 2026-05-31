@@ -4,6 +4,7 @@ import java.util.Date;
 
 public class Pemilih {
     
+    private String uidRfid;
     private String nik;
     private String nama_lengkap;
     private String domisili;
@@ -14,25 +15,25 @@ public class Pemilih {
     public Pemilih(){
     }
     
-    public Pemilih(String nik, String nama_lengkap, String domisili, Date tanggal_lahir, String status_pemilih, String jenis_kelamin) {
-        this.nik = nik;
-        this.nama_lengkap = nama_lengkap;
-        this.domisili = domisili;
-        this.tanggal_lahir = tanggal_lahir;
-        this.status_pemilih = status_pemilih;
-        this.jenis_kelamin = jenis_kelamin;
-    }
-    
-    @Override
-    public String toString() {
-        return "Pemilih{" + 
-                "nik=" + nik + 
-                ", nama_lengkap=" + nama_lengkap + 
-                ", domisili=" + domisili + 
-                ", tanggal_lahir=" + tanggal_lahir + 
-                ", status_pemilih=" + status_pemilih + 
-                ", jenis_kelamin=" + jenis_kelamin + '}';
-    }
+//    public Pemilih(String nik, String nama_lengkap, String domisili, Date tanggal_lahir, String status_pemilih, String jenis_kelamin) {
+//        this.nik = nik;
+//        this.nama_lengkap = nama_lengkap;
+//        this.domisili = domisili;
+//        this.tanggal_lahir = tanggal_lahir;
+//        this.status_pemilih = status_pemilih;
+//        this.jenis_kelamin = jenis_kelamin;
+//    }
+//    
+//    @Override
+//    public String toString() {
+//        return "Pemilih{" + 
+//                "nik=" + nik + 
+//                ", nama_lengkap=" + nama_lengkap + 
+//                ", domisili=" + domisili + 
+//                ", tanggal_lahir=" + tanggal_lahir + 
+//                ", status_pemilih=" + status_pemilih + 
+//                ", jenis_kelamin=" + jenis_kelamin + '}';
+//    }
     
     public String getNik() {
         return nik;
@@ -80,5 +81,13 @@ public class Pemilih {
 
     public void setJenis_kelamin(String jenis_kelamin) { // Diubah jadi huruf kecil semua
         this.jenis_kelamin = jenis_kelamin;
+    }
+
+    public String getUidRfid() {
+        return uidRfid;
+    }
+
+    public void setUidRfid(String uidRfid) {
+        this.uidRfid = uidRfid;
     }
 }

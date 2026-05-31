@@ -4,29 +4,38 @@
  */
 package com.sitardi.sitardi.Form;
 
-
 import com.sitardi.sitardi.Panels.DataPemilih;
 import com.sitardi.sitardi.Panels.DataUser;
 
 import com.sitardi.sitardi.Panels.InfoTerkini;
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.net.URL;
+import javax.imageio.ImageIO;
 import javax.swing.JPanel;
+import object.User;
 import services.PemilihService;
 
 /**
  *
  * @author ASUS
  */
-public class Dashboard extends javax.swing.JFrame {
+public class DashboardAdmin extends javax.swing.JFrame {
 
-    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(Dashboard.class.getName());
+    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(DashboardAdmin.class.getName());
 
     /**
      * Creates new form Dashboard
      */
-    public Dashboard() {
+    private User userLogged;
+
+    public DashboardAdmin(User user) {
+        this.userLogged = user; // Simpan data user yang login ke variabel lokal
         initComponents();
+
+        // Panggil fungsi untuk update tampilan profil
+        setProfileData();
+        setActiveMenu(btnDashboard);
         AddViews(new InfoTerkini());
         setLocationRelativeTo(null);
     }
@@ -44,7 +53,7 @@ public class Dashboard extends javax.swing.JFrame {
         sidePanel = new javax.swing.JPanel();
         jLabel7 = new javax.swing.JLabel();
         roundPanel1 = new com.sitardi.sitardi.CustomComponents.RoundPanel();
-        roundImage1 = new com.sitardi.sitardi.CustomComponents.RoundImage();
+        profileimg = new com.sitardi.sitardi.CustomComponents.RoundImage();
         lblUsername = new javax.swing.JLabel();
         btnDashboard = new javax.swing.JButton();
         btnDataPetugas = new javax.swing.JButton();
@@ -68,10 +77,10 @@ public class Dashboard extends javax.swing.JFrame {
         roundPanel1.setRoundImage(true);
         roundPanel1.setLayout(new java.awt.BorderLayout());
 
-        roundImage1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/nanami_MBG(My Bini Gwejh).png"))); // NOI18N
-        roundImage1.setBorderColor(new java.awt.Color(254, 254, 254));
-        roundImage1.setIsCircle(true);
-        roundPanel1.add(roundImage1, java.awt.BorderLayout.CENTER);
+        profileimg.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/nanami_MBG(My Bini Gwejh).png"))); // NOI18N
+        profileimg.setBorderColor(new java.awt.Color(254, 254, 254));
+        profileimg.setIsCircle(true);
+        roundPanel1.add(profileimg, java.awt.BorderLayout.CENTER);
 
         lblUsername.setBackground(new java.awt.Color(229, 178, 120));
         lblUsername.setFont(new java.awt.Font("Futura Bk BT", 0, 20)); // NOI18N
@@ -205,8 +214,9 @@ public class Dashboard extends javax.swing.JFrame {
             mainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(mainLayout.createSequentialGroup()
                 .addComponent(sidePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(pnlKonten, javax.swing.GroupLayout.DEFAULT_SIZE, 1136, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(pnlKonten, javax.swing.GroupLayout.DEFAULT_SIZE, 1124, Short.MAX_VALUE)
+                .addContainerGap())
         );
         mainLayout.setVerticalGroup(
             mainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -223,12 +233,8 @@ public class Dashboard extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnDashboardActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDashboardActionPerformed
-        btnDashboard.setForeground(Color.decode("#E5B278"));
-        btnDataPetugas.setForeground(Color.decode("#FEFEFE"));
-
-                AddViews(new InfoTerkini());
-
-        btnDataPemilih.setForeground(Color.decode("#FEFEFE"));
+        setActiveMenu(btnDashboard);
+        AddViews(new InfoTerkini());
 
 // TODO add your handling code here:
     }//GEN-LAST:event_btnDashboardActionPerformed
@@ -243,17 +249,19 @@ public class Dashboard extends javax.swing.JFrame {
 
     private void btnDataPetugasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDataPetugasActionPerformed
         // TODO add your handling code here:
+        setActiveMenu(btnDataPetugas);
         AddViews(new DataUser());
     }//GEN-LAST:event_btnDataPetugasActionPerformed
 
     private void btnPengaturanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPengaturanActionPerformed
         // TODO add your handling code here:
-        
+
     }//GEN-LAST:event_btnPengaturanActionPerformed
 
     private void btnDataPemilihActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDataPemilihActionPerformed
         // TODO add your handling code here:
         AddViews(new DataPemilih());
+        setActiveMenu(btnDataPemilih);
     }//GEN-LAST:event_btnDataPemilihActionPerformed
 
     /**
@@ -278,7 +286,7 @@ public class Dashboard extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> new Dashboard().setVisible(true));
+        java.awt.EventQueue.invokeLater(() -> new DashboardAdmin(null).setVisible(true));
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -291,15 +299,54 @@ public class Dashboard extends javax.swing.JFrame {
     private javax.swing.JLabel lblUsername;
     private javax.swing.JPanel main;
     private static javax.swing.JPanel pnlKonten;
-    private com.sitardi.sitardi.CustomComponents.RoundImage roundImage1;
+    private com.sitardi.sitardi.CustomComponents.RoundImage profileimg;
     private com.sitardi.sitardi.CustomComponents.RoundPanel roundPanel1;
     private javax.swing.JPanel sidePanel;
     // End of variables declaration//GEN-END:variables
-    
+
+    private void setProfileData() {
+        if (userLogged != null) {
+            // 1. Set Nama
+            lblUsername.setText(userLogged.getName());
+
+            // 2. Set Foto Profil dari URL Cloud
+            String urlString = userLogged.getUrl_img();
+
+            if (urlString != null && !urlString.isEmpty()) {
+                // Kita gunakan Thread agar UI tidak "freeze" saat mendownload gambar
+                new Thread(() -> {
+                    try {
+                        URL url = new URL(urlString);
+                        // Membaca gambar dari URL
+                        java.awt.Image image = ImageIO.read(url);
+
+                        if (image != null) {
+                            // Scaling agar pas dengan ukuran komponen profileimg
+                            int width = profileimg.getWidth() > 0 ? profileimg.getWidth() : 100;
+                            int height = profileimg.getHeight() > 0 ? profileimg.getHeight() : 100;
+
+                            java.awt.Image scaledImage = image.getScaledInstance(width, height, java.awt.Image.SCALE_SMOOTH);
+
+                            // Update UI harus dilakukan di Event Dispatch Thread
+                            javax.swing.SwingUtilities.invokeLater(() -> {
+                                profileimg.setIcon(new javax.swing.ImageIcon(scaledImage));
+                            });
+                        }
+                    } catch (Exception e) {
+                        System.err.println("Gagal memuat gambar dari Cloud: " + e.getMessage());
+                        // Opsional: Set gambar default jika gagal
+                        // profileimg.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/default_user.png")));
+                    }
+                }).start();
+            }
+        }
+    }
+
     public static void showData(String key) {
         PemilihService P = new PemilihService();
         P.tampilPemilih(pnlKonten, key);
     }
+
     private void AddViews(JPanel Dt) {
         if (pnlKonten.getComponentCount() > 0) {
             pnlKonten.removeAll();
@@ -308,6 +355,24 @@ public class Dashboard extends javax.swing.JFrame {
         pnlKonten.revalidate();
         pnlKonten.repaint();
     }
-    
+
+    private void setActiveMenu(javax.swing.JButton activeBtn) {
+        // 1. Daftar semua tombol menu kamu
+        javax.swing.JButton[] menus = {btnDashboard, btnDataPetugas, btnDataPemilih, btnPengaturan};
+
+        // 2. Loop semua tombol
+        for (javax.swing.JButton btn : menus) {
+            if (btn == activeBtn) {
+                // Warna saat aktif (Menyala/Gold)
+                btn.setForeground(Color.decode("#E5B278"));
+                // Opsional: Jika ingin memberi bold saat aktif
+                btn.setFont(new java.awt.Font("Futura Bk BT", 1, 20));
+            } else {
+                // Warna standar (Putih)
+                btn.setForeground(Color.decode("#FEFEFE"));
+                btn.setFont(new java.awt.Font("Futura Bk BT", 0, 20));
+            }
+        }
+    }
 
 }

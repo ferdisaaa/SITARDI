@@ -4,6 +4,10 @@
  */
 package com.sitardi.sitardi.Form;
 
+import javax.swing.JOptionPane;
+import object.User;
+import services.UserService;
+
 /**
  *
  * @author ASUS
@@ -39,7 +43,6 @@ public class Login extends javax.swing.JFrame {
         inptPassword = new com.sitardi.sitardi.CustomComponents.CustomPasswordField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(1000, 595));
 
         jPanel1.setBackground(new java.awt.Color(96, 2, 0));
 
@@ -51,8 +54,17 @@ public class Login extends javax.swing.JFrame {
         inptUsername.setBackground(new java.awt.Color(254, 254, 254));
         inptUsername.setBorder(null);
         inptUsername.setForeground(new java.awt.Color(13, 13, 13));
-        inptUsername.setText("roundedTextField2");
         inptUsername.setFont(new java.awt.Font("Futura Bk BT", 0, 24)); // NOI18N
+        inptUsername.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                inptUsernameMouseClicked(evt);
+            }
+        });
+        inptUsername.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                inptUsernameActionPerformed(evt);
+            }
+        });
 
         lblUsername.setFont(new java.awt.Font("Futura Bk BT", 1, 24)); // NOI18N
         lblUsername.setForeground(new java.awt.Color(254, 254, 254));
@@ -67,11 +79,15 @@ public class Login extends javax.swing.JFrame {
         btnLogin.setText("Login");
         btnLogin.setBorderColor(new java.awt.Color(229, 178, 120));
         btnLogin.setFont(new java.awt.Font("Futura Md BT", 1, 28)); // NOI18N
+        btnLogin.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLoginActionPerformed(evt);
+            }
+        });
 
         inptPassword.setBackground(new java.awt.Color(254, 254, 254));
         inptPassword.setBorder(null);
         inptPassword.setForeground(new java.awt.Color(13, 13, 13));
-        inptPassword.setText("customPasswordField1");
         inptPassword.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -116,6 +132,55 @@ public class Login extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
+        String username = inptUsername.getText();
+        // Mengambil password dari CustomPasswordField (biasanya getPassword() mengembalikan char[])
+        String password = new String(inptPassword.getPassword());
+
+        // Validasi input kosong
+        if (username.isEmpty() || password.isEmpty() || username.equals("roundedTextField2")) {
+            JOptionPane.showMessageDialog(this, "Username dan Password tidak boleh kosong!");
+            return;
+        }
+        
+        UserService userService = new UserService();
+        User userTerautentikasi = userService.login(username, password);
+        
+        if (userTerautentikasi != null) {
+            String role = userTerautentikasi.getRole();
+
+            // Tutup form login
+            this.dispose();
+
+            // Logika Navigasi berdasarkan Role
+            if (role.equalsIgnoreCase("admin")) {
+                JOptionPane.showMessageDialog(null, "Selamat Datang, Admin " + userTerautentikasi.getName());
+                // Ganti 'DashboardAdmin' dengan nama class JFrame Admin kamu
+                new DashboardAdmin(userTerautentikasi).setVisible(true);
+                
+            } else if (role.equalsIgnoreCase("petugas")) {
+                JOptionPane.showMessageDialog(null, "Selamat Datang, Petugas " + userTerautentikasi.getName());
+                // Ganti 'DashboardPetugas' dengan nama class JFrame Petugas kamu
+//                new DashboardPetugas().setVisible(true);
+
+            } else {
+                JOptionPane.showMessageDialog(this, "Role tidak dikenali, hubungi administrator.");
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Username atau Password salah!");
+        }
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnLoginActionPerformed
+
+    private void inptUsernameMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_inptUsernameMouseClicked
+        inptUsername.setText("");
+        // TODO add your handling code here:
+    }//GEN-LAST:event_inptUsernameMouseClicked
+
+    private void inptUsernameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_inptUsernameActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_inptUsernameActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -151,6 +216,4 @@ public class Login extends javax.swing.JFrame {
     private javax.swing.JLabel lblUsername;
     // End of variables declaration//GEN-END:variables
 
-    
 }
-

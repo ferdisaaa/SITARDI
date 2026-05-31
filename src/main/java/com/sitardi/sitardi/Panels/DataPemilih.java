@@ -156,7 +156,7 @@ public class DataPemilih extends javax.swing.JPanel {
     }//GEN-LAST:event_txtCariMouseClicked
 
     private void btnTambahActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTambahActionPerformed
-        com.sitardi.sitardi.Form.TambahEdit popUpTambah = new com.sitardi.sitardi.Form.TambahEdit(null, true);
+        com.sitardi.sitardi.Form.TambahEditPemilih popUpTambah = new com.sitardi.sitardi.Form.TambahEditPemilih(null, true);
 
         // 2. Kosongkan semua kotak teks (berjaga-jaga jika ada sisa tulisan)
         popUpTambah.TxtNIK.setText("");

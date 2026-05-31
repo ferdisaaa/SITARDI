@@ -10,59 +10,68 @@ package object;
  */
 public class User {
 
-    private String UserId;
-    private String Username;
-    private String Name;
-    private String Email;
-    private String Password;
-    private String UrlImg;
+    private String nik;
+    private String username;
+    private String name;
+    private String email;
+    private String password;
+    private String url_img;
 
-    public String getUserId() {
-        return UserId;
+    public String getRole() {
+        return role;
     }
 
-    public void setUserId(String UserId) {
-        this.UserId = UserId;
+    public void setRole(String role) {
+        this.role = role;
+    }
+    private String role;
+
+    public String getNik() {
+        return nik;
     }
 
-    public String getUsrname() {
-        return Username;
+    public void setNik(String nik) {
+        this.nik = nik;
     }
 
-    public void setUsrname(String Username) {
-        this.Username = Username;
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String Username) {
+        this.username = Username;
     }
 
     public String getName() {
-        return Name;
+        return name;
     }
 
     public void setName(String Name) {
-        this.Name = Name;
+        this.name = Name;
     }
 
     public String getEmail() {
-        return Email;
+        return email;
     }
 
     public void setEmail(String Email) {
-        this.Email = Email;
+        this.email = Email;
     }
 
     public String getPassword() {
-        return Password;
+        return password;
     }
 
     public void setPassword(String Password) {
-        this.Password = Password;
+        this.password = Password;
     }
 
-    public String getUrlImg() {
-        return UrlImg;
+    public String getUrl_img() {
+        return url_img;
     }
 
-    public void setUrlImg(String UrlImg) {
-        this.UrlImg = UrlImg;
+    public void setUrl_img(String url_img) {
+        this.url_img = url_img;
     }
 
 }
