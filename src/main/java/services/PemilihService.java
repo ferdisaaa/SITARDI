@@ -1,16 +1,16 @@
 package services;
 
 import com.mongodb.client.model.Filters;
-import com.sitardi.sitardi.Panels.DataPemilih;
-import com.sitardi.sitardi.CustomComponents.DynamicCard;
+import com.sitardi.Panels.DataPemilih;
+import com.sitardi.CustomComponents.DynamicCard;
 import java.awt.*;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.swing.*;
-import object.GenericDAO;
-import object.Pemilih;
+import utils.GenericDAO;
+import utils.Pemilih;
 import org.bson.conversions.Bson;
 
 public class PemilihService {

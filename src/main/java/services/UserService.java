@@ -9,8 +9,8 @@ package services;
  * @author ASUS
  */
 import com.mongodb.client.model.Filters;
-import com.sitardi.sitardi.CustomComponents.DynamicCard;
-import com.sitardi.sitardi.Panels.DataUser;
+import com.sitardi.CustomComponents.DynamicCard;
+import com.sitardi.Panels.DataUser;
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.lang.reflect.Field;
@@ -19,9 +19,10 @@ import java.util.List;
 import javax.swing.BorderFactory;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import object.GenericDAO;
-import object.User;
+import utils.GenericDAO;
+import utils.User;
 import org.bson.conversions.Bson;
+import utils.Security;
 
 public class UserService {
 
@@ -34,8 +35,13 @@ public class UserService {
     // --- LOGIKA DATA ---
     public void tambahUser(User u) {
         try {
+            // 1. Proses Hashing Password
+            if (u.getPassword() != null && !u.getPassword().isEmpty()) {
+                String hashedPass = Security.getHash(u.getPassword(), Security.SHA_256);
+                u.setPassword(hashedPass);
+            }
+
             DAO.save(u);
-            JOptionPane.showMessageDialog(null, "User berhasil disimpan!");
             DataUser.showData("");
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Gagal simpan: " + e.getMessage());
@@ -43,16 +49,36 @@ public class UserService {
     }
 
     public void updateUser(User newUser) {
-        // PASTIKAN: "UserId" adalah nama field di MongoDB. 
-        // Jika di MongoDB fieldnya bernama "nik", ganti string di bawah menjadi "nik"
-        Bson filter = Filters.eq("nik", newUser.getNik());
+        try {
+            // 1. Cari data lama di database berdasarkan NIK
+            Bson filter = Filters.eq("nik", newUser.getNik());
+            User userLama = DAO.findOne(filter);
 
-        if (DAO.findOne(filter) != null) {
-            DAO.update(filter, newUser);
-            DataUser.showData("");
-            JOptionPane.showMessageDialog(null, "Data User berhasil diperbarui!");
-        } else {
-            JOptionPane.showMessageDialog(null, "Data tidak ditemukan untuk diupdate!");
+            if (userLama != null) {
+                // 2. Logika Proteksi Password
+                // Jika password di form kosong, gunakan password lama (yang sudah ter-hash)
+                if (newUser.getPassword() == null || newUser.getPassword().trim().isEmpty()) {
+                    newUser.setPassword(userLama.getPassword());
+                } else {
+                    // Jika user menginput password baru, cek apakah itu password baru (plain text) 
+                    // atau hash lama. Jika panjangnya bukan 64 char (standar SHA-256), maka itu plain text.
+                    if (newUser.getPassword().length() != 64) {
+                        String hashedPass = Security.getHash(newUser.getPassword(), Security.SHA_256);
+                        newUser.setPassword(hashedPass);
+                    }
+                }
+
+                // 3. Eksekusi Update
+                DAO.update(filter, newUser);
+
+                // 4. Refresh UI
+                DataUser.showData("");
+            } else {
+                JOptionPane.showMessageDialog(null, "Data dengan NIK: " + newUser.getNik() + " tidak ditemukan!");
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Terjadi kesalahan saat update: " + e.getMessage());
+            System.err.println("Update Error: " + e.getMessage());
         }
     }
 
@@ -110,13 +136,22 @@ public class UserService {
         panelTarget.repaint();
     }
 
-    public User login(String username, String password) {
-        // Mencari user yang username DAN password-nya cocok
-        Bson filter = Filters.and(
-                Filters.eq("username", username),
-                Filters.eq("password", password)
-        );
+    public User login(String username, String plainPassword) {
+        try {
+            // 1. Hash password yang diinput user untuk dibandingkan
+            String hashedInput = Security.getHash(plainPassword, Security.SHA_256);
 
-        return DAO.findOne(filter);
+            // 2. Cari user di database berdasarkan username menggunakan DAO
+            Bson filter = Filters.eq("username", username);
+            User user = DAO.findOne(filter); // Menggunakan DAO, bukan userCollection
+
+            // 3. Validasi: Cek apakah user ada dan password match
+            if (user != null && user.getPassword().equals(hashedInput)) {
+                return user; // Login Sukses, kembalikan objek User
+            }
+        } catch (Exception e) {
+            System.err.println("Login Error: " + e.getMessage());
+        }
+        return null; // Login Gagal
     }
 }
