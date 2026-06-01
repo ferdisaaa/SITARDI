@@ -23,9 +23,8 @@ class MongoManager {
 
     public static MongoDatabase getDatabase() {
         if (mongoClient == null) {
-//            mongoClient = MongoClients.create("mongodb://localhost:27017");
-            mongoClient = MongoClients.create("mongodb+srv://gezsyx:cfAFDG21e7weksghjgr@cluster0.e5mez1h.mongodb.net/?appName=Cluster0");
-//            pw=cfAFDG21e7weksghjgr
+                mongoClient = MongoClients.create("mongodb://localhost:27017");
+
         }
         CodecRegistry pojoCodecRegistry = CodecRegistries.fromRegistries(
                 MongoClientSettings.getDefaultCodecRegistry(),
@@ -33,4 +32,30 @@ class MongoManager {
         );
         return mongoClient.getDatabase(DATABASE_NAME).withCodecRegistry(pojoCodecRegistry);
     }
+    
+    
+    
+//   COMENT KODE DIBAWAH DAN UNCOMENT KODE DIATAS UNTUK MENJALANKAN DATABASE LOCAL 
+//    public static MongoDatabase getDatabase() {
+//        if (mongoClient == null) {
+//            // Ambil URI secara aman dari file config.properties
+//            String uri = utils.Database.getMongoUrl();
+//
+//            if (uri == null || uri.isEmpty()) {
+//                throw new RuntimeException("Gagal koneksi: MONGODB_URL tidak ditemukan di .env!");
+//            }
+//
+//            mongoClient = MongoClients.create(uri);
+//        }
+//
+//        // Registrasi Codec untuk Mapping POJO (Object Java ke MongoDB)
+//        CodecRegistry pojoCodecRegistry = CodecRegistries.fromRegistries(
+//                MongoClientSettings.getDefaultCodecRegistry(),
+//                CodecRegistries.fromProviders(PojoCodecProvider.builder().automatic(true).build())
+//        );
+//
+//        // DATABASE_NAME pastikan sudah terdefinisi di class ini (misal: "SITARDI_DB")
+//        return mongoClient.getDatabase(DATABASE_NAME).withCodecRegistry(pojoCodecRegistry);
+//    }
+    
 }
