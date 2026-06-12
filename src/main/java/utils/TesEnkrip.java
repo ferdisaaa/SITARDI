@@ -6,7 +6,7 @@ package utils;
 
 /**
  *
- * @author ASUS
+ * @author Al
  */
 public class TesEnkrip {
     public static void main(String[] args) {
