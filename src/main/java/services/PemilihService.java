@@ -16,13 +16,13 @@ import org.bson.conversions.Bson;
 public class PemilihService {
 
     private final GenericDAO<Pemilih> DAO;
+    String collectionName = System.getProperty("COLLP");
 
     public PemilihService() {
-        this.DAO = new GenericDAO<>("Pemilih", Pemilih.class);
+        this.DAO = new GenericDAO<>(collectionName, Pemilih.class);
     }
 
     // --- LOGIKA DATA ---
-    
     public void tambahPemilih(Pemilih p) {
         DAO.save(p);
     }
@@ -43,7 +43,9 @@ public class PemilihService {
     }
 
     public List<Pemilih> cariPemilih(String key) {
-        if (key == null || key.trim().isEmpty() || key.equals("Cari.........")) return DAO.findAll();
+        if (key == null || key.trim().isEmpty() || key.equals("Cari.........")) {
+            return DAO.findAll();
+        }
 
         List<Bson> filters = new ArrayList<>();
         for (Field f : Pemilih.class.getDeclaredFields()) {
@@ -55,30 +57,59 @@ public class PemilihService {
     }
 
     // --- LOGIKA TAMPILAN (MENGGUNAKAN FACTORY) ---
-
     public void tampilPemilih(JPanel panelTarget, String key) {
-        List<Pemilih> daftar = cariPemilih(key);
-
+        // 1. Tampilkan teks loading ringan di awal
         panelTarget.removeAll();
         panelTarget.setLayout(new BorderLayout());
-
-        // Kontainer Grid (3 Kolom)
-        JPanel gridPanel = new JPanel(new GridLayout(0, 3, 20, 20));
-        gridPanel.setOpaque(false);
-        gridPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
-
-        for (Pemilih p : daftar) {
-            // Memanggil Factory Otomatis
-            gridPanel.add(DynamicCard.createCard(p, this));
-        }
-
-        // Agar scrollable
-        JPanel wrapper = new JPanel(new BorderLayout());
-        wrapper.setOpaque(false);
-        wrapper.add(gridPanel, BorderLayout.NORTH);
-        
-        panelTarget.add(wrapper, BorderLayout.CENTER);
+        JLabel lblLoading = new JLabel("Memuat data dari database...", SwingConstants.CENTER);
+        lblLoading.setFont(new Font("SansSerif", Font.ITALIC, 14));
+        panelTarget.add(lblLoading, BorderLayout.CENTER);
         panelTarget.revalidate();
         panelTarget.repaint();
+
+        // 2. Jalankan SwingWorker agar UI tidak freeze/lag
+        SwingWorker<List<Pemilih>, Void> worker = new SwingWorker<>() {
+            @Override
+            protected List<Pemilih> doInBackground() throws Exception {
+                // Tetap ambil data di background thread
+                return cariPemilih(key);
+            }
+
+            @Override
+            protected void done() {
+                try {
+                    List<Pemilih> daftar = get();
+                    panelTarget.removeAll();
+
+                    // Wadah kartu: Tetap gunakan susunan 3 kolom biar rapi
+                    JPanel gridPanel = new JPanel(new GridLayout(0, 3, 20, 20));
+                    gridPanel.setOpaque(false);
+                    gridPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
+
+                    // Masukkan semua kartu pemilih ke grid
+                    for (Pemilih p : daftar) {
+                        gridPanel.add(DynamicCard.createCard(p, PemilihService.this));
+                    }
+
+                    // 🛠️ FIX UTAMA: Pasang gridPanel LANGSUNG ke panelTarget NetBeans
+                    // Gunakan BorderLayout.NORTH agar tinggi panel fleksibel mengikuti jumlah kartu
+                    panelTarget.setLayout(new BorderLayout());
+                    panelTarget.add(gridPanel, BorderLayout.NORTH);
+
+                    // Paksa NetBeans ScrollPane untuk menghitung ulang tinggi layar baru
+                    panelTarget.revalidate();
+                    panelTarget.repaint();
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    panelTarget.removeAll();
+                    panelTarget.add(new JLabel("Gagal memuat data: " + e.getMessage(), SwingConstants.CENTER), BorderLayout.CENTER);
+                    panelTarget.revalidate();
+                    panelTarget.repaint();
+                }
+            }
+        };
+
+        worker.execute();
     }
 }

@@ -46,35 +46,40 @@ public class DynamicCard {
             RoundImage imgHeader = new RoundImage();
             imgHeader.setIsCircle(true);
             imgHeader.setPreferredSize(new Dimension(100, 100));
-            imgHeader.setBorderThickness(3); // Menambah estetika border
+            imgHeader.setBorderThickness(3);
 
-            // Logika Load Gambar
             if (u.getUrl_img() != null && !u.getUrl_img().isEmpty()) {
-                try {
-                    // Cek apakah ini link online atau file lokal
-                    if (u.getUrl_img().startsWith("http")) {
-                        // JIKA LINK ONLINE
-                        URL url = new URL(u.getUrl_img());
-                        Image image = ImageIO.read(url); // Mengunduh gambar
+                imgHeader.setText("Loading..."); 
+
+                new Thread(() -> {
+                    try {
+                        Image image = null;
+                        if (u.getUrl_img().startsWith("http")) {
+                            URL url = new URL(u.getUrl_img());
+                            image = ImageIO.read(url);
+                        } else {
+                            ImageIcon icon = new ImageIcon(u.getUrl_img());
+                            image = icon.getImage();
+                        }
+
                         if (image != null) {
                             Image scaledImg = image.getScaledInstance(100, 100, Image.SCALE_SMOOTH);
-                            imgHeader.setIcon(new ImageIcon(scaledImg));
+                            ImageIcon finalIcon = new ImageIcon(scaledImg);
+                            SwingUtilities.invokeLater(() -> {
+                                imgHeader.setText("");
+                                imgHeader.setIcon(finalIcon);
+                            });
                         }
-                    } else {
-                        // JIKA FILE LOKAL
-                        ImageIcon icon = new ImageIcon(u.getUrl_img());
-                        Image scaledImg = icon.getImage().getScaledInstance(100, 100, Image.SCALE_SMOOTH);
-                        imgHeader.setIcon(new ImageIcon(scaledImg));
+                    } catch (Exception e) {
+                        System.out.println("Gagal memuat gambar: " + e.getMessage());
+                        SwingUtilities.invokeLater(() -> imgHeader.setText("Error"));
                     }
-                } catch (Exception e) {
-                    System.out.println("Gagal memuat gambar: " + e.getMessage());
-                    imgHeader.setText("Error");
-                }
+                }).start();
+
             } else {
                 imgHeader.setText("No Image");
             }
 
-            // Wrapper agar gambar berada di tengah secara horizontal
             JPanel imgWrapper = new JPanel(new FlowLayout(FlowLayout.CENTER));
             imgWrapper.setOpaque(false);
             imgWrapper.add(imgHeader);
@@ -143,7 +148,7 @@ public class DynamicCard {
             popUp.TxtUsername.setText(u.getUsername());
             popUp.cmbRole.setSelectedItem(u.getRole());
             popUp.Txtemail.setText(u.getEmail());
-            popUp.TxtPassword.setText(u.getPassword());
+            popUp.TxtPassword.setText("");
             popUp.btnUpdate.setEnabled(true);
             popUp.btnSave.setEnabled(false);
             popUp.loadProfileImage(u.getUrl_img());
@@ -171,7 +176,12 @@ public class DynamicCard {
         JButton btnEdit = createStyledButton("Edit", COLOR_EDIT);
         btnEdit.addActionListener(e -> {
             TambahEditPemilih popUp = new TambahEditPemilih(null, true);
-            popUp.txtUIDRFID.setText(p.getUidRfid());
+            String encryptedUid = p.getUidRfid();
+            if (encryptedUid != null && !encryptedUid.isEmpty()) {
+                popUp.txtUIDRFID.setText(utils.Encryptions.decrypt(encryptedUid));
+            } else {
+                popUp.txtUIDRFID.setText(""); // Set kosong jika di DB memang kosong
+            }
             popUp.TxtNIK.setText(p.getNik());
             popUp.TxtNama.setText(p.getNama_lengkap());
             popUp.TxtDomisili.setText(p.getDomisili());
@@ -211,7 +221,18 @@ public class DynamicCard {
         if (value instanceof Date) {
             return new SimpleDateFormat("dd-MM-yyyy").format((Date) value);
         }
-        return value.toString();
+
+        String valStr = value.toString();
+        // Cek secara cerdas: Jika string berakhiran '=' atau berupa pola Base64 khas AES, 
+        // coba lakukan dekripsi. Jika gagal/bukan enkripsi, kembalikan string asli.
+        if (valStr.length() >= 16 && (valStr.endsWith("=") || valStr.matches("^[a-zA-Z0-9+/]+={0,2}$"))) {
+            String decrypted = utils.Encryptions.decrypt(valStr);
+            if (decrypted != null) {
+                return decrypted; // Tampilkan UID asli yang sudah didekripsi
+            }
+        }
+
+        return valStr;
     }
 
     private static JButton createStyledButton(String text, Color bg) {

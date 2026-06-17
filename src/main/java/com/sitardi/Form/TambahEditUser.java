@@ -192,8 +192,12 @@ public class TambahEditUser extends javax.swing.JDialog {
         roundImage1.setIsCircle(true);
         jPanel1.add(roundImage1, new org.netbeans.lib.awtextra.AbsoluteConstraints(143, 61, -1, -1));
 
-        TxtPassword.setText("jPasswordField1");
         TxtPassword.setPreferredSize(new java.awt.Dimension(220, 25));
+        TxtPassword.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                TxtPasswordActionPerformed(evt);
+            }
+        });
         jPanel1.add(TxtPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 390, -1, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -287,6 +291,10 @@ public class TambahEditUser extends javax.swing.JDialog {
         loadProfileImage(txtUrl.getText().trim());
         // TODO add your handling code here:
     }//GEN-LAST:event_txtUrlKeyReleased
+
+    private void TxtPasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TxtPasswordActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_TxtPasswordActionPerformed
 
     /**
      * @param args the command line arguments

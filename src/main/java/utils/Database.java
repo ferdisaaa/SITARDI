@@ -13,17 +13,17 @@ import java.util.Properties;
  * @author ASUS
  */
 public class Database {
-    private static Properties properties = new Properties();
-
-    static {
-        try (FileInputStream fis = new FileInputStream(".env")) {
-            properties.load(fis);
-        } catch (IOException e) {
-            System.err.println("File .env tidak ditemukan di root!");
-        }
-    }
-
-    public static String getMongoUrl() {
-        return properties.getProperty("MONGODB_URL");
-    }
+//    private static Properties properties = new Properties();
+//
+//    static {
+//        try (FileInputStream fis = new FileInputStream(".env")) {
+//            properties.load(fis);
+//        } catch (IOException e) {
+//            System.err.println("File .env tidak ditemukan di root!");
+//        }
+//    }
+//
+//    public static String getMongoUrl() {
+//        return properties.getProperty("MONGODB_URL");
+//    }
 }

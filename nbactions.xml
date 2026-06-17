@@ -10,7 +10,7 @@
                 <goal>org.codehaus.mojo:exec-maven-plugin:3.1.0:exec</goal>
             </goals>
             <properties>
-                <exec.vmArgs></exec.vmArgs>
+                <exec.vmArgs>-DKEY="S1T4RDI1K3PLE5ET" -DMONGODB_URL=mongodb+srv://gezsyx:efhaksjbjehabmfas@cluster0.e5mez1h.mongodb.net/?appName=Cluster0 -DDATABASE_NAME="SITARDI" -DCOLLU="User" -DCOLLP="Pemilih"</exec.vmArgs>
                 <exec.args>${exec.vmArgs} -classpath %classpath ${exec.mainClass} ${exec.appArgs}</exec.args>
                 <exec.appArgs></exec.appArgs>
                 <exec.mainClass>com.sitardi.Form.Login</exec.mainClass>
@@ -27,7 +27,7 @@
                 <goal>org.codehaus.mojo:exec-maven-plugin:3.1.0:exec</goal>
             </goals>
             <properties>
-                <exec.vmArgs>-agentlib:jdwp=transport=dt_socket,server=n,address=${jpda.address}</exec.vmArgs>
+                <exec.vmArgs>-DKEY="S1T4RDI1K3PLE5ET" -DMONGODB_URL=mongodb+srv://gezsyx:efhaksjbjehabmfas@cluster0.e5mez1h.mongodb.net/?appName=Cluster0 -DDATABASE_NAME="SITARDI" -DCOLLU="User" -DCOLLP="Pemilih" -agentlib:jdwp=transport=dt_socket,server=n,address=${jpda.address}</exec.vmArgs>
                 <exec.args>${exec.vmArgs} -classpath %classpath ${exec.mainClass} ${exec.appArgs}</exec.args>
                 <exec.appArgs></exec.appArgs>
                 <exec.mainClass>com.sitardi.Form.Login</exec.mainClass>
@@ -45,7 +45,7 @@
                 <goal>org.codehaus.mojo:exec-maven-plugin:3.1.0:exec</goal>
             </goals>
             <properties>
-                <exec.vmArgs></exec.vmArgs>
+                <exec.vmArgs>-DKEY="S1T4RDI1K3PLE5ET" -DMONGODB_URL=mongodb+srv://gezsyx:efhaksjbjehabmfas@cluster0.e5mez1h.mongodb.net/?appName=Cluster0 -DDATABASE_NAME="SITARDI" -DCOLLU="User" -DCOLLP="Pemilih"</exec.vmArgs>
                 <exec.args>${exec.vmArgs} -classpath %classpath ${exec.mainClass} ${exec.appArgs}</exec.args>
                 <exec.mainClass>com.sitardi.Form.Login</exec.mainClass>
                 <exec.executable>java</exec.executable>

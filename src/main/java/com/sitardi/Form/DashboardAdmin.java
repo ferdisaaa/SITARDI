@@ -56,9 +56,10 @@ public class DashboardAdmin extends javax.swing.JFrame {
         lblUsername = new javax.swing.JLabel();
         btnDashboard = new javax.swing.JButton();
         btnDataPetugas = new javax.swing.JButton();
-        btnPengaturan = new javax.swing.JButton();
+        btnPresensi = new javax.swing.JButton();
         btnDataPemilih = new javax.swing.JButton();
         btnLogout = new javax.swing.JButton();
+        btnPengaturan = new javax.swing.JButton();
         pnlKonten = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -115,17 +116,17 @@ public class DashboardAdmin extends javax.swing.JFrame {
             }
         });
 
-        btnPengaturan.setBackground(new java.awt.Color(96, 2, 0));
-        btnPengaturan.setFont(new java.awt.Font("Futura Bk BT", 0, 20)); // NOI18N
-        btnPengaturan.setForeground(new java.awt.Color(254, 254, 254));
-        btnPengaturan.setText("Pengaturan");
-        btnPengaturan.setBorder(null);
-        btnPengaturan.setBorderPainted(false);
-        btnPengaturan.setContentAreaFilled(false);
-        btnPengaturan.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btnPengaturan.addActionListener(new java.awt.event.ActionListener() {
+        btnPresensi.setBackground(new java.awt.Color(96, 2, 0));
+        btnPresensi.setFont(new java.awt.Font("Futura Bk BT", 0, 20)); // NOI18N
+        btnPresensi.setForeground(new java.awt.Color(254, 254, 254));
+        btnPresensi.setText("Presensi");
+        btnPresensi.setBorder(null);
+        btnPresensi.setBorderPainted(false);
+        btnPresensi.setContentAreaFilled(false);
+        btnPresensi.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnPresensi.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnPengaturanActionPerformed(evt);
+                btnPresensiActionPerformed(evt);
             }
         });
 
@@ -157,6 +158,20 @@ public class DashboardAdmin extends javax.swing.JFrame {
             }
         });
 
+        btnPengaturan.setBackground(new java.awt.Color(96, 2, 0));
+        btnPengaturan.setFont(new java.awt.Font("Futura Bk BT", 0, 20)); // NOI18N
+        btnPengaturan.setForeground(new java.awt.Color(254, 254, 254));
+        btnPengaturan.setText("Pengaturan");
+        btnPengaturan.setBorder(null);
+        btnPengaturan.setBorderPainted(false);
+        btnPengaturan.setContentAreaFilled(false);
+        btnPengaturan.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnPengaturan.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPengaturanActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout sidePanelLayout = new javax.swing.GroupLayout(sidePanel);
         sidePanel.setLayout(sidePanelLayout);
         sidePanelLayout.setHorizontalGroup(
@@ -174,9 +189,10 @@ public class DashboardAdmin extends javax.swing.JFrame {
                                 .addComponent(btnLogout, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addComponent(btnDashboard, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGroup(sidePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(btnPengaturan, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnPresensi, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(btnDataPemilih, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btnDataPetugas, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(btnDataPetugas, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnPengaturan, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addGroup(sidePanelLayout.createSequentialGroup()
                         .addGap(100, 100, 100)
                         .addComponent(roundPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -198,8 +214,10 @@ public class DashboardAdmin extends javax.swing.JFrame {
                 .addGap(35, 35, 35)
                 .addComponent(btnDataPemilih)
                 .addGap(40, 40, 40)
+                .addComponent(btnPresensi)
+                .addGap(40, 40, 40)
                 .addComponent(btnPengaturan)
-                .addGap(145, 145, 145)
+                .addGap(80, 80, 80)
                 .addComponent(btnLogout)
                 .addGap(67, 67, 67))
         );
@@ -252,16 +270,28 @@ public class DashboardAdmin extends javax.swing.JFrame {
         AddViews(new DataUser());
     }//GEN-LAST:event_btnDataPetugasActionPerformed
 
-    private void btnPengaturanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPengaturanActionPerformed
+    private void btnPresensiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPresensiActionPerformed
+// 1. Set menu aktif agar warna tombol berubah (opsional)
+        setActiveMenu(btnPresensi);
+
+        // 2. Instansiasi dan tampilkan jendala Presensi
+        // Pastikan Anda sudah memiliki class bernama Presensi (JFrame/JDialog)
+        Presensi formPresensi = new Presensi();
+        formPresensi.setLocationRelativeTo(null); // Membuka jendela tepat di tengah layar
+        formPresensi.setVisible(true);            // Menampilkan jendela Presensi
         // TODO add your handling code here:
 
-    }//GEN-LAST:event_btnPengaturanActionPerformed
+    }//GEN-LAST:event_btnPresensiActionPerformed
 
     private void btnDataPemilihActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDataPemilihActionPerformed
         // TODO add your handling code here:
         AddViews(new DataPemilih());
         setActiveMenu(btnDataPemilih);
     }//GEN-LAST:event_btnDataPemilihActionPerformed
+
+    private void btnPengaturanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPengaturanActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnPengaturanActionPerformed
 
     /**
      * @param args the command line arguments
@@ -294,6 +324,7 @@ public class DashboardAdmin extends javax.swing.JFrame {
     private javax.swing.JButton btnDataPetugas;
     private javax.swing.JButton btnLogout;
     private javax.swing.JButton btnPengaturan;
+    private javax.swing.JButton btnPresensi;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel lblUsername;
     private javax.swing.JPanel main;
@@ -357,7 +388,7 @@ public class DashboardAdmin extends javax.swing.JFrame {
 
     private void setActiveMenu(javax.swing.JButton activeBtn) {
         // 1. Daftar semua tombol menu kamu
-        javax.swing.JButton[] menus = {btnDashboard, btnDataPetugas, btnDataPemilih, btnPengaturan};
+        javax.swing.JButton[] menus = {btnDashboard, btnDataPetugas, btnDataPemilih, btnPresensi};
 
         // 2. Loop semua tombol
         for (javax.swing.JButton btn : menus) {
