@@ -19,43 +19,39 @@ import org.bson.codecs.pojo.PojoCodecProvider;
 class MongoManager {
 
     private static MongoClient mongoClient;
-    private static final String DATABASE_NAME = "SITARDI";
 
     public static MongoDatabase getDatabase() {
-        if (mongoClient == null) {
-                mongoClient = MongoClients.create("mongodb://localhost:27017");
 
+        String url = System.getProperty("MONGODB_URL");
+        String databaseName = System.getProperty("DATABASE_NAME");
+
+        if (url == null || url.isEmpty()) {
+            throw new RuntimeException("Gagal koneksi: MONGODB_URI tidak ditemukan di VM Options NetBeans!");
         }
+
+        if (mongoClient == null) {
+            mongoClient = MongoClients.create(url);
+            System.out.println("SITARDI: Berhasil terhubung ke database [" + databaseName + "]");
+        }
+
         CodecRegistry pojoCodecRegistry = CodecRegistries.fromRegistries(
                 MongoClientSettings.getDefaultCodecRegistry(),
                 CodecRegistries.fromProviders(PojoCodecProvider.builder().automatic(true).build())
         );
-        return mongoClient.getDatabase(DATABASE_NAME).withCodecRegistry(pojoCodecRegistry);
+
+        return mongoClient.getDatabase(databaseName).withCodecRegistry(pojoCodecRegistry);
     }
-    
-    
-    
+
 //   COMENT KODE DIBAWAH DAN UNCOMENT KODE DIATAS UNTUK MENJALANKAN DATABASE LOCAL 
 //    public static MongoDatabase getDatabase() {
 //        if (mongoClient == null) {
-//            // Ambil URI secara aman dari file config.properties
-//            String uri = utils.Database.getMongoUrl();
+//                mongoClient = MongoClients.create("mongodb://localhost:27017");
 //
-//            if (uri == null || uri.isEmpty()) {
-//                throw new RuntimeException("Gagal koneksi: MONGODB_URL tidak ditemukan di .env!");
-//            }
-//
-//            mongoClient = MongoClients.create(uri);
 //        }
-//
-//        // Registrasi Codec untuk Mapping POJO (Object Java ke MongoDB)
 //        CodecRegistry pojoCodecRegistry = CodecRegistries.fromRegistries(
 //                MongoClientSettings.getDefaultCodecRegistry(),
 //                CodecRegistries.fromProviders(PojoCodecProvider.builder().automatic(true).build())
 //        );
-//
-//        // DATABASE_NAME pastikan sudah terdefinisi di class ini (misal: "SITARDI_DB")
 //        return mongoClient.getDatabase(DATABASE_NAME).withCodecRegistry(pojoCodecRegistry);
 //    }
-    
 }

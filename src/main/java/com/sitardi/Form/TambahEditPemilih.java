@@ -10,18 +10,17 @@ import java.text.ParseException;
 import utils.Pemilih;
 import services.PemilihService;
 
-    
-
 /**
  *
  * @author ASUS
  */
 public class TambahEditPemilih extends javax.swing.JDialog {
-    
+
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(TambahEditPemilih.class.getName());
 
     /**
      * Creates new form TambahEdit
+     *
      * @param parent
      * @param modal
      */
@@ -252,43 +251,44 @@ public class TambahEditPemilih extends javax.swing.JDialog {
 
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
         // TODO add your handling code here:
-                                               
-   try {
-        // 1. Membuat objek Pemilih baru
-        utils.Pemilih P = new utils.Pemilih();
-        
-        // 2. Set semua data dari textfield ke objek Pemilih
-        P.setUidRfid(txtUIDRFID.getText().trim());
-        P.setNik(TxtNIK.getText().trim());
-        P.setNama_lengkap(TxtNama.getText().trim());
-        P.setDomisili(TxtDomisili.getText().trim());
-        P.setStatus_pemilih(cmbStatus.getSelectedItem().toString());
-        P.setJenis_kelamin(cmbJenisKelamin.getSelectedItem().toString());
-        
-        // 3. Khusus Tanggal Lahir: Ambil String dan parsing ke Date Java
-        String txtTanggal = TxtTTL.getText().trim();
-        java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("dd-MM-yyyy");
-        sdf.setLenient(false); // Validasi ketat agar format tanggal harus pas dd-MM-yyyy
-        java.util.Date tanggal = sdf.parse(txtTanggal);
-        P.setTanggal_lahir(tanggal);
-        
-        // 4. Panggil service untuk menyimpan ke database MongoDB
-        services.PemilihService service = new services.PemilihService();
-        service.tambahPemilih(P);
-        
-        // 5. REFRESH DATA (Memanggil Class DataPemilih yang benar tanpa angka 1)
+
+        try {
+            // 1. Membuat objek Pemilih baru
+            utils.Pemilih P = new utils.Pemilih();
+
+            String plainUID = txtUIDRFID.getText().trim();
+            String encryptedUID = utils.Encryptions.encrypt(plainUID);
+            P.setUidRfid(encryptedUID);
+            P.setNik(TxtNIK.getText().trim());
+            P.setNama_lengkap(TxtNama.getText().trim());
+            P.setDomisili(TxtDomisili.getText().trim());
+            P.setStatus_pemilih(cmbStatus.getSelectedItem().toString());
+            P.setJenis_kelamin(cmbJenisKelamin.getSelectedItem().toString());
+
+            // 3. Khusus Tanggal Lahir: Ambil String dan parsing ke Date Java
+            String txtTanggal = TxtTTL.getText().trim();
+            java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("dd-MM-yyyy");
+            sdf.setLenient(false); // Validasi ketat agar format tanggal harus pas dd-MM-yyyy
+            java.util.Date tanggal = sdf.parse(txtTanggal);
+            P.setTanggal_lahir(tanggal);
+
+            // 4. Panggil service untuk menyimpan ke database MongoDB
+            services.PemilihService service = new services.PemilihService();
+            service.tambahPemilih(P);
+
+            // 5. REFRESH DATA (Memanggil Class DataPemilih yang benar tanpa angka 1)
             com.sitardi.Panels.DataPemilih.showData("");
-        
-        // 6. Tampilkan pesan sukses & Tutup Form
-        javax.swing.JOptionPane.showMessageDialog(this, "Data berhasil disimpan!");
-        this.dispose();
-        
-    } catch (java.text.ParseException e) {
-        javax.swing.JOptionPane.showMessageDialog(this, "Format tanggal salah! Gunakan format dd-MM-yyyy\nContoh: 07-08-2000");
-    } catch (Exception e) {
-        e.printStackTrace();
-        javax.swing.JOptionPane.showMessageDialog(this, "Gagal menyimpan data! Error: " + e.getMessage());
-    }
+
+            // 6. Tampilkan pesan sukses & Tutup Form
+            javax.swing.JOptionPane.showMessageDialog(this, "Data berhasil disimpan!");
+            this.dispose();
+
+        } catch (java.text.ParseException e) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Format tanggal salah! Gunakan format dd-MM-yyyy\nContoh: 07-08-2000");
+        } catch (Exception e) {
+            e.printStackTrace();
+            javax.swing.JOptionPane.showMessageDialog(this, "Gagal menyimpan data! Error: " + e.getMessage());
+        }
 
     }//GEN-LAST:event_btnSaveActionPerformed
 
@@ -301,40 +301,42 @@ public class TambahEditPemilih extends javax.swing.JDialog {
     }//GEN-LAST:event_TxtNIKActionPerformed
 
     private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
-       try {
-        utils.Pemilih P = new utils.Pemilih();
-        P.setUidRfid(txtUIDRFID.getText().trim());
-        P.setNik(TxtNIK.getText().trim());
-        P.setNama_lengkap(TxtNama.getText().trim());
-        P.setDomisili(TxtDomisili.getText().trim());
-        P.setStatus_pemilih(cmbStatus.getSelectedItem().toString());
-        P.setJenis_kelamin(cmbJenisKelamin.getSelectedItem().toString());
-        
-        java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("dd-MM-yyyy");
-        sdf.setLenient(false);
-        java.util.Date tanggal = sdf.parse(TxtTTL.getText().trim());
-        P.setTanggal_lahir(tanggal);
-        
-        services.PemilihService service = new services.PemilihService();
-        service.updatePemilih(P);
-        
-        // REFRESH DATA SETELAH UPDATE
+        try {
+            utils.Pemilih P = new utils.Pemilih();
+            String plainUID = txtUIDRFID.getText().trim();
+            String encryptedUID = utils.Encryptions.encrypt(plainUID);
+            P.setUidRfid(encryptedUID);
+            P.setNik(TxtNIK.getText().trim());
+            P.setNama_lengkap(TxtNama.getText().trim());
+            P.setDomisili(TxtDomisili.getText().trim());
+            P.setStatus_pemilih(cmbStatus.getSelectedItem().toString());
+            P.setJenis_kelamin(cmbJenisKelamin.getSelectedItem().toString());
+
+            java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("dd-MM-yyyy");
+            sdf.setLenient(false);
+            java.util.Date tanggal = sdf.parse(TxtTTL.getText().trim());
+            P.setTanggal_lahir(tanggal);
+
+            services.PemilihService service = new services.PemilihService();
+            service.updatePemilih(P);
+
+            // REFRESH DATA SETELAH UPDATE
             com.sitardi.Panels.DataPemilih.showData("");
-        
-        this.dispose();
-        
-    } catch (java.text.ParseException e) {
-        javax.swing.JOptionPane.showMessageDialog(this, "Format tanggal salah! Gunakan format dd-MM-yyyy (Contoh: 07-08-2000)");
-    } catch (Exception e) {
-        e.printStackTrace();
-        javax.swing.JOptionPane.showMessageDialog(this, "Gagal mengupdate data: " + e.getMessage());
-    }
-    
+
+            this.dispose();
+
+        } catch (java.text.ParseException e) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Format tanggal salah! Gunakan format dd-MM-yyyy (Contoh: 07-08-2000)");
+        } catch (Exception e) {
+            e.printStackTrace();
+            javax.swing.JOptionPane.showMessageDialog(this, "Gagal mengupdate data: " + e.getMessage());
+        }
+
     }//GEN-LAST:event_btnUpdateActionPerformed
 
     private void cmbJenisKelaminActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbJenisKelaminActionPerformed
         // TODO add your handling code here:
-        
+
     }//GEN-LAST:event_cmbJenisKelaminActionPerformed
 
     private void txtUIDRFIDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtUIDRFIDActionPerformed

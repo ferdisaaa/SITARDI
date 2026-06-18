@@ -28,8 +28,9 @@ public class UserService {
 
     private final GenericDAO<User> DAO;
 
+    String collectionName = System.getProperty("COLLU");
     public UserService() {
-        this.DAO = new GenericDAO<>("User", User.class);
+        this.DAO = new GenericDAO<>(collectionName, User.class);
     }
 
     // --- LOGIKA DATA ---
