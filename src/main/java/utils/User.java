@@ -4,27 +4,20 @@
  */
 package utils;
 
+import org.bson.types.ObjectId;
+
 /**
  *
  * @author ASUS
  */
 public class User {
-
+    private ObjectId id;
     private String nik;
     private String username;
     private String name;
     private String email;
     private String password;
     private String url_img;
-
-    public String getRole() {
-        return role;
-    }
-
-    public void setRole(String role) {
-        this.role = role;
-    }
-    private String role;
 
     public String getNik() {
         return nik;
@@ -72,6 +65,14 @@ public class User {
 
     public void setUrl_img(String url_img) {
         this.url_img = url_img;
+    }
+
+    public ObjectId getId() {
+        return id;
+    }
+
+    public void setId(ObjectId id) {
+        this.id = id;
     }
 
 }

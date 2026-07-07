@@ -60,6 +60,7 @@ public class DashboardAdmin extends javax.swing.JFrame {
         btnDataPemilih = new javax.swing.JButton();
         btnLogout = new javax.swing.JButton();
         btnPengaturan = new javax.swing.JButton();
+        btnModeAbsensi = new com.sitardi.CustomComponents.SliderModeButton();
         pnlKonten = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -172,37 +173,48 @@ public class DashboardAdmin extends javax.swing.JFrame {
             }
         });
 
+        btnModeAbsensi.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnModeAbsensiActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout sidePanelLayout = new javax.swing.GroupLayout(sidePanel);
         sidePanel.setLayout(sidePanelLayout);
         sidePanelLayout.setHorizontalGroup(
             sidePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(sidePanelLayout.createSequentialGroup()
                 .addGroup(sidePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(sidePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(lblUsername, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGroup(sidePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(sidePanelLayout.createSequentialGroup()
-                                .addGap(21, 21, 21)
-                                .addComponent(jLabel7))
-                            .addGroup(sidePanelLayout.createSequentialGroup()
-                                .addGap(80, 80, 80)
-                                .addComponent(btnLogout, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addComponent(btnDashboard, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGroup(sidePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(btnPresensi, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btnDataPemilih, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btnDataPetugas, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnPengaturan, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addGroup(sidePanelLayout.createSequentialGroup()
+                        .addGap(21, 21, 21)
+                        .addComponent(jLabel7)
+                        .addGap(47, 47, 47)
+                        .addComponent(btnModeAbsensi, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(sidePanelLayout.createSequentialGroup()
                         .addGap(100, 100, 100)
-                        .addComponent(roundPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(87, Short.MAX_VALUE))
+                        .addComponent(roundPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(sidePanelLayout.createSequentialGroup()
+                        .addGap(80, 80, 80)
+                        .addGroup(sidePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(lblUsername, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(sidePanelLayout.createSequentialGroup()
+                                .addComponent(btnLogout, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(3, 3, 3))
+                            .addComponent(btnDashboard, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(sidePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(btnPresensi, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(btnDataPemilih, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(btnDataPetugas, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(btnPengaturan, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
+                .addContainerGap(27, Short.MAX_VALUE))
         );
         sidePanelLayout.setVerticalGroup(
             sidePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(sidePanelLayout.createSequentialGroup()
                 .addGap(17, 17, 17)
-                .addComponent(jLabel7)
+                .addGroup(sidePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnModeAbsensi, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                 .addGap(33, 33, 33)
                 .addComponent(roundPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -275,10 +287,11 @@ public class DashboardAdmin extends javax.swing.JFrame {
         setActiveMenu(btnPresensi);
 
         // 2. Instansiasi dan tampilkan jendala Presensi
-        // Pastikan Anda sudah memiliki class bernama Presensi (JFrame/JDialog)
-        Presensi formPresensi = new Presensi();
-        formPresensi.setLocationRelativeTo(null); // Membuka jendela tepat di tengah layar
-        formPresensi.setVisible(true);            // Menampilkan jendela Presensi
+        // Kirim status mode saat ini (true/false) ke constructor Presensi
+        boolean modeSaatIni = btnModeAbsensi.isMasukMode();
+        Presensi formPresensi = new Presensi(this, modeSaatIni);
+        formPresensi.setLocationRelativeTo(null); // Agar form presensi muncul di tengah layar
+        formPresensi.setVisible(true);           // Menampilkan jendela Presensi
         // TODO add your handling code here:
 
     }//GEN-LAST:event_btnPresensiActionPerformed
@@ -292,6 +305,23 @@ public class DashboardAdmin extends javax.swing.JFrame {
     private void btnPengaturanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPengaturanActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnPengaturanActionPerformed
+
+    private void btnModeAbsensiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModeAbsensiActionPerformed
+
+        boolean isMasuk = btnModeAbsensi.isMasukMode();
+
+        // 2. Jalankan logika sesuai kebutuhan aplikasi SITARDI Anda
+        if (isMasuk) {
+            System.out.println("Sistem beralih ke: MODE MASUK");
+            // Tempatkan logika jika sistem masuk mode absen masuk
+            // Contoh: JOptionPane.showMessageDialog(this, "Mode Absen: MASUK");
+        } else {
+            System.out.println("Sistem beralih ke: MODE KELUAR");
+            // Tempatkan logika jika sistem masuk mode absen keluar
+            // Contoh: JOptionPane.showMessageDialog(this, "Mode Absen: KELUAR");
+        }
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnModeAbsensiActionPerformed
 
     /**
      * @param args the command line arguments
@@ -323,6 +353,7 @@ public class DashboardAdmin extends javax.swing.JFrame {
     private javax.swing.JButton btnDataPemilih;
     private javax.swing.JButton btnDataPetugas;
     private javax.swing.JButton btnLogout;
+    private com.sitardi.CustomComponents.SliderModeButton btnModeAbsensi;
     private javax.swing.JButton btnPengaturan;
     private javax.swing.JButton btnPresensi;
     private javax.swing.JLabel jLabel7;

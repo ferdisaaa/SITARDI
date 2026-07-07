@@ -4,22 +4,42 @@
  */
 package com.sitardi.Form;
 
+import com.sitardi.Serial.SerialDtHandler;
 import services.JamDigitalService;
+import services.LogAbsensiService;
+import services.PemilihService;
+import services.SerialService;
+import services.UserService;
+import utils.Pemilih;
+import utils.User;
 
 /**
  *
  * @author ASUS
  */
 public class Presensi extends javax.swing.JFrame {
-    
+
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(Presensi.class.getName());
+    private javax.swing.JFrame parentDashboard;
+    private String statusAbsensi;
+    private LogAbsensiService logAbsensiService;
+    private SerialService serialService;
+    private PemilihService pemilihService;
+    private SerialDtHandler<String> rfidHandler;
+    private Thread delayThread;
 
     /**
      * Creates new form Presensi
+     *
+     * @param isMasukMode
      */
-    public Presensi() {
+    public Presensi(javax.swing.JFrame parentDashboard, boolean isMasukMode) {
+        this.parentDashboard = parentDashboard;
+        this.statusAbsensi = isMasukMode ? "MASUK" : "KELUAR";
+
         initComponents();
         initJamDigital();
+        initAbsensiAndBroadcast();
     }
 
     /**
@@ -37,9 +57,9 @@ public class Presensi extends javax.swing.JFrame {
         roundPanel1 = new com.sitardi.CustomComponents.RoundPanel();
         roundPanel2 = new com.sitardi.CustomComponents.RoundPanel();
         jLabel9 = new javax.swing.JLabel();
-        jLabel10 = new javax.swing.JLabel();
-        jLabel11 = new javax.swing.JLabel();
-        jLabel12 = new javax.swing.JLabel();
+        txtNama = new javax.swing.JLabel();
+        txtKonfirmasi = new javax.swing.JLabel();
+        txtSelamat = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
@@ -56,6 +76,7 @@ public class Presensi extends javax.swing.JFrame {
         lblTitle2 = new javax.swing.JLabel();
         inptNIK = new javax.swing.JTextField();
         btnMasuk = new com.sitardi.CustomComponents.RoundedButton();
+        btnTest = new com.sitardi.CustomComponents.RoundedButton();
         btnClose = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -76,20 +97,20 @@ public class Presensi extends javax.swing.JFrame {
 
         jLabel9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/card.png"))); // NOI18N
 
-        jLabel10.setFont(new java.awt.Font("Futura Md BT", 0, 18)); // NOI18N
-        jLabel10.setForeground(new java.awt.Color(254, 254, 254));
-        jLabel10.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel10.setText("SCAN E-KTP");
+        txtNama.setFont(new java.awt.Font("Futura Md BT", 0, 18)); // NOI18N
+        txtNama.setForeground(new java.awt.Color(254, 254, 254));
+        txtNama.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        txtNama.setText("SCAN E-KTP");
 
-        jLabel11.setFont(new java.awt.Font("Futura Bk BT", 0, 18)); // NOI18N
-        jLabel11.setForeground(new java.awt.Color(254, 254, 254));
-        jLabel11.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel11.setText("Letakan E-KTP mu pada alat scanner ");
+        txtKonfirmasi.setFont(new java.awt.Font("Futura Bk BT", 0, 18)); // NOI18N
+        txtKonfirmasi.setForeground(new java.awt.Color(254, 254, 254));
+        txtKonfirmasi.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        txtKonfirmasi.setText("Letakan E-KTP mu pada alat scanner ");
 
-        jLabel12.setFont(new java.awt.Font("Futura Bk BT", 0, 18)); // NOI18N
-        jLabel12.setForeground(new java.awt.Color(254, 254, 254));
-        jLabel12.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel12.setText("untuk mencatat kehadiran");
+        txtSelamat.setFont(new java.awt.Font("Futura Bk BT", 0, 18)); // NOI18N
+        txtSelamat.setForeground(new java.awt.Color(254, 254, 254));
+        txtSelamat.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        txtSelamat.setText("untuk mencatat kehadiran");
 
         javax.swing.GroupLayout roundPanel2Layout = new javax.swing.GroupLayout(roundPanel2);
         roundPanel2.setLayout(roundPanel2Layout);
@@ -98,14 +119,12 @@ public class Presensi extends javax.swing.JFrame {
             .addGroup(roundPanel2Layout.createSequentialGroup()
                 .addGap(42, 42, 42)
                 .addGroup(roundPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(txtNama, javax.swing.GroupLayout.PREFERRED_SIZE, 315, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(roundPanel2Layout.createSequentialGroup()
                         .addGap(127, 127, 127)
                         .addComponent(jLabel9))
-                    .addGroup(roundPanel2Layout.createSequentialGroup()
-                        .addGap(96, 96, 96)
-                        .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 315, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 315, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtSelamat, javax.swing.GroupLayout.PREFERRED_SIZE, 315, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtKonfirmasi, javax.swing.GroupLayout.PREFERRED_SIZE, 315, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(46, Short.MAX_VALUE))
         );
         roundPanel2Layout.setVerticalGroup(
@@ -114,11 +133,11 @@ public class Presensi extends javax.swing.JFrame {
                 .addGap(44, 44, 44)
                 .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel10)
+                .addComponent(txtNama)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel11)
+                .addComponent(txtKonfirmasi)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel12)
+                .addComponent(txtSelamat)
                 .addContainerGap(79, Short.MAX_VALUE))
         );
 
@@ -280,6 +299,23 @@ public class Presensi extends javax.swing.JFrame {
         btnMasuk.setBorderColor(new java.awt.Color(229, 178, 120));
         btnMasuk.setFont(new java.awt.Font("Futura Bk BT", 1, 18)); // NOI18N
         btnMasuk.setRadius(15);
+        btnMasuk.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnMasukActionPerformed(evt);
+            }
+        });
+
+        btnTest.setBackground(new java.awt.Color(96, 2, 0));
+        btnTest.setForeground(new java.awt.Color(254, 254, 254));
+        btnTest.setText("Tes Scan");
+        btnTest.setBorderColor(new java.awt.Color(229, 178, 120));
+        btnTest.setFont(new java.awt.Font("Futura Bk BT", 1, 18)); // NOI18N
+        btnTest.setRadius(15);
+        btnTest.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnTestActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout pnlInputManualLayout = new javax.swing.GroupLayout(pnlInputManual);
         pnlInputManual.setLayout(pnlInputManualLayout);
@@ -291,7 +327,8 @@ public class Presensi extends javax.swing.JFrame {
                     .addComponent(lblTitle2)
                     .addComponent(lblTitle1)
                     .addComponent(inptNIK, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnMasuk, javax.swing.GroupLayout.DEFAULT_SIZE, 793, Short.MAX_VALUE))
+                    .addComponent(btnMasuk, javax.swing.GroupLayout.DEFAULT_SIZE, 793, Short.MAX_VALUE)
+                    .addComponent(btnTest, javax.swing.GroupLayout.DEFAULT_SIZE, 793, Short.MAX_VALUE))
                 .addContainerGap(58, Short.MAX_VALUE))
         );
         pnlInputManualLayout.setVerticalGroup(
@@ -305,7 +342,9 @@ public class Presensi extends javax.swing.JFrame {
                 .addComponent(inptNIK, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(33, 33, 33)
                 .addComponent(btnMasuk, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(81, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(btnTest, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(20, Short.MAX_VALUE))
         );
 
         btnClose.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Close.png"))); // NOI18N
@@ -352,9 +391,21 @@ public class Presensi extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnCloseMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCloseMouseClicked
-this.dispose();
+        if (this.parentDashboard != null) {
+            this.parentDashboard.setVisible(true); // Memunculkan kembali dashboard admin
+        }
+        this.dispose();
         // TODO add your handling code here:
     }//GEN-LAST:event_btnCloseMouseClicked
+
+    private void btnMasukActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMasukActionPerformed
+
+// TODO add your handling code here:
+    }//GEN-LAST:event_btnMasukActionPerformed
+
+    private void btnTestActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTestActionPerformed
+        SerialService.getInstance().broadcast("115");
+    }//GEN-LAST:event_btnTestActionPerformed
 
     /**
      * @param args the command line arguments
@@ -378,17 +429,19 @@ this.dispose();
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> new Presensi().setVisible(true));
+ /* Create and display the form */
+        java.awt.EventQueue.invokeLater(() -> {
+            // Berikan nilai default (misal: true) agar form bisa di-test run langsung
+            new Presensi(null, true).setVisible(true);
+        });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel btnClose;
     private com.sitardi.CustomComponents.RoundedButton btnMasuk;
+    private com.sitardi.CustomComponents.RoundedButton btnTest;
     private javax.swing.JTextField inptNIK;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -408,9 +461,12 @@ this.dispose();
     private com.sitardi.CustomComponents.RoundPanel roundPanel1;
     private com.sitardi.CustomComponents.RoundPanel roundPanel2;
     private javax.swing.JPanel sidePanel;
+    private javax.swing.JLabel txtKonfirmasi;
+    private javax.swing.JLabel txtNama;
+    private javax.swing.JLabel txtSelamat;
     // End of variables declaration//GEN-END:variables
 
-private void initJamDigital() {
+    private void initJamDigital() {
         // Thread untuk Jam (Format: Jam:Menit:Detik)
         JamDigitalService jam = new JamDigitalService(lblWaktu, "HH:mm:ss");
         jam.getThread().start();
@@ -423,5 +479,164 @@ private void initJamDigital() {
         JamDigitalService tahun = new JamDigitalService(lblTahun, "yyyy");
         tahun.getThread().start();
     }
-    
+
+    private void initAbsensiAndBroadcast() {
+        logAbsensiService = new LogAbsensiService();
+        pemilihService = new PemilihService();
+        serialService = SerialService.getInstance();
+
+        // A. REGISTER HANDLER UNTUK MERESPON SETIAP BROADCAST DATA
+        rfidHandler = new SerialDtHandler<String>() {
+            @Override
+            public void onDataReceived(String data) {
+                // Proses absensi (Baik dari scan kartu asli maupun input manual)
+                prosesAbsensiSistem(data);
+            }
+        };
+        serialService.addHandler(rfidHandler);
+
+        // B. TOMBOL MANUAL (btnMasuk) SEKARANG IKUT MELAKUKAN BROADCAST
+        btnMasuk.addActionListener(new java.awt.event.ActionListener() {
+            @Override
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                String nikInput = inptNIK.getText().trim();
+                if (!nikInput.isEmpty()) {
+                    // Masuk ke jalur pipeline yang sama dengan RFID via Broadcast
+                    serialService.broadcast(nikInput);
+                    inptNIK.setText(""); // Bersihkan field
+                } else {
+                    updateUiWithDelay("INPUT KOSONG", "Silakan masukkan NIK Anda", "pada kolom yang tersedia.");
+                }
+            }
+        });
+
+        // C. KONEKSIKAN KE PORT SCANNER
+        String targetPort = "COM3";
+        int baudRate = 9600;
+        serialService.connect(targetPort, baudRate);
+    }
+
+    /**
+     * Jalur pemrosesan tunggal (Unified Pipeline) untuk mencatat log dan update
+     * UI
+     */
+    private void prosesAbsensiSistem(String nomorIdentitas) {
+        try {
+            // 1. VALIDASI USER: Apakah terdaftar di sistem?
+            Pemilih pemilihTerdaftar = pemilihService.cariBerdasarkanIdentitas(nomorIdentitas);
+
+            if (pemilihTerdaftar == null) {
+                updateUiWithDelay(
+                        "TIDAK TERDAFTAR",
+                        "ID / NIK tidak dikenali.",
+                        "Silakan hubungi panitia/admin."
+                );
+                return;
+            }
+
+            String namaUser = pemilihTerdaftar.getNama_lengkap().toUpperCase();
+
+            // 2. PERIKSA RIWAYAT ABSENSI HARI INI
+            boolean sudahAbsenMasuk = logAbsensiService.cekStatusAbsenHariIni(nomorIdentitas, "MASUK");
+            boolean sudahAbsenKeluar = logAbsensiService.cekStatusAbsenHariIni(nomorIdentitas, "KELUAR");
+
+            // SITUASI A: User sudah menyelesaikan kedua proses (MASUK & KELUAR)
+            if (sudahAbsenMasuk && sudahAbsenKeluar) {
+                updateUiWithDelay(
+                        "AKSES DITOLAK",
+                        namaUser,
+                        "Anda sudah selesai melakukan absensi hari ini!"
+                );
+                return;
+            }
+
+            // SITUASI B: Alat sedang dalam mode "MASUK"
+            if (this.statusAbsensi.equals("MASUK")) {
+                if (sudahAbsenMasuk) {
+                    updateUiWithDelay(
+                            "SUDAH ABSEN",
+                            namaUser,
+                            "Anda sudah melakukan absensi MASUK."
+                    );
+                    return; // Blokir tap masuk berulang
+                }
+            } // SITUASI C: Alat sedang dalam mode "KELUAR"
+            else if (this.statusAbsensi.equals("KELUAR")) {
+                if (!sudahAbsenMasuk) {
+                    updateUiWithDelay(
+                            "AKSES DITOLAK",
+                            namaUser,
+                            "Belum bisa ABSEN KELUAR karena Anda belum ABSEN MASUK."
+                    );
+                    return; // Blokir jika langsung lompat ke absen keluar
+                }
+                if (sudahAbsenKeluar) {
+                    updateUiWithDelay(
+                            "SUDAH ABSEN",
+                            namaUser,
+                            "Anda sudah melakukan absensi KELUAR."
+                    );
+                    return; // Blokir tap keluar berulang
+                }
+            }
+
+            // 3. EKSEKUSI: Jika lolos semua validasi di atas, catat log absensi baru
+            logAbsensiService.catatLog(nomorIdentitas, this.statusAbsensi);
+
+            // 4. UPDATE UI: Berhasil
+            updateUiWithDelay(
+                    this.statusAbsensi + " SUKSES!",
+                    namaUser,
+                    "Terima kasih, data berhasil disimpan."
+            );
+
+        } catch (Exception e) {
+            updateUiWithDelay(
+                    "SISTEM GAGAL",
+                    "Gagal memproses absensi.",
+                    e.getMessage()
+            );
+        }
+    }
+
+    /**
+     * Mengupdate teks panel informasi dan meresetnya ke default secara
+     * Thread-Safe setelah 3 detik
+     */
+    private void updateUiWithDelay(String nama, String konfirmasi, String selamat) {
+        // Jika ada delay thread yang sedang berjalan dari tap sebelumnya, hentikan paksa!
+        if (delayThread != null && delayThread.isAlive()) {
+            delayThread.interrupt();
+        }
+
+        // Buat thread baru untuk menangani jeda tampilan informasi (Kiosk Mode)
+        delayThread = new Thread(() -> {
+            try {
+                // Update UI awal di dalam Event Dispatch Thread (EDT)
+                java.awt.EventQueue.invokeLater(() -> {
+                    txtNama.setText(nama);
+                    txtKonfirmasi.setText(konfirmasi);
+                    txtSelamat.setText(selamat);
+                });
+
+                // Tahan informasi di layar selama 3 detik
+                Thread.sleep(3000);
+
+                // Kembalikan ke teks panduan default (Thread-Safe)
+                java.awt.EventQueue.invokeLater(() -> {
+                    txtNama.setText("SCAN E-KTP");
+                    txtKonfirmasi.setText("Letakan E-KTP mu pada alat scanner ");
+                    txtSelamat.setText("untuk mencatat kehadiran");
+                });
+
+            } catch (InterruptedException e) {
+                // Diabaikan jika di-interrupt oleh aktivitas tap baru sebelum 3 detik usai
+            }
+        });
+
+        delayThread.setName("KioskDelayThread");
+        delayThread.setDaemon(true); // Agar thread mati otomatis saat aplikasi ditutup
+        delayThread.start();
+    }
+
 }

@@ -135,15 +135,9 @@ public class Login extends javax.swing.JFrame {
         User userTerautentikasi = userService.login(username, password);
 
         if (userTerautentikasi != null) {
-            this.dispose(); // Tutup form login
+            this.dispose();
+            new DashboardAdmin(userTerautentikasi).setVisible(true);
 
-            // Cek Role dan buka Dashboard yang sesuai
-            if (userTerautentikasi.getRole().equalsIgnoreCase("admin")) {
-                new DashboardAdmin(userTerautentikasi).setVisible(true);
-            } else {
-                JOptionPane.showMessageDialog(this, "Selamat Datang, " + userTerautentikasi.getName());
-                // new DashboardPetugas(userTerautentikasi).setVisible(true);
-            }
         } else {
             JOptionPane.showMessageDialog(this, "Username atau Password salah!", "Gagal Login", JOptionPane.ERROR_MESSAGE);
             inptPassword.setText("");

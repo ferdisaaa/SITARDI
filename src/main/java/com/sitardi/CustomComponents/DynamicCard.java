@@ -49,7 +49,7 @@ public class DynamicCard {
             imgHeader.setBorderThickness(3);
 
             if (u.getUrl_img() != null && !u.getUrl_img().isEmpty()) {
-                imgHeader.setText("Loading..."); 
+                imgHeader.setText("Loading...");
 
                 new Thread(() -> {
                     try {
@@ -104,7 +104,9 @@ public class DynamicCard {
                 // Filter: Field yang TIDAK boleh muncul sebagai teks
                 if (name.toLowerCase().contains("password")
                         || name.equals("_id")
-                        || name.equals("url_img")) { // url_img sudah jadi gambar di atas
+                        || name.equals("id")
+                        || name.equals("url_img")
+                        || name.equals("uidRfid")) {
                     continue;
                 }
 
@@ -140,13 +142,14 @@ public class DynamicCard {
 
         JButton btnEdit = createStyledButton("Edit", COLOR_EDIT);
         btnEdit.addActionListener(e -> {
-            // Logika buka form edit user di sini
             TambahEditUser popUp = new TambahEditUser(null, true);
+            popUp.setUserId(u.getId());
             popUp.txtUrl.setText(u.getUrl_img());
             popUp.TxtNIK.setText(u.getNik());
+//            popUp.TxtNIK.setEnabled(false);
             popUp.TxtNama.setText(u.getName());
             popUp.TxtUsername.setText(u.getUsername());
-            popUp.cmbRole.setSelectedItem(u.getRole());
+//            popUp.cmbRole.setSelectedItem(u.getRole());
             popUp.Txtemail.setText(u.getEmail());
             popUp.TxtPassword.setText("");
             popUp.btnUpdate.setEnabled(true);
@@ -160,7 +163,7 @@ public class DynamicCard {
         btnDel.addActionListener(e -> {
             int confirm = JOptionPane.showConfirmDialog(null, "Hapus data " + u.getName() + "?", "Konfirmasi", JOptionPane.YES_NO_OPTION);
             if (confirm == JOptionPane.YES_OPTION) {
-                service.hapusUser(u.getNik());
+                service.hapusUser(u.getId().toHexString());
             }
         });
 
@@ -176,12 +179,8 @@ public class DynamicCard {
         JButton btnEdit = createStyledButton("Edit", COLOR_EDIT);
         btnEdit.addActionListener(e -> {
             TambahEditPemilih popUp = new TambahEditPemilih(null, true);
-            String encryptedUid = p.getUidRfid();
-            if (encryptedUid != null && !encryptedUid.isEmpty()) {
-                popUp.txtUIDRFID.setText(utils.Encryptions.decrypt(encryptedUid));
-            } else {
-                popUp.txtUIDRFID.setText(""); // Set kosong jika di DB memang kosong
-            }
+            popUp.setPemilihId(p.getId());
+            popUp.txtUIDRFID.setText("");
             popUp.TxtNIK.setText(p.getNik());
             popUp.TxtNama.setText(p.getNama_lengkap());
             popUp.TxtDomisili.setText(p.getDomisili());
@@ -200,7 +199,7 @@ public class DynamicCard {
         btnDel.addActionListener(e -> {
             int confirm = JOptionPane.showConfirmDialog(null, "Hapus data " + p.getNama_lengkap() + "?", "Konfirmasi", JOptionPane.YES_NO_OPTION);
             if (confirm == JOptionPane.YES_OPTION) {
-                service.hapusPemilih(p.getNik());
+                service.hapusPemilih(p.getId().toHexString());
             }
         });
 
@@ -221,18 +220,7 @@ public class DynamicCard {
         if (value instanceof Date) {
             return new SimpleDateFormat("dd-MM-yyyy").format((Date) value);
         }
-
-        String valStr = value.toString();
-        // Cek secara cerdas: Jika string berakhiran '=' atau berupa pola Base64 khas AES, 
-        // coba lakukan dekripsi. Jika gagal/bukan enkripsi, kembalikan string asli.
-        if (valStr.length() >= 16 && (valStr.endsWith("=") || valStr.matches("^[a-zA-Z0-9+/]+={0,2}$"))) {
-            String decrypted = utils.Encryptions.decrypt(valStr);
-            if (decrypted != null) {
-                return decrypted; // Tampilkan UID asli yang sudah didekripsi
-            }
-        }
-
-        return valStr;
+        return value.toString();
     }
 
     private static JButton createStyledButton(String text, Color bg) {

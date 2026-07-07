@@ -11,78 +11,50 @@ import java.time.LocalDateTime;
  * @author 
  */
 public class LogAbsensi {
-
-    private String log_id;
-    private String nik;
-    private LocalDateTime masuk;
-    private LocalDateTime keluar;
-    private String status;
-    
-    public LogAbsensi(){
+    private String idLog;
+    private String uidRfid;
+    private LocalDateTime waktuTap;
+    private String status; 
+    public LogAbsensi() {
     }
 
-     public LogAbsensi(String log_id, String nik, LocalDateTime masuk, LocalDateTime keluar, String status) {
-        this.log_id = log_id;
-        this.nik = nik;
-        this.masuk = masuk;
-        this.keluar = keluar;
+    public LogAbsensi(String idLog, String uidRfid, LocalDateTime waktuTap, String status) {
+        this.idLog = idLog;
+        this.uidRfid = uidRfid;
+        this.waktuTap = waktuTap;
         this.status = status;
     }
-    public String getlog_id() {
-        return log_id;
+
+    
+    public String getIdLog() {
+        return idLog;
     }
 
-    public void setlog_id(String log_id) {
-        this.log_id = log_id;
+    public void setIdLog(String idLog) {
+        this.idLog = idLog;
     }
 
-    public String getnik() {
-        return nik;
+    public String getUidRfid() {
+        return uidRfid;
     }
 
-    public void setNik(String nik) {
-        this.nik = nik;
+    public void setUidRfid(String uidRfid) {
+        this.uidRfid = uidRfid;
     }
 
-    public String getLog_ID() {
-        return log_id;
+    public LocalDateTime getWaktuTap() {
+        return waktuTap;
     }
 
-    public void setLog_ID(String Log_id) {
-        this.log_id = Log_id;
-    }
-
-    public String getNIK() {
-        return nik;
-    }
-
-    public void setNIK(String nik) {
-        this.nik = nik;
-    }
-
-    public LocalDateTime getmasuk() {
-        return masuk;
-    }
-
-    public void setMasuk(LocalDateTime masuk) {
-        this.masuk = masuk;
-    }
-
-    public LocalDateTime getkeluar() {
-        return keluar;
-    }
-
-    public void setKeluar(LocalDateTime Keluar) {
-        this.keluar = Keluar;
+    public void setWaktuTap(LocalDateTime waktuTap) {
+        this.waktuTap = waktuTap;
     }
 
     public String getStatus() {
         return status;
     }
 
-    public void setStatus(String Status) {
-        this.status = Status;
+    public void setStatus(String status) {
+        this.status = status;
     }
-
-
 }

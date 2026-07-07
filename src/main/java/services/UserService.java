@@ -22,6 +22,7 @@ import javax.swing.JPanel;
 import utils.GenericDAO;
 import utils.User;
 import org.bson.conversions.Bson;
+import org.bson.types.ObjectId;
 import utils.Security;
 
 public class UserService {
@@ -29,6 +30,7 @@ public class UserService {
     private final GenericDAO<User> DAO;
 
     String collectionName = System.getProperty("COLLU");
+
     public UserService() {
         this.DAO = new GenericDAO<>(collectionName, User.class);
     }
@@ -42,6 +44,13 @@ public class UserService {
                 u.setPassword(hashedPass);
             }
 
+            if (u.getNik() != null && !u.getNik().isEmpty()) {
+                u.setNik(utils.Encryptions.encrypt(u.getNik()));
+            }
+            if (u.getEmail() != null && !u.getEmail().isEmpty()) {
+                u.setEmail(utils.Encryptions.encrypt(u.getEmail()));
+            }
+
             DAO.save(u);
             DataUser.showData("");
         } catch (Exception e) {
@@ -51,31 +60,35 @@ public class UserService {
 
     public void updateUser(User newUser) {
         try {
-            // 1. Cari data lama di database berdasarkan NIK
-            Bson filter = Filters.eq("nik", newUser.getNik());
+            // 1. Cari data lama di database berdasarkan _id bawaan MongoDB
+            Bson filter = Filters.eq("_id", newUser.getId());
             User userLama = DAO.findOne(filter);
 
             if (userLama != null) {
                 // 2. Logika Proteksi Password
-                // Jika password di form kosong, gunakan password lama (yang sudah ter-hash)
                 if (newUser.getPassword() == null || newUser.getPassword().trim().isEmpty()) {
                     newUser.setPassword(userLama.getPassword());
                 } else {
-                    // Jika user menginput password baru, cek apakah itu password baru (plain text) 
-                    // atau hash lama. Jika panjangnya bukan 64 char (standar SHA-256), maka itu plain text.
                     if (newUser.getPassword().length() != 64) {
                         String hashedPass = Security.getHash(newUser.getPassword(), Security.SHA_256);
                         newUser.setPassword(hashedPass);
                     }
                 }
 
-                // 3. Eksekusi Update
+                if (newUser.getNik() != null && !newUser.getNik().isEmpty()) {
+                    newUser.setNik(utils.Encryptions.encrypt(newUser.getNik()));
+                }
+                if (newUser.getEmail() != null && !newUser.getEmail().isEmpty()) {
+                    newUser.setEmail(utils.Encryptions.encrypt(newUser.getEmail()));
+                }
+
+                // 3. Eksekusi Update berdasarkan _id
                 DAO.update(filter, newUser);
 
                 // 4. Refresh UI
                 DataUser.showData("");
             } else {
-                JOptionPane.showMessageDialog(null, "Data dengan NIK: " + newUser.getNik() + " tidak ditemukan!");
+                JOptionPane.showMessageDialog(null, "Data User tidak ditemukan!");
             }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Terjadi kesalahan saat update: " + e.getMessage());
@@ -84,12 +97,17 @@ public class UserService {
     }
 
     public void hapusUser(String id) {
-        // Samakan kunci filter dengan yang ada di database
-        Bson filter = Filters.eq("nik", id);
+        try {
+            // Konversi String ID Hexadecimal menjadi ObjectId bawaan MongoDB
+            Bson filter = Filters.eq("_id", new ObjectId(id));
 
-        DAO.delete(filter);
-        DataUser.showData("");
-        JOptionPane.showMessageDialog(null, "User berhasil dihapus.");
+            DAO.delete(filter);
+            DataUser.showData("");
+            JOptionPane.showMessageDialog(null, "User berhasil dihapus.");
+        } catch (IllegalArgumentException e) {
+            // Antisipasi jika format string id yang dikirim dari UI tidak valid/bukan format ObjectId
+            JOptionPane.showMessageDialog(null, "Format ID tidak valid: " + e.getMessage());
+        }
     }
 
     public List<User> cariUser(String key) {
@@ -114,6 +132,32 @@ public class UserService {
     // --- LOGIKA TAMPILAN ---
     public void tampilUser(JPanel panelTarget, String key) {
         List<User> daftar = cariUser(key);
+
+        for (User u : daftar) {
+            // Dekripsi NIK
+            if (u.getNik() != null && !u.getNik().isEmpty()) {
+                try {
+                    String decryptedNik = utils.Encryptions.decrypt(u.getNik());
+                    if (decryptedNik != null) {
+                        u.setNik(decryptedNik);
+                    }
+                } catch (Exception ex) {
+                    System.err.println("Gagal dekripsi NIK User: " + ex.getMessage());
+                }
+            }
+
+            // Dekripsi Email
+            if (u.getEmail() != null && !u.getEmail().isEmpty()) {
+                try {
+                    String decryptedEmail = utils.Encryptions.decrypt(u.getEmail());
+                    if (decryptedEmail != null) {
+                        u.setEmail(decryptedEmail);
+                    }
+                } catch (Exception ex) {
+                    System.err.println("Gagal dekripsi Email User: " + ex.getMessage());
+                }
+            }
+        }
 
         panelTarget.removeAll();
         panelTarget.setLayout(new BorderLayout());

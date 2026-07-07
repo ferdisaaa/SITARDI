@@ -17,7 +17,13 @@ import services.PemilihService;
 public class TambahEditPemilih extends javax.swing.JDialog {
 
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(TambahEditPemilih.class.getName());
+    
+    private org.bson.types.ObjectId pemilihId;
 
+    public void setPemilihId(org.bson.types.ObjectId id) {
+        this.pemilihId = id;
+    }
+        
     /**
      * Creates new form TambahEdit
      *
@@ -256,9 +262,7 @@ public class TambahEditPemilih extends javax.swing.JDialog {
             // 1. Membuat objek Pemilih baru
             utils.Pemilih P = new utils.Pemilih();
 
-            String plainUID = txtUIDRFID.getText().trim();
-            String encryptedUID = utils.Encryptions.encrypt(plainUID);
-            P.setUidRfid(encryptedUID);
+            P.setUidRfid(txtUIDRFID.getText().trim());
             P.setNik(TxtNIK.getText().trim());
             P.setNama_lengkap(TxtNama.getText().trim());
             P.setDomisili(TxtDomisili.getText().trim());
@@ -303,10 +307,9 @@ public class TambahEditPemilih extends javax.swing.JDialog {
     private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
         try {
             utils.Pemilih P = new utils.Pemilih();
-            String plainUID = txtUIDRFID.getText().trim();
-            String encryptedUID = utils.Encryptions.encrypt(plainUID);
-            P.setUidRfid(encryptedUID);
+            P.setId(this.pemilihId);
             P.setNik(TxtNIK.getText().trim());
+            P.setUidRfid(txtUIDRFID.getText().trim());
             P.setNama_lengkap(TxtNama.getText().trim());
             P.setDomisili(TxtDomisili.getText().trim());
             P.setStatus_pemilih(cmbStatus.getSelectedItem().toString());

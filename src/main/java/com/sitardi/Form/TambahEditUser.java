@@ -7,6 +7,7 @@ package com.sitardi.Form;
 import com.sitardi.Panels.DataPemilih;
 import static com.sitardi.Panels.DataPemilih.showData;
 import java.text.ParseException;
+import org.bson.types.ObjectId;
 import utils.Pemilih;
 import utils.User;
 import services.PemilihService;
@@ -17,6 +18,13 @@ import services.UserService;
  * @author ASUS
  */
 public class TambahEditUser extends javax.swing.JDialog {
+    
+    private ObjectId userId; 
+
+    // Tambahkan method setter ini agar bisa diisi dari DynamicCard
+    public void setUserId(ObjectId id) {
+        this.userId = id;
+    }
 
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(TambahEditUser.class.getName());
 
@@ -59,8 +67,6 @@ public class TambahEditUser extends javax.swing.JDialog {
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
-        cmbRole = new javax.swing.JComboBox<>();
         jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
         txtUrl = new javax.swing.JTextField();
@@ -81,7 +87,7 @@ public class TambahEditUser extends javax.swing.JDialog {
                 btnSaveActionPerformed(evt);
             }
         });
-        jPanel1.add(btnSave, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 490, -1, -1));
+        jPanel1.add(btnSave, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 460, -1, -1));
 
         btnUpdate.setBackground(new java.awt.Color(150, 30, 31));
         btnUpdate.setFont(new java.awt.Font("Futura Md BT", 1, 12)); // NOI18N
@@ -92,7 +98,7 @@ public class TambahEditUser extends javax.swing.JDialog {
                 btnUpdateActionPerformed(evt);
             }
         });
-        jPanel1.add(btnUpdate, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 490, -1, -1));
+        jPanel1.add(btnUpdate, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 460, -1, -1));
 
         TxtNIK.setFont(new java.awt.Font("Futura Md BT", 0, 12)); // NOI18N
         TxtNIK.setPreferredSize(new java.awt.Dimension(220, 25));
@@ -151,22 +157,6 @@ public class TambahEditUser extends javax.swing.JDialog {
         jLabel6.setText("Password");
         jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 390, -1, -1));
 
-        jLabel7.setFont(new java.awt.Font("Futura Md BT", 1, 12)); // NOI18N
-        jLabel7.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel7.setText("Role");
-        jPanel1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 430, -1, 21));
-
-        cmbRole.setFont(new java.awt.Font("Futura Md BT", 0, 12)); // NOI18N
-        cmbRole.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Admin", "Petugas" }));
-        cmbRole.setPreferredSize(new java.awt.Dimension(220, 25));
-        cmbRole.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cmbRoleActionPerformed(evt);
-            }
-        });
-        jPanel1.add(cmbRole, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 430, -1, -1));
-
         jLabel8.setFont(new java.awt.Font("Futura Md BT", 1, 12)); // NOI18N
         jLabel8.setForeground(new java.awt.Color(255, 255, 255));
         jLabel8.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -208,9 +198,7 @@ public class TambahEditUser extends javax.swing.JDialog {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 548, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 520, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
@@ -226,7 +214,6 @@ public class TambahEditUser extends javax.swing.JDialog {
             u.setName(TxtNama.getText().trim());
             u.setEmail(Txtemail.getText().trim());
             u.setPassword(new String(TxtPassword.getPassword()));
-            u.setRole(cmbRole.getSelectedItem().toString());
             u.setUrl_img(txtUrl.getText().trim());
 
             // 2. Validasi sederhana
@@ -261,12 +248,12 @@ public class TambahEditUser extends javax.swing.JDialog {
     private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
         try {
             User u = new User();
-            u.setNik(TxtNIK.getText().trim()); // NIK digunakan sebagai kunci pencarian
+            u.setId(this.userId);
             u.setUsername(TxtUsername.getText().trim());
+            u.setNik(TxtNIK.getText().trim());
             u.setName(TxtNama.getText().trim());
             u.setEmail(Txtemail.getText().trim());
             u.setPassword(new String(TxtPassword.getPassword()));
-            u.setRole(cmbRole.getSelectedItem().toString());
             u.setUrl_img(txtUrl.getText().trim());
 
             UserService service = new UserService();
@@ -281,11 +268,6 @@ public class TambahEditUser extends javax.swing.JDialog {
         }
 
     }//GEN-LAST:event_btnUpdateActionPerformed
-
-    private void cmbRoleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbRoleActionPerformed
-        // TODO add your handling code here:
-
-    }//GEN-LAST:event_cmbRoleActionPerformed
 
     private void txtUrlKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtUrlKeyReleased
         loadProfileImage(txtUrl.getText().trim());
@@ -338,13 +320,11 @@ public class TambahEditUser extends javax.swing.JDialog {
     public javax.swing.JTextField Txtemail;
     public javax.swing.JButton btnSave;
     public javax.swing.JButton btnUpdate;
-    public javax.swing.JComboBox<String> cmbRole;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
