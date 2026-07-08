@@ -7,6 +7,7 @@ package com.sitardi.Form;
 import com.sitardi.Panels.DataPemilih;
 import com.sitardi.Panels.DataUser;
 import com.sitardi.Panels.InfoTerkini;
+import com.sitardi.Panels.Pengaturan;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.net.URL;
@@ -303,7 +304,10 @@ public class DashboardAdmin extends javax.swing.JFrame {
     }//GEN-LAST:event_btnDataPemilihActionPerformed
 
     private void btnPengaturanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPengaturanActionPerformed
-        // TODO add your handling code here:
+        AddViews(new Pengaturan());
+        setActiveMenu(btnPengaturan);        
+
+// TODO add your handling code here:
     }//GEN-LAST:event_btnPengaturanActionPerformed
 
     private void btnModeAbsensiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModeAbsensiActionPerformed
