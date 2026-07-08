@@ -7,6 +7,7 @@ package services;
 import com.fazecast.jSerialComm.SerialPort;
 import com.fazecast.jSerialComm.SerialPortDataListener;
 import com.fazecast.jSerialComm.SerialPortEvent;
+import com.sitardi.Panels.InfoTerkini;
 import com.sitardi.Serial.SerialDtHandler;
 import java.util.ArrayList;
 import java.util.List;
@@ -125,4 +126,17 @@ public class SerialService {
     public boolean isConnected() {
         return activePort != null && activePort.isOpen();
     }
+    
+    public void onNikDiterima(String nikYangDitangkap) {
+    
+    // 1. Ambil data dari MongoDB berdasarkan NIK (Gunakan GenericDAO/PemilihDAO kamu)
+    // String nama = dao.getNamaByNik(nikYangDitangkap);
+    // Dummy tes:
+    String nama = "Budi Santoso"; 
+    String status = "Hadir (DPT)";
+
+    // 2. Kirim ke Dashboard InfoTerkini
+    // [PENTING]: Gunakan objek infoTerkini yang sudah aktif di layar
+    InfoTerkini.tambahKartuPemilih(nikYangDitangkap, nama, status);
+}
 }

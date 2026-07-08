@@ -18,6 +18,12 @@ import org.bson.Document;
  * @author ASUS
  */
 public class InfoTerkini extends javax.swing.JPanel {
+    
+    public static InfoTerkini instance;
+
+    public static void tambahKartuPemilih(String nikYangDitangkap, String nama, String status) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
 
     private Timer realtimeTimer;
     private MongoCollection<Document> pemilihCollection;
@@ -27,29 +33,52 @@ public class InfoTerkini extends javax.swing.JPanel {
      * Creates new form InfoTerkini
      */
     public InfoTerkini() {
+        
+        instance = this;
         initComponents();
-        kustomisasiKomponen();
-
         // 3. Inisialisasi koneksi database & nyalakan realtime counter
         initDatabase();
-        initRealtimeUpdate();
+    
     }
 
-    @Override
-    public void addNotify() {
-        super.addNotify();
-        if (realtimeTimer != null && !realtimeTimer.isRunning()) {
-            realtimeTimer.start();
-        }
-    }
+    public void tambahkartuPemilih(String nik, String namaLengkap, String status) {
+        javax.swing.SwingUtilities.invokeLater(() -> {
+            // 1. Membuat Panel Kartu (Warna Putih)
+            javax.swing.JPanel kartu = new javax.swing.JPanel();
+            kartu.setBackground(java.awt.Color.WHITE);
+            kartu.setPreferredSize(new java.awt.Dimension(280, 120));
+            kartu.setLayout(new java.awt.GridLayout(3, 1, 5, 5)); // 3 Baris teks
+            
+            // Memberikan garis pinggir (border) abu-abu agar terlihat seperti kartu asli
+            kartu.setBorder(javax.swing.BorderFactory.createCompoundBorder(
+                javax.swing.BorderFactory.createLineBorder(new java.awt.Color(200, 200, 200), 2),
+                javax.swing.BorderFactory.createEmptyBorder(10, 10, 10, 10) // Padding dalam
+            ));
 
-    // Matikan timer jika user berpindah ke panel/menu lain agar menghemat RAM dan CPU Kiosk
-    @Override
-    public void removeNotify() {
-        super.removeNotify();
-        if (realtimeTimer != null && realtimeTimer.isRunning()) {
-            realtimeTimer.stop();
-        }
+            // 2. Membuat Label Teks
+            javax.swing.JLabel lblNik = new javax.swing.JLabel("NIK: " + nik);
+            lblNik.setFont(new java.awt.Font("Segoe UI", java.awt.Font.BOLD, 14));
+            
+            javax.swing.JLabel lblNama = new javax.swing.JLabel("Nama: " + namaLengkap);
+            lblNama.setFont(new java.awt.Font("Segoe UI", java.awt.Font.PLAIN, 13));
+            
+            javax.swing.JLabel lblStatus = new javax.swing.JLabel("Status: " + status);
+            lblStatus.setFont(new java.awt.Font("Segoe UI", java.awt.Font.ITALIC, 12));
+            lblStatus.setForeground(new java.awt.Color(0, 128, 0)); // Warna Hijau
+
+            // 3. Memasukkan Teks ke dalam Kartu
+            kartu.add(lblNik);
+            kartu.add(lblNama);
+            kartu.add(lblStatus);
+
+            // 4. Memasukkan Kartu ke dalam Wadah Merah
+            // [!] Pastikan variabel panelWadah ini sesuai dengan yang kamu buat di Design
+            if (panelwadah != null) {
+                panelwadah.add(kartu, 0);
+                panelwadah.revalidate();
+                panelwadah.repaint();
+            }
+        });
     }
 
     /**
@@ -72,6 +101,7 @@ public class InfoTerkini extends javax.swing.JPanel {
         mainInfo2 = new javax.swing.JLabel();
         subInfo2 = new javax.swing.JLabel();
         roundPanel2 = new com.sitardi.CustomComponents.RoundPanel();
+        panelwadah = new javax.swing.JPanel();
 
         setLayout(new java.awt.BorderLayout());
 
@@ -185,40 +215,45 @@ public class InfoTerkini extends javax.swing.JPanel {
         roundPanel2.setLayout(roundPanel2Layout);
         roundPanel2Layout.setHorizontalGroup(
             roundPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGroup(roundPanel2Layout.createSequentialGroup()
+                .addGap(40, 40, 40)
+                .addComponent(panelwadah, javax.swing.GroupLayout.PREFERRED_SIZE, 890, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         roundPanel2Layout.setVerticalGroup(
             roundPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 390, Short.MAX_VALUE)
+            .addGroup(roundPanel2Layout.createSequentialGroup()
+                .addGap(24, 24, 24)
+                .addComponent(panelwadah, javax.swing.GroupLayout.PREFERRED_SIZE, 267, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(22, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout mainLayout = new javax.swing.GroupLayout(main);
         main.setLayout(mainLayout);
         mainLayout.setHorizontalGroup(
             mainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, mainLayout.createSequentialGroup()
-                .addGap(38, 38, 38)
-                .addGroup(mainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+            .addGroup(mainLayout.createSequentialGroup()
+                .addGap(46, 46, 46)
+                .addGroup(mainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(roundPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(mainLayout.createSequentialGroup()
                         .addComponent(infoPemilih, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 127, Short.MAX_VALUE)
+                        .addGap(75, 75, 75)
                         .addComponent(infoPemilihMasuk, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(100, 100, 100)
+                        .addGap(92, 92, 92)
                         .addComponent(infoPemilihKeluar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(56, 56, 56))
+                .addContainerGap(104, Short.MAX_VALUE))
         );
         mainLayout.setVerticalGroup(
             mainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, mainLayout.createSequentialGroup()
-                .addContainerGap(78, Short.MAX_VALUE)
+                .addGap(25, 25, 25)
                 .addGroup(mainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(infoPemilih, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(infoPemilihMasuk, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(infoPemilihKeluar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(46, 46, 46)
-                .addComponent(roundPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(58, 58, 58))
+                .addGap(18, 18, 18)
+                .addComponent(roundPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         add(main, java.awt.BorderLayout.CENTER);
@@ -233,6 +268,7 @@ public class InfoTerkini extends javax.swing.JPanel {
     private javax.swing.JLabel mainInfo;
     private javax.swing.JLabel mainInfo1;
     private javax.swing.JLabel mainInfo2;
+    private javax.swing.JPanel panelwadah;
     private com.sitardi.CustomComponents.RoundPanel roundPanel2;
     private javax.swing.JLabel subInfo;
     private javax.swing.JLabel subInfo1;
@@ -243,6 +279,31 @@ public class InfoTerkini extends javax.swing.JPanel {
         subInfo1.setText("Pemilih Masuk");
         subInfo2.setText("Pemilih Keluar");
     }
+    
+    // Taruh di dalam InfoTerkini.java
+public void updateStatistik() {
+    try {
+            // Proteksi awal: Pastikan database sudah terhubung melalui fungsi initDatabase()
+            if (this.pemilihCollection == null || this.logCollection == null) {
+                System.out.println("Menunggu koneksi MongoDB...");
+                return; 
+            }
+            
+            // 1. Hitung total DPT langsung dari koleksi MongoDB pemilih
+            long totalDpt = this.pemilihCollection.countDocuments();
+            
+            // 2. Hitung jumlah pemilih masuk. 
+            // Asumsi sementara: kita hitung dari total baris di koleksi log absensi
+            long pemilihMasuk = this.logCollection.countDocuments();
+            
+            // 3. Masukkan angka riil dari database tersebut ke Label UI
+            mainInfo.setText(String.valueOf(totalDpt));
+            mainInfo1.setText(String.valueOf(pemilihMasuk));
+            
+        } catch (Exception e) {
+            System.out.println("Gagal menghitung statistik: " + e.getMessage());
+        }
+}
 
     private void initDatabase() {
         try {
@@ -262,9 +323,10 @@ public class InfoTerkini extends javax.swing.JPanel {
 
             // 4. ISI VARIABEL GLOBAL (Ini yang paling krusial agar tidak bernilai null)
             this.pemilihCollection = db.getCollection(collPemilih);
-            this.logCollection = db.getCollection(collLog); // <-- Ubah ke nama koleksi log absensi Anda
+            this.logCollection = db.getCollection(collLog); 
 
             System.out.println("[SUCCESS] Berhasil terhubung ke MongoDB untuk Realtime Dashboard!");
+            updateStatistik();
 
         } catch (Exception e) {
             System.err.println("[ERROR] Gagal inisialisasi DB di InfoTerkini: " + e.getMessage());

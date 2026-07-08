@@ -264,7 +264,16 @@ public class DashboardAdmin extends javax.swing.JFrame {
 
     private void btnDashboardActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDashboardActionPerformed
         setActiveMenu(btnDashboard);
-        AddViews(new InfoTerkini());
+        if (com.sitardi.Panels.InfoTerkini.instance == null) {
+        // Jika belum ada sama sekali, baru kita buat baru
+        AddViews(new com.sitardi.Panels.InfoTerkini());
+    } else {
+        // 2. JIKA SUDAH ADA, pakai halaman LAMA yang sudah menyimpan kartu pemilih!
+        AddViews(com.sitardi.Panels.InfoTerkini.instance);
+        
+        // Sekalian refresh angkanya agar langsung singkron dengan MongoDB
+        com.sitardi.Panels.InfoTerkini.instance.updateStatistik();
+    }
 
 // TODO add your handling code here:
     }//GEN-LAST:event_btnDashboardActionPerformed

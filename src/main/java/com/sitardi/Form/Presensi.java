@@ -422,6 +422,7 @@ public class Presensi extends javax.swing.JFrame {
             // Tampilkan pesan error jika benar-benar kosong
             updateUiWithDelay("INPUT KOSONG", "Silakan masukkan NIK Anda", "pada kolom yang tersedia.");
         }
+        
 // TODO add your handling code here:
     }//GEN-LAST:event_btnMasukActionPerformed
 
@@ -590,6 +591,28 @@ public class Presensi extends javax.swing.JFrame {
 
             // 3. EKSEKUSI: Jika lolos semua validasi di atas, catat log absensi baru
             logAbsensiService.catatLog(nomorIdentitas, this.statusAbsensi);
+            // =========================================================
+            System.out.println("Mencoba mengirim kartu ke Dashboard..."); // <--- CCTV 1
+
+            if (com.sitardi.Panels.InfoTerkini.instance != null) {
+                System.out.println("Jembatan terhubung! Mengirim data..."); // <--- CCTV 2
+                
+                String statusTeks = "Hadir (" + this.statusAbsensi + ")";
+                com.sitardi.Panels.InfoTerkini.instance.tambahkartuPemilih(nomorIdentitas, namaUser, statusTeks);
+                com.sitardi.Panels.InfoTerkini.instance.updateStatistik(); 
+                
+                System.out.println("Kartu berhasil terkirim!"); // <--- CCTV 3
+            } else {
+                System.out.println("GAGAL: Panel InfoTerkini belum dibuka/instance masih null."); // <--- CCTV 4
+            }
+            
+
+            // 4. UPDATE UI: Berhasil
+            updateUiWithDelay(
+                    this.statusAbsensi + " SUKSES!",
+                    namaUser,
+                    "Terima kasih, data berhasil disimpan."
+            );
 
             // 4. UPDATE UI: Berhasil
             updateUiWithDelay(
