@@ -13,6 +13,7 @@ import java.awt.Color;
 import java.net.URL;
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
+import services.I18nService;
 import utils.User;
 import services.PemilihService;
 
@@ -35,6 +36,7 @@ public class DashboardAdmin extends javax.swing.JFrame {
 
         // Panggil fungsi untuk update tampilan profil
         setProfileData();
+        updateLanguage();
         setActiveMenu(btnDashboard);
         AddViews(new InfoTerkini());
         setLocationRelativeTo(null);
@@ -85,15 +87,15 @@ public class DashboardAdmin extends javax.swing.JFrame {
         roundPanel1.add(profileimg, java.awt.BorderLayout.CENTER);
 
         lblUsername.setBackground(new java.awt.Color(229, 178, 120));
-        lblUsername.setFont(new java.awt.Font("Futura Bk BT", 1, 20)); // NOI18N
+        lblUsername.setFont(new java.awt.Font("SansSerif", 1, 20)); // NOI18N
         lblUsername.setForeground(new java.awt.Color(229, 178, 120));
         lblUsername.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblUsername.setText("Mba Tukam");
 
         btnDashboard.setBackground(new java.awt.Color(96, 2, 0));
-        btnDashboard.setFont(new java.awt.Font("Futura Bk BT", 0, 20)); // NOI18N
+        btnDashboard.setFont(new java.awt.Font("SansSerif", 0, 20)); // NOI18N
         btnDashboard.setForeground(new java.awt.Color(254, 254, 254));
-        btnDashboard.setText("Dashboard");
+        btnDashboard.setText("加/編集");
         btnDashboard.setBorder(null);
         btnDashboard.setBorderPainted(false);
         btnDashboard.setContentAreaFilled(false);
@@ -105,9 +107,9 @@ public class DashboardAdmin extends javax.swing.JFrame {
         });
 
         btnDataPetugas.setBackground(new java.awt.Color(96, 2, 0));
-        btnDataPetugas.setFont(new java.awt.Font("Futura Bk BT", 0, 20)); // NOI18N
+        btnDataPetugas.setFont(new java.awt.Font("SansSerif", 0, 20)); // NOI18N
         btnDataPetugas.setForeground(new java.awt.Color(254, 254, 254));
-        btnDataPetugas.setText("Data Petugas");
+        btnDataPetugas.setText("加/編集");
         btnDataPetugas.setBorder(null);
         btnDataPetugas.setBorderPainted(false);
         btnDataPetugas.setContentAreaFilled(false);
@@ -119,9 +121,9 @@ public class DashboardAdmin extends javax.swing.JFrame {
         });
 
         btnPresensi.setBackground(new java.awt.Color(96, 2, 0));
-        btnPresensi.setFont(new java.awt.Font("Futura Bk BT", 0, 20)); // NOI18N
+        btnPresensi.setFont(new java.awt.Font("SansSerif", 0, 20)); // NOI18N
         btnPresensi.setForeground(new java.awt.Color(254, 254, 254));
-        btnPresensi.setText("Presensi");
+        btnPresensi.setText("加/編集");
         btnPresensi.setBorder(null);
         btnPresensi.setBorderPainted(false);
         btnPresensi.setContentAreaFilled(false);
@@ -133,9 +135,9 @@ public class DashboardAdmin extends javax.swing.JFrame {
         });
 
         btnDataPemilih.setBackground(new java.awt.Color(96, 2, 0));
-        btnDataPemilih.setFont(new java.awt.Font("Futura Bk BT", 0, 20)); // NOI18N
+        btnDataPemilih.setFont(new java.awt.Font("SansSerif", 0, 20)); // NOI18N
         btnDataPemilih.setForeground(new java.awt.Color(254, 254, 254));
-        btnDataPemilih.setText("Data Pemilih");
+        btnDataPemilih.setText("加/編集");
         btnDataPemilih.setBorder(null);
         btnDataPemilih.setBorderPainted(false);
         btnDataPemilih.setContentAreaFilled(false);
@@ -147,7 +149,7 @@ public class DashboardAdmin extends javax.swing.JFrame {
         });
 
         btnLogout.setBackground(new java.awt.Color(96, 2, 0));
-        btnLogout.setFont(new java.awt.Font("Futura Bk BT", 0, 20)); // NOI18N
+        btnLogout.setFont(new java.awt.Font("SansSerif", 0, 20)); // NOI18N
         btnLogout.setForeground(new java.awt.Color(254, 254, 254));
         btnLogout.setText("Logout");
         btnLogout.setBorder(null);
@@ -161,9 +163,9 @@ public class DashboardAdmin extends javax.swing.JFrame {
         });
 
         btnPengaturan.setBackground(new java.awt.Color(96, 2, 0));
-        btnPengaturan.setFont(new java.awt.Font("Futura Bk BT", 0, 20)); // NOI18N
+        btnPengaturan.setFont(new java.awt.Font("SansSerif", 0, 20)); // NOI18N
         btnPengaturan.setForeground(new java.awt.Color(254, 254, 254));
-        btnPengaturan.setText("Pengaturan");
+        btnPengaturan.setText("加/編集");
         btnPengaturan.setBorder(null);
         btnPengaturan.setBorderPainted(false);
         btnPengaturan.setContentAreaFilled(false);
@@ -218,9 +220,9 @@ public class DashboardAdmin extends javax.swing.JFrame {
                     .addComponent(btnModeAbsensi, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                 .addGap(33, 33, 33)
                 .addComponent(roundPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(lblUsername)
-                .addGap(67, 67, 67)
+                .addGap(61, 61, 61)
                 .addComponent(btnDashboard)
                 .addGap(35, 35, 35)
                 .addComponent(btnDataPetugas)
@@ -252,7 +254,7 @@ public class DashboardAdmin extends javax.swing.JFrame {
             mainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(mainLayout.createSequentialGroup()
                 .addGroup(mainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(sidePanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(sidePanel, javax.swing.GroupLayout.DEFAULT_SIZE, 731, Short.MAX_VALUE)
                     .addComponent(pnlKonten, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(0, 0, Short.MAX_VALUE))
         );
@@ -284,11 +286,9 @@ public class DashboardAdmin extends javax.swing.JFrame {
     }//GEN-LAST:event_btnDataPetugasActionPerformed
 
     private void btnPresensiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPresensiActionPerformed
-// 1. Set menu aktif agar warna tombol berubah (opsional)
-        setActiveMenu(btnPresensi);
 
-        // 2. Instansiasi dan tampilkan jendala Presensi
-        // Kirim status mode saat ini (true/false) ke constructor Presensi
+
+        this.dispose();
         boolean modeSaatIni = btnModeAbsensi.isMasukMode();
         Presensi formPresensi = new Presensi(this, modeSaatIni);
         formPresensi.setLocationRelativeTo(null); // Agar form presensi muncul di tengah layar
@@ -299,13 +299,13 @@ public class DashboardAdmin extends javax.swing.JFrame {
 
     private void btnDataPemilihActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDataPemilihActionPerformed
         // TODO add your handling code here:
-        AddViews(new DataPemilih());
         setActiveMenu(btnDataPemilih);
+        AddViews(new DataPemilih());
     }//GEN-LAST:event_btnDataPemilihActionPerformed
 
     private void btnPengaturanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPengaturanActionPerformed
+        setActiveMenu(btnPengaturan);
         AddViews(new Pengaturan());
-        setActiveMenu(btnPengaturan);        
 
 // TODO add your handling code here:
     }//GEN-LAST:event_btnPengaturanActionPerformed
@@ -423,21 +423,35 @@ public class DashboardAdmin extends javax.swing.JFrame {
 
     private void setActiveMenu(javax.swing.JButton activeBtn) {
         // 1. Daftar semua tombol menu kamu
-        javax.swing.JButton[] menus = {btnDashboard, btnDataPetugas, btnDataPemilih, btnPresensi};
+        javax.swing.JButton[] menus = {btnDashboard, btnDataPetugas, btnDataPemilih, btnPresensi, btnPengaturan};
 
         // 2. Loop semua tombol
         for (javax.swing.JButton btn : menus) {
             if (btn == activeBtn) {
                 // Warna saat aktif (Menyala/Gold)
                 btn.setForeground(Color.decode("#E5B278"));
-                // Opsional: Jika ingin memberi bold saat aktif
-                btn.setFont(new java.awt.Font("Futura Bk BT", 1, 20));
             } else {
                 // Warna standar (Putih)
                 btn.setForeground(Color.decode("#FEFEFE"));
-                btn.setFont(new java.awt.Font("Futura Bk BT", 0, 20));
             }
         }
+    }
+
+    public void updateLanguage() {
+        // Jalankan di Event Dispatch Thread agar aman untuk UI Swing
+        javax.swing.SwingUtilities.invokeLater(() -> {
+            btnDashboard.setText(I18nService.getLocale("ui.btn.dashboard"));
+            btnDataPetugas.setText(I18nService.getLocale("ui.btn.data.petugas"));
+            btnDataPemilih.setText(I18nService.getLocale("ui.btn.data.pemilih"));
+            btnPresensi.setText(I18nService.getLocale("ui.btn.presensi"));
+            btnPengaturan.setText(I18nService.getLocale("ui.btn.pengaturan"));
+            btnLogout.setText(I18nService.getLocale("ui.btn.logout"));
+
+            // Memastikan layouting diperbarui jika panjang kata berubah signifikan
+            sidePanel.revalidate();
+            sidePanel.repaint();
+            btnModeAbsensi.repaint();
+        });
     }
 
 }

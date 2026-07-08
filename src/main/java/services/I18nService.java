@@ -2,21 +2,18 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package utils;
-
-
-
+package services;
 
 import java.util.Locale;
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
-
 
 /**
  *
  * @author MyBook Hype
  */
 public class I18nService {
+
     private static ResourceBundle bundle;
     private static Locale currentLocale;
 
@@ -33,7 +30,7 @@ public class I18nService {
     }
 
     // Fungsi mengambil teks terjemahan dengan proteksi Try-Catch Shield (Halaman 10)
-    public static String get(String key) {
+    public static String getLocale(String key) {
         try {
             return bundle.getString(key);
         } catch (MissingResourceException e) {
@@ -42,5 +39,9 @@ public class I18nService {
             return "!" + key + "!";
         }
     }
-    
+
+    public static Locale getCurrentLocale() {
+        return currentLocale;
+    }
+
 }

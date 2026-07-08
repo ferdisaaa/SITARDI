@@ -12,11 +12,7 @@ import java.util.Date;
 import javax.swing.SwingUtilities;
 import javax.swing.Timer;
 import org.bson.Document;
-
-/**
- *
- * @author ASUS
- */
+import services.I18nService;
 public class InfoTerkini extends javax.swing.JPanel {
 
     private Timer realtimeTimer;
@@ -28,9 +24,8 @@ public class InfoTerkini extends javax.swing.JPanel {
      */
     public InfoTerkini() {
         initComponents();
-        kustomisasiKomponen();
-
-        // 3. Inisialisasi koneksi database & nyalakan realtime counter
+        
+        updateLanguage();
         initDatabase();
         initRealtimeUpdate();
     }
@@ -64,13 +59,13 @@ public class InfoTerkini extends javax.swing.JPanel {
         main = new javax.swing.JPanel();
         infoPemilih = new com.sitardi.CustomComponents.RoundPanel();
         mainInfo = new javax.swing.JLabel();
-        subInfo = new javax.swing.JLabel();
+        subInfoPemilih = new javax.swing.JLabel();
         infoPemilihMasuk = new com.sitardi.CustomComponents.RoundPanel();
         mainInfo1 = new javax.swing.JLabel();
-        subInfo1 = new javax.swing.JLabel();
+        subInfoMasuk = new javax.swing.JLabel();
         infoPemilihKeluar = new com.sitardi.CustomComponents.RoundPanel();
         mainInfo2 = new javax.swing.JLabel();
-        subInfo2 = new javax.swing.JLabel();
+        subInfoKeluar = new javax.swing.JLabel();
         roundPanel2 = new com.sitardi.CustomComponents.RoundPanel();
 
         setLayout(new java.awt.BorderLayout());
@@ -85,10 +80,10 @@ public class InfoTerkini extends javax.swing.JPanel {
         mainInfo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         mainInfo.setText("0");
 
-        subInfo.setFont(new java.awt.Font("Futura Bk BT", 0, 18)); // NOI18N
-        subInfo.setForeground(new java.awt.Color(254, 254, 254));
-        subInfo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        subInfo.setText("Pemilih Terdaftar");
+        subInfoPemilih.setFont(new java.awt.Font("SansSerif", 0, 18)); // NOI18N
+        subInfoPemilih.setForeground(new java.awt.Color(254, 254, 254));
+        subInfoPemilih.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        subInfoPemilih.setText("Pemilih Terdaftar");
 
         javax.swing.GroupLayout infoPemilihLayout = new javax.swing.GroupLayout(infoPemilih);
         infoPemilih.setLayout(infoPemilihLayout);
@@ -98,7 +93,7 @@ public class InfoTerkini extends javax.swing.JPanel {
                 .addContainerGap(38, Short.MAX_VALUE)
                 .addGroup(infoPemilihLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(mainInfo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(subInfo, javax.swing.GroupLayout.DEFAULT_SIZE, 190, Short.MAX_VALUE))
+                    .addComponent(subInfoPemilih, javax.swing.GroupLayout.DEFAULT_SIZE, 190, Short.MAX_VALUE))
                 .addGap(39, 39, 39))
         );
         infoPemilihLayout.setVerticalGroup(
@@ -107,7 +102,7 @@ public class InfoTerkini extends javax.swing.JPanel {
                 .addContainerGap(32, Short.MAX_VALUE)
                 .addComponent(mainInfo, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(subInfo, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(subInfoPemilih, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(27, 27, 27))
         );
 
@@ -119,10 +114,10 @@ public class InfoTerkini extends javax.swing.JPanel {
         mainInfo1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         mainInfo1.setText("0");
 
-        subInfo1.setFont(new java.awt.Font("Futura Bk BT", 0, 18)); // NOI18N
-        subInfo1.setForeground(new java.awt.Color(254, 254, 254));
-        subInfo1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        subInfo1.setText("Pemilih Terdaftar");
+        subInfoMasuk.setFont(new java.awt.Font("SansSerif", 0, 18)); // NOI18N
+        subInfoMasuk.setForeground(new java.awt.Color(254, 254, 254));
+        subInfoMasuk.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        subInfoMasuk.setText("Pemilih Masuk");
 
         javax.swing.GroupLayout infoPemilihMasukLayout = new javax.swing.GroupLayout(infoPemilihMasuk);
         infoPemilihMasuk.setLayout(infoPemilihMasukLayout);
@@ -132,7 +127,7 @@ public class InfoTerkini extends javax.swing.JPanel {
                 .addContainerGap(38, Short.MAX_VALUE)
                 .addGroup(infoPemilihMasukLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(mainInfo1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(subInfo1, javax.swing.GroupLayout.DEFAULT_SIZE, 190, Short.MAX_VALUE))
+                    .addComponent(subInfoMasuk, javax.swing.GroupLayout.DEFAULT_SIZE, 190, Short.MAX_VALUE))
                 .addGap(39, 39, 39))
         );
         infoPemilihMasukLayout.setVerticalGroup(
@@ -141,7 +136,7 @@ public class InfoTerkini extends javax.swing.JPanel {
                 .addContainerGap(32, Short.MAX_VALUE)
                 .addComponent(mainInfo1, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(subInfo1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(subInfoMasuk, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(27, 27, 27))
         );
 
@@ -153,10 +148,10 @@ public class InfoTerkini extends javax.swing.JPanel {
         mainInfo2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         mainInfo2.setText("0");
 
-        subInfo2.setFont(new java.awt.Font("Futura Bk BT", 0, 18)); // NOI18N
-        subInfo2.setForeground(new java.awt.Color(254, 254, 254));
-        subInfo2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        subInfo2.setText("Pemilih Terdaftar");
+        subInfoKeluar.setFont(new java.awt.Font("SansSerif", 0, 18)); // NOI18N
+        subInfoKeluar.setForeground(new java.awt.Color(254, 254, 254));
+        subInfoKeluar.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        subInfoKeluar.setText("Pemilih Keluar");
 
         javax.swing.GroupLayout infoPemilihKeluarLayout = new javax.swing.GroupLayout(infoPemilihKeluar);
         infoPemilihKeluar.setLayout(infoPemilihKeluarLayout);
@@ -166,7 +161,7 @@ public class InfoTerkini extends javax.swing.JPanel {
                 .addContainerGap(38, Short.MAX_VALUE)
                 .addGroup(infoPemilihKeluarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(mainInfo2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(subInfo2, javax.swing.GroupLayout.DEFAULT_SIZE, 190, Short.MAX_VALUE))
+                    .addComponent(subInfoKeluar, javax.swing.GroupLayout.DEFAULT_SIZE, 190, Short.MAX_VALUE))
                 .addGap(39, 39, 39))
         );
         infoPemilihKeluarLayout.setVerticalGroup(
@@ -175,7 +170,7 @@ public class InfoTerkini extends javax.swing.JPanel {
                 .addContainerGap(32, Short.MAX_VALUE)
                 .addComponent(mainInfo2, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(subInfo2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(subInfoKeluar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(27, 27, 27))
         );
 
@@ -234,35 +229,24 @@ public class InfoTerkini extends javax.swing.JPanel {
     private javax.swing.JLabel mainInfo1;
     private javax.swing.JLabel mainInfo2;
     private com.sitardi.CustomComponents.RoundPanel roundPanel2;
-    private javax.swing.JLabel subInfo;
-    private javax.swing.JLabel subInfo1;
-    private javax.swing.JLabel subInfo2;
+    private javax.swing.JLabel subInfoKeluar;
+    private javax.swing.JLabel subInfoMasuk;
+    private javax.swing.JLabel subInfoPemilih;
     // End of variables declaration//GEN-END:variables
-
-    private void kustomisasiKomponen() {
-        subInfo1.setText("Pemilih Masuk");
-        subInfo2.setText("Pemilih Keluar");
-    }
 
     private void initDatabase() {
         try {
-            // 1. Buat koneksi ke server MongoDB
             String mongoURI = System.getProperty("MONGODB_URL");
-            // Jika menggunakan localhost, biarkan menggunakan: "mongodb://localhost:27017"
-
             com.mongodb.client.MongoClient client = com.mongodb.client.MongoClients.create(mongoURI);
 
-            // 2. Ambil database (Ganti "sitardi_db" dengan nama database asli Anda jika berbeda)
             String dbName = System.getProperty("DATABASE_NAME");
             com.mongodb.client.MongoDatabase db = client.getDatabase(dbName);
 
-            // 3. Ambil nama koleksi pemilih dari System Property (atau fallback ke "pemilih")
             String collPemilih = System.getProperty("COLLP");
             String collLog = System.getProperty("COLLLA");
 
-            // 4. ISI VARIABEL GLOBAL (Ini yang paling krusial agar tidak bernilai null)
             this.pemilihCollection = db.getCollection(collPemilih);
-            this.logCollection = db.getCollection(collLog); // <-- Ubah ke nama koleksi log absensi Anda
+            this.logCollection = db.getCollection(collLog); 
 
             System.out.println("[SUCCESS] Berhasil terhubung ke MongoDB untuk Realtime Dashboard!");
 
@@ -273,17 +257,13 @@ public class InfoTerkini extends javax.swing.JPanel {
     }
 
     private void initRealtimeUpdate() {
-        // Timer berjalan setiap 2000 milidetik (2 Detik)
-        realtimeTimer = new Timer(2000, e -> {
-            // Jalankan query MongoDB di dalam Worker Thread agar UI tidak patah-patah/freeze
+        realtimeTimer = new Timer(1000, e -> {
             new Thread(() -> {
                 try {
-                    // AMBIL DATA DARI DB (Silakan sesuaikan dengan method service Anda jika ada)
                     long totalTerdaftar = dapatkanTotalTerdaftar();
                     long totalMasuk = dapatkanLogHariIni("MASUK");
                     long totalKeluar = dapatkanLogHariIni("KELUAR");
 
-                    // LEMPAR KEMBALI KE EDT (Event Dispatch Thread) UNTUK UPDATE UI
                     SwingUtilities.invokeLater(() -> {
                         mainInfo.setText(String.valueOf(totalTerdaftar));
                         mainInfo1.setText(String.valueOf(totalMasuk));
@@ -297,10 +277,8 @@ public class InfoTerkini extends javax.swing.JPanel {
         });
     }
 
-    // --- LOGIKA AGREGASI / QUERY COUNT ---
     private long dapatkanTotalTerdaftar() {
-        // Jika menggunakan service bawaan: return new utils.GenericDAO<>(System.getProperty("COLLP"), utils.Pemilih.class).findAll().size();
-        // Atau via collection langsung:
+
         if (pemilihCollection != null) {
             return pemilihCollection.countDocuments();
         }
@@ -312,19 +290,22 @@ public class InfoTerkini extends javax.swing.JPanel {
             return 0;
         }
 
-        // Ambil batas waktu awal hari ini (00:00:00) agar data log lama tidak terhitung
         Date awalHariIni = Date.from(LocalDate.now().atStartOfDay(ZoneId.systemDefault()).toInstant());
 
-        // Menghitung dokumen berdasarkan status dan waktu di atas jam 00:00 hari ini
         return logCollection.countDocuments(Filters.and(
                 Filters.eq("status", status),
                 Filters.gte("waktuTap", awalHariIni)
         ));
 
-        // PENTING: Jika setelah perbaikan ini angka tetap 0 padahal datanya ada, 
-        // kemungkinan besar ada masalah di zona waktu (UTC vs Local).
-        // Anda bisa menguji (sementara) dengan menghapus filter waktu untuk melihat apakah datanya terbaca:
-        // return logCollection.countDocuments(Filters.eq("status", status));
+    }
+    
+        public void updateLanguage() {
+        // Jalankan di Event Dispatch Thread agar aman untuk UI Swing
+        javax.swing.SwingUtilities.invokeLater(() -> {
+            subInfoPemilih.setText(I18nService.getLocale("ui.label.terdaftar"));
+            subInfoMasuk.setText(I18nService.getLocale("ui.label.infomasuk"));
+            subInfoKeluar.setText(I18nService.getLocale("ui.label.infokeluar"));
+        });
     }
 
 }

@@ -68,7 +68,7 @@ public class TambahEditPemilih extends javax.swing.JDialog {
         jPanel1.setBackground(new java.awt.Color(96, 2, 0));
 
         btnSave.setBackground(new java.awt.Color(229, 178, 120));
-        btnSave.setFont(new java.awt.Font("Futura Md BT", 1, 12)); // NOI18N
+        btnSave.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
         btnSave.setForeground(new java.awt.Color(254, 254, 254));
         btnSave.setText("Simpan");
         btnSave.addActionListener(new java.awt.event.ActionListener() {
@@ -78,7 +78,7 @@ public class TambahEditPemilih extends javax.swing.JDialog {
         });
 
         btnUpdate.setBackground(new java.awt.Color(150, 30, 31));
-        btnUpdate.setFont(new java.awt.Font("Futura Md BT", 1, 12)); // NOI18N
+        btnUpdate.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
         btnUpdate.setForeground(new java.awt.Color(254, 254, 254));
         btnUpdate.setText("Update");
         btnUpdate.addActionListener(new java.awt.event.ActionListener() {
@@ -105,27 +105,27 @@ public class TambahEditPemilih extends javax.swing.JDialog {
 
         TxtTTL.setFont(new java.awt.Font("Futura Md BT", 0, 12)); // NOI18N
 
-        jLabel2.setFont(new java.awt.Font("Futura Md BT", 1, 12)); // NOI18N
+        jLabel2.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setText("NIK");
 
-        jLabel3.setFont(new java.awt.Font("Futura Md BT", 1, 12)); // NOI18N
+        jLabel3.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setText("Nama");
 
-        jLabel4.setFont(new java.awt.Font("Futura Md BT", 1, 12)); // NOI18N
+        jLabel4.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
         jLabel4.setText("Domisili");
 
-        jLabel5.setFont(new java.awt.Font("Futura Md BT", 1, 12)); // NOI18N
+        jLabel5.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(255, 255, 255));
         jLabel5.setText("Tanggal Lahir");
 
-        jLabel6.setFont(new java.awt.Font("Futura Md BT", 1, 12)); // NOI18N
+        jLabel6.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(255, 255, 255));
         jLabel6.setText("Status");
 
-        jLabel7.setFont(new java.awt.Font("Futura Md BT", 1, 12)); // NOI18N
+        jLabel7.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
         jLabel7.setForeground(new java.awt.Color(255, 255, 255));
         jLabel7.setText("Jenis Kelamin");
 
@@ -137,7 +137,7 @@ public class TambahEditPemilih extends javax.swing.JDialog {
             }
         });
 
-        jLabel8.setFont(new java.awt.Font("Futura Md BT", 1, 12)); // NOI18N
+        jLabel8.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
         jLabel8.setForeground(new java.awt.Color(255, 255, 255));
         jLabel8.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel8.setText("TAMBAH /EDIT DATA PEMILIH");
@@ -145,7 +145,7 @@ public class TambahEditPemilih extends javax.swing.JDialog {
         cmbStatus.setFont(new java.awt.Font("Futura Md BT", 0, 12)); // NOI18N
         cmbStatus.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "DPT", "DPK" }));
 
-        jLabel9.setFont(new java.awt.Font("Futura Md BT", 1, 12)); // NOI18N
+        jLabel9.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
         jLabel9.setForeground(new java.awt.Color(255, 255, 255));
         jLabel9.setText("UIDRFID");
 
@@ -231,7 +231,7 @@ public class TambahEditPemilih extends javax.swing.JDialog {
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, 22, Short.MAX_VALUE)
+                        .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, 21, Short.MAX_VALUE)
                         .addGap(6, 6, 6))
                     .addComponent(cmbJenisKelamin))
                 .addGap(29, 29, 29)

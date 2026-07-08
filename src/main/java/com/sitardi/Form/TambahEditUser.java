@@ -79,7 +79,7 @@ public class TambahEditUser extends javax.swing.JDialog {
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         btnSave.setBackground(new java.awt.Color(229, 178, 120));
-        btnSave.setFont(new java.awt.Font("Futura Md BT", 1, 12)); // NOI18N
+        btnSave.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
         btnSave.setForeground(new java.awt.Color(254, 254, 254));
         btnSave.setText("Simpan");
         btnSave.addActionListener(new java.awt.event.ActionListener() {
@@ -90,7 +90,7 @@ public class TambahEditUser extends javax.swing.JDialog {
         jPanel1.add(btnSave, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 460, -1, -1));
 
         btnUpdate.setBackground(new java.awt.Color(150, 30, 31));
-        btnUpdate.setFont(new java.awt.Font("Futura Md BT", 1, 12)); // NOI18N
+        btnUpdate.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
         btnUpdate.setForeground(new java.awt.Color(254, 254, 254));
         btnUpdate.setText("Update");
         btnUpdate.addActionListener(new java.awt.event.ActionListener() {
@@ -127,43 +127,43 @@ public class TambahEditUser extends javax.swing.JDialog {
         Txtemail.setPreferredSize(new java.awt.Dimension(220, 25));
         jPanel1.add(Txtemail, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 350, -1, -1));
 
-        jLabel2.setFont(new java.awt.Font("Futura Md BT", 1, 12)); // NOI18N
+        jLabel2.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel2.setText("NIK");
         jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 230, -1, -1));
 
-        jLabel3.setFont(new java.awt.Font("Futura Md BT", 1, 12)); // NOI18N
+        jLabel3.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel3.setText("Username");
         jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 270, -1, -1));
 
-        jLabel4.setFont(new java.awt.Font("Futura Md BT", 1, 12)); // NOI18N
+        jLabel4.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
         jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel4.setText("Nama");
         jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 310, 58, -1));
 
-        jLabel5.setFont(new java.awt.Font("Futura Md BT", 1, 12)); // NOI18N
+        jLabel5.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(255, 255, 255));
         jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel5.setText("Email");
         jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 350, 87, -1));
 
-        jLabel6.setFont(new java.awt.Font("Futura Md BT", 1, 12)); // NOI18N
+        jLabel6.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(255, 255, 255));
         jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel6.setText("Password");
         jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 390, -1, -1));
 
-        jLabel8.setFont(new java.awt.Font("Futura Md BT", 1, 12)); // NOI18N
+        jLabel8.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
         jLabel8.setForeground(new java.awt.Color(255, 255, 255));
         jLabel8.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel8.setText("TAMBAH /EDIT DATA USER");
         jPanel1.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(96, 21, 187, 28));
 
-        jLabel9.setFont(new java.awt.Font("Futura Md BT", 1, 12)); // NOI18N
+        jLabel9.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
         jLabel9.setForeground(new java.awt.Color(255, 255, 255));
         jLabel9.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel9.setText("Url Img");

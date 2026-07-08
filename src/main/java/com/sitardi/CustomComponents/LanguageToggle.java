@@ -105,4 +105,15 @@ public class LanguageToggle extends JPanel {
     public String getSelectedLanguage() {
         return fullLangs[selectedIndex];
     }
+    
+    // Method baru agar posisi slider bisa dikendalikan secara programmatis dari luar
+    public void setLanguage(String languageName) {
+        for (int i = 0; i < fullLangs.length; i++) {
+            if (fullLangs[i].equalsIgnoreCase(languageName)) {
+                this.selectedIndex = i;
+                repaint(); // Gambar ulang slider ke posisi bahasa yang sesuai
+                return;
+            }
+        }
+    }
 }

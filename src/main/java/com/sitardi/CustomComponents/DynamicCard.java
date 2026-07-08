@@ -1,13 +1,5 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.sitardi.CustomComponents;
 
-/**
- *
- * @author ASUS
- */
 import java.awt.*;
 import java.lang.reflect.Field;
 import java.text.SimpleDateFormat;
@@ -32,7 +24,7 @@ public class DynamicCard {
     private static final Font FONT_TITLE = new Font("SansSerif", Font.BOLD, 15);
 
     public static JPanel createCard(Object obj, Object service) {
-        // Layout Utama: BorderLayout agar bisa membagi Atas (Gambar), Tengah (Data), Bawah (Tombol)
+        // Layout Utama
         JPanel cardPanel = new JPanel(new BorderLayout(0, 15));
         cardPanel.setBackground(COLOR_CARD_BG);
         cardPanel.setBorder(BorderFactory.createCompoundBorder(
@@ -49,7 +41,7 @@ public class DynamicCard {
             imgHeader.setBorderThickness(3);
 
             if (u.getUrl_img() != null && !u.getUrl_img().isEmpty()) {
-                imgHeader.setText("Loading...");
+                imgHeader.setText(services.I18nService.getLocale("ui.card.loading"));
 
                 new Thread(() -> {
                     try {
@@ -72,12 +64,12 @@ public class DynamicCard {
                         }
                     } catch (Exception e) {
                         System.out.println("Gagal memuat gambar: " + e.getMessage());
-                        SwingUtilities.invokeLater(() -> imgHeader.setText("Error"));
+                        SwingUtilities.invokeLater(() -> imgHeader.setText(services.I18nService.getLocale("ui.card.error")));
                     }
                 }).start();
 
             } else {
-                imgHeader.setText("No Image");
+                imgHeader.setText(services.I18nService.getLocale("ui.card.no_image"));
             }
 
             JPanel imgWrapper = new JPanel(new FlowLayout(FlowLayout.CENTER));
@@ -86,7 +78,7 @@ public class DynamicCard {
             cardPanel.add(imgWrapper, BorderLayout.NORTH);
         }
 
-        // --- 2. BAGIAN TENGAH (CENTER): DATA OTOMATIS ---
+        // --- 2. BAGIAN TENGAH (CENTER): DATA OTOMATIS BERBASIS I18N ---
         JPanel infoPanel = new JPanel(new GridLayout(0, 1, 0, 5));
         infoPanel.setOpaque(false);
 
@@ -101,7 +93,7 @@ public class DynamicCard {
                 String name = field.getName();
                 Object value = field.get(obj);
 
-                // Filter: Field yang TIDAK boleh muncul sebagai teks
+                // Filter Field yang disembunyikan
                 if (name.toLowerCase().contains("password")
                         || name.equals("_id")
                         || name.equals("id")
@@ -110,8 +102,23 @@ public class DynamicCard {
                     continue;
                 }
 
-                String labelName = formatLabelName(name);
+                // i18n untuk Label: Cari dengan key "field.[namaField]"
+                String labelName = services.I18nService.getLocale("field." + name);
+                if (labelName.startsWith("!") && labelName.endsWith("!")) {
+                    labelName = formatLabelName(name); // Fallback otomatis ke text bawaan jika belum diterjemahkan
+                }
+
+                // Format Nilai Data
                 String displayValue = formatValue(value);
+                
+                // i18n untuk Nilai (Opsional): Berguna untuk field ber-value kode seperti jenis_kelamin ("l"/"p")
+                if (value instanceof String) {
+                    String valueKey = "value." + name + "." + value.toString().toLowerCase();
+                    String translatedValue = services.I18nService.getLocale(valueKey);
+                    if (!translatedValue.startsWith("!") || !translatedValue.endsWith("!")) {
+                        displayValue = translatedValue;
+                    }
+                }
 
                 JLabel label = new JLabel("<html><b>" + labelName + ":</b> " + displayValue + "</html>");
                 label.setFont(name.toLowerCase().contains("name") || name.toLowerCase().contains("nama") ? FONT_TITLE : FONT_LABEL);
@@ -140,16 +147,14 @@ public class DynamicCard {
         JPanel panel = new JPanel(new GridLayout(1, 2, 10, 0));
         panel.setOpaque(false);
 
-        JButton btnEdit = createStyledButton("Edit", COLOR_EDIT);
+        JButton btnEdit = createStyledButton(services.I18nService.getLocale("ui.btn.ubah"), COLOR_EDIT);
         btnEdit.addActionListener(e -> {
             TambahEditUser popUp = new TambahEditUser(null, true);
             popUp.setUserId(u.getId());
             popUp.txtUrl.setText(u.getUrl_img());
             popUp.TxtNIK.setText(u.getNik());
-//            popUp.TxtNIK.setEnabled(false);
             popUp.TxtNama.setText(u.getName());
             popUp.TxtUsername.setText(u.getUsername());
-//            popUp.cmbRole.setSelectedItem(u.getRole());
             popUp.Txtemail.setText(u.getEmail());
             popUp.TxtPassword.setText("");
             popUp.btnUpdate.setEnabled(true);
@@ -159,9 +164,12 @@ public class DynamicCard {
             popUp.setVisible(true);
         });
 
-        JButton btnDel = createStyledButton("Hapus", COLOR_DELETE);
+        JButton btnDel = createStyledButton(services.I18nService.getLocale("ui.btn.hapus"), COLOR_DELETE);
         btnDel.addActionListener(e -> {
-            int confirm = JOptionPane.showConfirmDialog(null, "Hapus data " + u.getName() + "?", "Konfirmasi", JOptionPane.YES_NO_OPTION);
+            String confirmMsg = services.I18nService.getLocale("ui.dialog.delete.confirm").replace("{0}", u.getName());
+            String titleMsg = services.I18nService.getLocale("ui.dialog.delete.title");
+            
+            int confirm = JOptionPane.showConfirmDialog(null, confirmMsg, titleMsg, JOptionPane.YES_NO_OPTION);
             if (confirm == JOptionPane.YES_OPTION) {
                 service.hapusUser(u.getId().toHexString());
             }
@@ -176,7 +184,7 @@ public class DynamicCard {
         JPanel panel = new JPanel(new GridLayout(1, 2, 12, 0));
         panel.setOpaque(false);
 
-        JButton btnEdit = createStyledButton("Edit", COLOR_EDIT);
+        JButton btnEdit = createStyledButton(services.I18nService.getLocale("ui.btn.ubah"), COLOR_EDIT);
         btnEdit.addActionListener(e -> {
             TambahEditPemilih popUp = new TambahEditPemilih(null, true);
             popUp.setPemilihId(p.getId());
@@ -195,9 +203,12 @@ public class DynamicCard {
             popUp.setVisible(true);
         });
 
-        JButton btnDel = createStyledButton("Hapus", COLOR_DELETE);
+        JButton btnDel = createStyledButton(services.I18nService.getLocale("ui.btn.hapus"), COLOR_DELETE);
         btnDel.addActionListener(e -> {
-            int confirm = JOptionPane.showConfirmDialog(null, "Hapus data " + p.getNama_lengkap() + "?", "Konfirmasi", JOptionPane.YES_NO_OPTION);
+            String confirmMsg = services.I18nService.getLocale("ui.dialog.delete.confirm").replace("{0}", p.getNama_lengkap());
+            String titleMsg = services.I18nService.getLocale("ui.dialog.delete.title");
+
+            int confirm = JOptionPane.showConfirmDialog(null, confirmMsg, titleMsg, JOptionPane.YES_NO_OPTION);
             if (confirm == JOptionPane.YES_OPTION) {
                 service.hapusPemilih(p.getId().toHexString());
             }

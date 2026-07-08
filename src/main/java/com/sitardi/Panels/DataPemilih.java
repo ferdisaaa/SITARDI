@@ -66,7 +66,7 @@ public class DataPemilih extends javax.swing.JPanel {
         btnTambah.setBorder(null);
         btnTambah.setForeground(new java.awt.Color(254, 254, 254));
         btnTambah.setText("Tambah");
-        btnTambah.setFont(new java.awt.Font("Futura Md BT", 1, 18)); // NOI18N
+        btnTambah.setFont(new java.awt.Font("SansSerif", 1, 18)); // NOI18N
         btnTambah.setPreferredSize(new java.awt.Dimension(125, 45));
         btnTambah.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -78,7 +78,7 @@ public class DataPemilih extends javax.swing.JPanel {
         txtCari.setForeground(new java.awt.Color(13, 13, 13));
         txtCari.setText("Cari.........");
         txtCari.setCaretColor(new java.awt.Color(13, 13, 13));
-        txtCari.setFont(new java.awt.Font("Futura Bk BT", 0, 18)); // NOI18N
+        txtCari.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
         txtCari.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 txtCariMouseClicked(evt);
@@ -116,9 +116,9 @@ public class DataPemilih extends javax.swing.JPanel {
             mainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, mainLayout.createSequentialGroup()
                 .addGap(43, 43, 43)
-                .addGroup(mainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnTambah, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtCari, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(mainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(btnTambah, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(txtCari, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
                 .addComponent(pnlData, javax.swing.GroupLayout.PREFERRED_SIZE, 586, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(28, Short.MAX_VALUE))

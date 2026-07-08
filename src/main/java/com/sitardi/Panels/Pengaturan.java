@@ -4,6 +4,9 @@
  */
 package com.sitardi.Panels;
 
+import com.sitardi.Form.DashboardAdmin;
+import services.I18nService;
+
 /**
  *
  * @author ASUS
@@ -15,6 +18,9 @@ public class Pengaturan extends javax.swing.JPanel {
      */
     public Pengaturan() {
         initComponents();
+        syncLanguageToggleState();
+        initLanguageListener();
+        updateLanguage();
     }
 
     /**
@@ -36,7 +42,7 @@ public class Pengaturan extends javax.swing.JPanel {
 
         main.setBackground(new java.awt.Color(254, 254, 254));
 
-        jLabel1.setFont(new java.awt.Font("Futura Bk BT", 1, 18)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("SansSerif", 1, 18)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(96, 2, 0));
         jLabel1.setText("Bahasa Sistem");
 
@@ -51,7 +57,7 @@ public class Pengaturan extends javax.swing.JPanel {
             .addGap(0, 0, Short.MAX_VALUE)
         );
 
-        jLabel2.setFont(new java.awt.Font("Futura Md BT", 1, 21)); // NOI18N
+        jLabel2.setFont(new java.awt.Font("SansSerif", 1, 21)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(96, 2, 0));
         jLabel2.setText("PENGATURAN SISTEM");
 
@@ -69,8 +75,8 @@ public class Pengaturan extends javax.swing.JPanel {
                         .addGroup(mainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jSeparator1)
                             .addGroup(mainLayout.createSequentialGroup()
-                                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 630, Short.MAX_VALUE)
+                                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 242, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 540, Short.MAX_VALUE)
                                 .addComponent(languageToggle2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(85, 85, 85))))
         );
@@ -85,7 +91,7 @@ public class Pengaturan extends javax.swing.JPanel {
                 .addGroup(mainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(languageToggle2, javax.swing.GroupLayout.DEFAULT_SIZE, 31, Short.MAX_VALUE)
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(584, Short.MAX_VALUE))
+                .addContainerGap(582, Short.MAX_VALUE))
         );
 
         add(main, java.awt.BorderLayout.CENTER);
@@ -99,4 +105,70 @@ public class Pengaturan extends javax.swing.JPanel {
     private com.sitardi.CustomComponents.LanguageToggle languageToggle2;
     private javax.swing.JPanel main;
     // End of variables declaration//GEN-END:variables
+private void initLanguageListener() {
+        // Mendengarkan event ganti bahasa dari komponen custom LanguageToggle
+        languageToggle2.addPropertyChangeListener("language", evt -> {
+            String selectedLang = (String) evt.getNewValue();
+            java.util.Locale locale;
+
+            // Mapping String dari LanguageToggle ke Objek Locale
+            switch (selectedLang) {
+                case "English":
+                    locale = new java.util.Locale("en");
+                    break;
+                case "日本語":
+                    locale = java.util.Locale.JAPANESE;
+                    break;
+                case "Bahasa Indonesia":
+                default:
+                    locale = new java.util.Locale("id", "ID");
+                    break;
+            }
+
+            // 1. Perbarui Locale di Service I18n
+            services.I18nService.setLocale(locale);
+
+            // 2. Perbarui teks di panel Pengaturan ini sendiri
+            updateLanguage();
+
+            // 3. Cari DashboardAdmin (Frame Utama) dan perbarui teks menu sidebar-nya
+            java.awt.Window window = javax.swing.SwingUtilities.getWindowAncestor(this);
+            if (window instanceof DashboardAdmin) {
+                ((DashboardAdmin) window).updateLanguage();
+            }
+        });
+    }
+
+    // Metode untuk memperbarui semua teks di panel Pengaturan
+    public void updateLanguage() {
+        javax.swing.SwingUtilities.invokeLater(() -> {
+            jLabel2.setText(I18nService.getLocale("ui.label.pengaturan"));
+            jLabel1.setText(I18nService.getLocale("ui.label.bahasa.sistem"));
+        });
+    }
+    
+    private void syncLanguageToggleState() {
+        java.util.Locale current = services.I18nService.getCurrentLocale();
+        if (current != null) {
+            String lang = current.getLanguage();
+            
+            // Sesuaikan pemanggilan method setter di bawah dengan method yang ada pada LanguageToggle Anda
+            // (Misal: setLanguage, setSelectedItem, atau setMasukMode)
+            switch (lang) {
+                case "en":
+                    languageToggle2.setLanguage("English"); 
+                    break;
+                case "ja":
+                    languageToggle2.setLanguage("日本語");
+                    break;
+                default:
+                    languageToggle2.setLanguage("Bahasa Indonesia");
+                    break;
+            }
+            
+            // Pastikan komponen menggambar ulang posisinya yang baru
+            languageToggle2.repaint();
+        }
+    }
+
 }

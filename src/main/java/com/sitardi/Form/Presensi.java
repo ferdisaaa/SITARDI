@@ -67,7 +67,7 @@ public class Presensi extends javax.swing.JFrame {
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         pnlRealtime = new com.sitardi.CustomComponents.RoundPanel();
-        lblTitle = new javax.swing.JLabel();
+        lblTimeTitle = new javax.swing.JLabel();
         lblWaktu = new javax.swing.JLabel();
         lblHariTanggalBulan = new javax.swing.JLabel();
         lblTahun = new javax.swing.JLabel();
@@ -78,6 +78,7 @@ public class Presensi extends javax.swing.JFrame {
         btnMasuk = new com.sitardi.CustomComponents.RoundedButton();
         btnTest = new com.sitardi.CustomComponents.RoundedButton();
         btnClose = new javax.swing.JLabel();
+        lblBtnClose = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -100,12 +101,12 @@ public class Presensi extends javax.swing.JFrame {
         txtNama.setFont(new java.awt.Font("Futura Md BT", 0, 18)); // NOI18N
         txtNama.setForeground(new java.awt.Color(254, 254, 254));
         txtNama.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        txtNama.setText("SCAN E-KTP");
+        txtNama.setText("SCAN KARTU");
 
         txtKonfirmasi.setFont(new java.awt.Font("Futura Bk BT", 0, 18)); // NOI18N
         txtKonfirmasi.setForeground(new java.awt.Color(254, 254, 254));
         txtKonfirmasi.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        txtKonfirmasi.setText("Letakan E-KTP mu pada alat scanner ");
+        txtKonfirmasi.setText("Letakan kartumu mu pada alat scanner ");
 
         txtSelamat.setFont(new java.awt.Font("Futura Bk BT", 0, 18)); // NOI18N
         txtSelamat.setForeground(new java.awt.Color(254, 254, 254));
@@ -164,7 +165,7 @@ public class Presensi extends javax.swing.JFrame {
 
         jLabel4.setFont(new java.awt.Font("Futura Md BT", 0, 16)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(254, 254, 254));
-        jLabel4.setText("1. Pastikan E-KTP dalam keadaan bersih sebelum di scan");
+        jLabel4.setText("1. Pastikan kartumu dalam keadaan bersih sebelum di scan");
 
         jLabel5.setFont(new java.awt.Font("Futura Md BT", 0, 16)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(254, 254, 254));
@@ -225,15 +226,15 @@ public class Presensi extends javax.swing.JFrame {
                 .addComponent(jLabel7)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel8)
-                .addContainerGap(132, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pnlRealtime.setBackground(new java.awt.Color(150, 30, 31));
         pnlRealtime.setPreferredSize(new java.awt.Dimension(595, 185));
 
-        lblTitle.setFont(new java.awt.Font("Futura Md BT", 1, 24)); // NOI18N
-        lblTitle.setForeground(new java.awt.Color(254, 254, 254));
-        lblTitle.setText("Waktu saat ini");
+        lblTimeTitle.setFont(new java.awt.Font("Futura Md BT", 1, 24)); // NOI18N
+        lblTimeTitle.setForeground(new java.awt.Color(254, 254, 254));
+        lblTimeTitle.setText("Waktu saat ini");
 
         lblWaktu.setFont(new java.awt.Font("Futura Md BT", 1, 82)); // NOI18N
         lblWaktu.setForeground(new java.awt.Color(254, 254, 254));
@@ -256,7 +257,7 @@ public class Presensi extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlRealtimeLayout.createSequentialGroup()
                 .addContainerGap(45, Short.MAX_VALUE)
                 .addGroup(pnlRealtimeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblTitle)
+                    .addComponent(lblTimeTitle)
                     .addGroup(pnlRealtimeLayout.createSequentialGroup()
                         .addComponent(lblWaktu, javax.swing.GroupLayout.PREFERRED_SIZE, 387, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -269,7 +270,7 @@ public class Presensi extends javax.swing.JFrame {
             pnlRealtimeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlRealtimeLayout.createSequentialGroup()
                 .addGap(21, 21, 21)
-                .addComponent(lblTitle)
+                .addComponent(lblTimeTitle)
                 .addGap(18, 18, 18)
                 .addGroup(pnlRealtimeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addGroup(pnlRealtimeLayout.createSequentialGroup()
@@ -285,7 +286,7 @@ public class Presensi extends javax.swing.JFrame {
 
         lblTitle1.setFont(new java.awt.Font("Futura Md BT", 1, 21)); // NOI18N
         lblTitle1.setForeground(new java.awt.Color(254, 254, 254));
-        lblTitle1.setText("INPUT PRESENSI MANUAL");
+        lblTitle1.setText("CATAT PRESENSI MANUAL");
 
         lblTitle2.setFont(new java.awt.Font("Futura Bk BT", 0, 18)); // NOI18N
         lblTitle2.setForeground(new java.awt.Color(254, 254, 254));
@@ -355,6 +356,17 @@ public class Presensi extends javax.swing.JFrame {
             }
         });
 
+        lblBtnClose.setFont(new java.awt.Font("Futura Md BT", 1, 18)); // NOI18N
+        lblBtnClose.setForeground(new java.awt.Color(96, 2, 0));
+        lblBtnClose.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        lblBtnClose.setText("Keluar");
+        lblBtnClose.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        lblBtnClose.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblBtnCloseMouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout mainLayout = new javax.swing.GroupLayout(main);
         main.setLayout(mainLayout);
         mainLayout.setHorizontalGroup(
@@ -364,9 +376,13 @@ public class Presensi extends javax.swing.JFrame {
                     .addGroup(mainLayout.createSequentialGroup()
                         .addComponent(sidePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(mainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(pnlRealtime, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 895, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnClose, javax.swing.GroupLayout.Alignment.TRAILING)))
+                        .addGroup(mainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(pnlRealtime, javax.swing.GroupLayout.PREFERRED_SIZE, 895, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(mainLayout.createSequentialGroup()
+                                .addComponent(btnClose, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(lblBtnClose, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(15, 15, 15))))
                     .addGroup(mainLayout.createSequentialGroup()
                         .addGap(525, 525, 525)
                         .addComponent(pnlInputManual, javax.swing.GroupLayout.PREFERRED_SIZE, 895, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -376,13 +392,15 @@ public class Presensi extends javax.swing.JFrame {
             mainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(sidePanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(mainLayout.createSequentialGroup()
-                .addGap(37, 37, 37)
-                .addComponent(btnClose, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(41, 41, 41)
+                .addGroup(mainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnClose)
+                    .addComponent(lblBtnClose, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(pnlRealtime, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(42, 42, 42)
                 .addComponent(pnlInputManual, javax.swing.GroupLayout.PREFERRED_SIZE, 306, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(94, Short.MAX_VALUE))
+                .addGap(94, 94, 94))
         );
 
         getContentPane().add(main, java.awt.BorderLayout.CENTER);
@@ -396,12 +414,8 @@ public class Presensi extends javax.swing.JFrame {
             serialService.removeHandler(rfidHandler);
         }
 
-        // 2. Munculkan kembali Dashboard Admin
-        if (this.parentDashboard != null) {
-            this.parentDashboard.setVisible(true);
-        }
+        this.parentDashboard.setVisible(true);
 
-        // 3. Hancurkan form Presensi
         this.dispose();
         // TODO add your handling code here:
     }//GEN-LAST:event_btnCloseMouseClicked
@@ -428,6 +442,18 @@ public class Presensi extends javax.swing.JFrame {
     private void btnTestActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTestActionPerformed
         SerialService.getInstance().broadcast("333");
     }//GEN-LAST:event_btnTestActionPerformed
+
+    private void lblBtnCloseMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblBtnCloseMouseClicked
+        if (serialService != null && rfidHandler != null) {
+            serialService.removeHandler(rfidHandler);
+        }
+
+        this.parentDashboard.setVisible(true);
+
+        this.dispose();
+
+        // TODO add your handling code here:
+    }//GEN-LAST:event_lblBtnCloseMouseClicked
 
     /**
      * @param args the command line arguments
@@ -471,9 +497,10 @@ public class Presensi extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
+    private javax.swing.JLabel lblBtnClose;
     private javax.swing.JLabel lblHariTanggalBulan;
     private javax.swing.JLabel lblTahun;
-    private javax.swing.JLabel lblTitle;
+    private javax.swing.JLabel lblTimeTitle;
     private javax.swing.JLabel lblTitle1;
     private javax.swing.JLabel lblTitle2;
     private javax.swing.JLabel lblWaktu;
@@ -553,7 +580,7 @@ public class Presensi extends javax.swing.JFrame {
                 updateUiWithDelay(
                         "AKSES DITOLAK",
                         namaUser,
-                        "Anda sudah selesai melakukan absensi hari ini!"
+                        "Anda sudah selesai melakukan absensi!"
                 );
                 return;
             }
@@ -632,8 +659,8 @@ public class Presensi extends javax.swing.JFrame {
 
                 // Kembalikan ke teks panduan default (Thread-Safe)
                 java.awt.EventQueue.invokeLater(() -> {
-                    txtNama.setText("SCAN E-KTP");
-                    txtKonfirmasi.setText("Letakan E-KTP mu pada alat scanner ");
+                    txtNama.setText("SCAN KARTU");
+                    txtKonfirmasi.setText("Letakan kartumu pada alat scanner ");
                     txtSelamat.setText("untuk mencatat kehadiran");
                 });
 

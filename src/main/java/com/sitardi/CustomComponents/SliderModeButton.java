@@ -8,11 +8,13 @@ import java.awt.event.MouseEvent;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.geom.RoundRectangle2D;
+import services.I18nService;
 
 /**
  * @author ASUS
  */
 public class SliderModeButton extends JComponent {
+
     private boolean masukMode = true; // true = MASUK, false = KELUAR
     private float animationProgress = 0.0f; // 0.0 (Masuk) sampai 1.0 (Keluar)
     private Timer timer;
@@ -91,10 +93,10 @@ public class SliderModeButton extends JComponent {
         boolean oldVal = masukMode;
         masukMode = !masukMode;
         timer.start();
-        
+
         // 1. Picu Property Change
         firePropertyChange("mode", oldVal, masukMode);
-        
+
         // 2. Picu Action Performed (Fungsi baru)
         fireActionPerformed();
     }
@@ -131,9 +133,9 @@ public class SliderModeButton extends JComponent {
         // 3. Cetak Teks
         g2.setFont(new Font("SansSerif", Font.BOLD, 12));
         FontMetrics fm = g2.getFontMetrics();
-        
-        String txtMasuk = "MASUK";
-        String txtKeluar = "KELUAR";
+
+        String txtMasuk = I18nService.getLocale("ui.label.masuk");
+        String txtKeluar = I18nService.getLocale("ui.label.keluar");
 
         int masukX = (w / 4) - (fm.stringWidth(txtMasuk) / 2);
         int keluarX = (3 * w / 4) - (fm.stringWidth(txtKeluar) / 2);

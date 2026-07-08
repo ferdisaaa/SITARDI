@@ -81,7 +81,7 @@
                       <EmptySpace pref="38" max="32767" attributes="0"/>
                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
                           <Component id="mainInfo" alignment="0" max="32767" attributes="0"/>
-                          <Component id="subInfo" alignment="0" pref="190" max="32767" attributes="0"/>
+                          <Component id="subInfoPemilih" alignment="0" pref="190" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace min="-2" pref="39" max="-2" attributes="0"/>
                   </Group>
@@ -93,7 +93,7 @@
                       <EmptySpace pref="32" max="32767" attributes="0"/>
                       <Component id="mainInfo" min="-2" pref="47" max="-2" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Component id="subInfo" min="-2" pref="30" max="-2" attributes="0"/>
+                      <Component id="subInfoPemilih" min="-2" pref="30" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
                   </Group>
               </Group>
@@ -112,10 +112,10 @@
                 <Property name="text" type="java.lang.String" value="0"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JLabel" name="subInfo">
+            <Component class="javax.swing.JLabel" name="subInfoPemilih">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                  <Font name="Futura Bk BT" size="18" style="0"/>
+                  <Font name="SansSerif" size="18" style="0"/>
                 </Property>
                 <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="fe" green="fe" red="fe" type="rgb"/>
@@ -143,7 +143,7 @@
                       <EmptySpace pref="38" max="32767" attributes="0"/>
                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
                           <Component id="mainInfo1" alignment="0" max="32767" attributes="0"/>
-                          <Component id="subInfo1" alignment="0" pref="190" max="32767" attributes="0"/>
+                          <Component id="subInfoMasuk" alignment="0" pref="190" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace min="-2" pref="39" max="-2" attributes="0"/>
                   </Group>
@@ -155,7 +155,7 @@
                       <EmptySpace pref="32" max="32767" attributes="0"/>
                       <Component id="mainInfo1" min="-2" pref="47" max="-2" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Component id="subInfo1" min="-2" pref="30" max="-2" attributes="0"/>
+                      <Component id="subInfoMasuk" min="-2" pref="30" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
                   </Group>
               </Group>
@@ -174,16 +174,16 @@
                 <Property name="text" type="java.lang.String" value="0"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JLabel" name="subInfo1">
+            <Component class="javax.swing.JLabel" name="subInfoMasuk">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                  <Font name="Futura Bk BT" size="18" style="0"/>
+                  <Font name="SansSerif" size="18" style="0"/>
                 </Property>
                 <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="fe" green="fe" red="fe" type="rgb"/>
                 </Property>
                 <Property name="horizontalAlignment" type="int" value="0"/>
-                <Property name="text" type="java.lang.String" value="Pemilih Terdaftar"/>
+                <Property name="text" type="java.lang.String" value="Pemilih Masuk"/>
               </Properties>
             </Component>
           </SubComponents>
@@ -205,7 +205,7 @@
                       <EmptySpace pref="38" max="32767" attributes="0"/>
                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
                           <Component id="mainInfo2" alignment="0" max="32767" attributes="0"/>
-                          <Component id="subInfo2" alignment="0" pref="190" max="32767" attributes="0"/>
+                          <Component id="subInfoKeluar" alignment="0" pref="190" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace min="-2" pref="39" max="-2" attributes="0"/>
                   </Group>
@@ -217,7 +217,7 @@
                       <EmptySpace pref="32" max="32767" attributes="0"/>
                       <Component id="mainInfo2" min="-2" pref="47" max="-2" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Component id="subInfo2" min="-2" pref="30" max="-2" attributes="0"/>
+                      <Component id="subInfoKeluar" min="-2" pref="30" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
                   </Group>
               </Group>
@@ -236,16 +236,16 @@
                 <Property name="text" type="java.lang.String" value="0"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JLabel" name="subInfo2">
+            <Component class="javax.swing.JLabel" name="subInfoKeluar">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                  <Font name="Futura Bk BT" size="18" style="0"/>
+                  <Font name="SansSerif" size="18" style="0"/>
                 </Property>
                 <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="fe" green="fe" red="fe" type="rgb"/>
                 </Property>
                 <Property name="horizontalAlignment" type="int" value="0"/>
-                <Property name="text" type="java.lang.String" value="Pemilih Terdaftar"/>
+                <Property name="text" type="java.lang.String" value="Pemilih Keluar"/>
               </Properties>
             </Component>
           </SubComponents>
