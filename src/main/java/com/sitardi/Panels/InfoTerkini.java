@@ -4,17 +4,52 @@
  */
 package com.sitardi.Panels;
 
+import com.mongodb.client.MongoCollection;
+import com.mongodb.client.model.Filters;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.Date;
+import javax.swing.SwingUtilities;
+import javax.swing.Timer;
+import org.bson.Document;
+
 /**
  *
  * @author ASUS
  */
 public class InfoTerkini extends javax.swing.JPanel {
 
+    private Timer realtimeTimer;
+    private MongoCollection<Document> pemilihCollection;
+    private MongoCollection<Document> logCollection;
+
     /**
      * Creates new form InfoTerkini
      */
     public InfoTerkini() {
         initComponents();
+        kustomisasiKomponen();
+
+        // 3. Inisialisasi koneksi database & nyalakan realtime counter
+        initDatabase();
+        initRealtimeUpdate();
+    }
+
+    @Override
+    public void addNotify() {
+        super.addNotify();
+        if (realtimeTimer != null && !realtimeTimer.isRunning()) {
+            realtimeTimer.start();
+        }
+    }
+
+    // Matikan timer jika user berpindah ke panel/menu lain agar menghemat RAM dan CPU Kiosk
+    @Override
+    public void removeNotify() {
+        super.removeNotify();
+        if (realtimeTimer != null && realtimeTimer.isRunning()) {
+            realtimeTimer.stop();
+        }
     }
 
     /**
@@ -30,10 +65,10 @@ public class InfoTerkini extends javax.swing.JPanel {
         infoPemilih = new com.sitardi.CustomComponents.RoundPanel();
         mainInfo = new javax.swing.JLabel();
         subInfo = new javax.swing.JLabel();
-        infoPemilih1 = new com.sitardi.CustomComponents.RoundPanel();
+        infoPemilihMasuk = new com.sitardi.CustomComponents.RoundPanel();
         mainInfo1 = new javax.swing.JLabel();
         subInfo1 = new javax.swing.JLabel();
-        infoPemilih2 = new com.sitardi.CustomComponents.RoundPanel();
+        infoPemilihKeluar = new com.sitardi.CustomComponents.RoundPanel();
         mainInfo2 = new javax.swing.JLabel();
         subInfo2 = new javax.swing.JLabel();
         roundPanel2 = new com.sitardi.CustomComponents.RoundPanel();
@@ -48,7 +83,7 @@ public class InfoTerkini extends javax.swing.JPanel {
         mainInfo.setFont(new java.awt.Font("Futura Md BT", 1, 48)); // NOI18N
         mainInfo.setForeground(new java.awt.Color(254, 254, 254));
         mainInfo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        mainInfo.setText("10");
+        mainInfo.setText("0");
 
         subInfo.setFont(new java.awt.Font("Futura Bk BT", 0, 18)); // NOI18N
         subInfo.setForeground(new java.awt.Color(254, 254, 254));
@@ -76,33 +111,33 @@ public class InfoTerkini extends javax.swing.JPanel {
                 .addGap(27, 27, 27))
         );
 
-        infoPemilih1.setBackground(new java.awt.Color(96, 2, 0));
-        infoPemilih1.setPreferredSize(new java.awt.Dimension(267, 148));
+        infoPemilihMasuk.setBackground(new java.awt.Color(96, 2, 0));
+        infoPemilihMasuk.setPreferredSize(new java.awt.Dimension(267, 148));
 
         mainInfo1.setFont(new java.awt.Font("Futura Md BT", 1, 48)); // NOI18N
         mainInfo1.setForeground(new java.awt.Color(254, 254, 254));
         mainInfo1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        mainInfo1.setText("10");
+        mainInfo1.setText("0");
 
         subInfo1.setFont(new java.awt.Font("Futura Bk BT", 0, 18)); // NOI18N
         subInfo1.setForeground(new java.awt.Color(254, 254, 254));
         subInfo1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         subInfo1.setText("Pemilih Terdaftar");
 
-        javax.swing.GroupLayout infoPemilih1Layout = new javax.swing.GroupLayout(infoPemilih1);
-        infoPemilih1.setLayout(infoPemilih1Layout);
-        infoPemilih1Layout.setHorizontalGroup(
-            infoPemilih1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, infoPemilih1Layout.createSequentialGroup()
+        javax.swing.GroupLayout infoPemilihMasukLayout = new javax.swing.GroupLayout(infoPemilihMasuk);
+        infoPemilihMasuk.setLayout(infoPemilihMasukLayout);
+        infoPemilihMasukLayout.setHorizontalGroup(
+            infoPemilihMasukLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, infoPemilihMasukLayout.createSequentialGroup()
                 .addContainerGap(38, Short.MAX_VALUE)
-                .addGroup(infoPemilih1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(infoPemilihMasukLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(mainInfo1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(subInfo1, javax.swing.GroupLayout.DEFAULT_SIZE, 190, Short.MAX_VALUE))
                 .addGap(39, 39, 39))
         );
-        infoPemilih1Layout.setVerticalGroup(
-            infoPemilih1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, infoPemilih1Layout.createSequentialGroup()
+        infoPemilihMasukLayout.setVerticalGroup(
+            infoPemilihMasukLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, infoPemilihMasukLayout.createSequentialGroup()
                 .addContainerGap(32, Short.MAX_VALUE)
                 .addComponent(mainInfo1, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -110,33 +145,33 @@ public class InfoTerkini extends javax.swing.JPanel {
                 .addGap(27, 27, 27))
         );
 
-        infoPemilih2.setBackground(new java.awt.Color(96, 2, 0));
-        infoPemilih2.setPreferredSize(new java.awt.Dimension(267, 148));
+        infoPemilihKeluar.setBackground(new java.awt.Color(96, 2, 0));
+        infoPemilihKeluar.setPreferredSize(new java.awt.Dimension(267, 148));
 
         mainInfo2.setFont(new java.awt.Font("Futura Md BT", 1, 48)); // NOI18N
         mainInfo2.setForeground(new java.awt.Color(254, 254, 254));
         mainInfo2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        mainInfo2.setText("10");
+        mainInfo2.setText("0");
 
         subInfo2.setFont(new java.awt.Font("Futura Bk BT", 0, 18)); // NOI18N
         subInfo2.setForeground(new java.awt.Color(254, 254, 254));
         subInfo2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         subInfo2.setText("Pemilih Terdaftar");
 
-        javax.swing.GroupLayout infoPemilih2Layout = new javax.swing.GroupLayout(infoPemilih2);
-        infoPemilih2.setLayout(infoPemilih2Layout);
-        infoPemilih2Layout.setHorizontalGroup(
-            infoPemilih2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, infoPemilih2Layout.createSequentialGroup()
+        javax.swing.GroupLayout infoPemilihKeluarLayout = new javax.swing.GroupLayout(infoPemilihKeluar);
+        infoPemilihKeluar.setLayout(infoPemilihKeluarLayout);
+        infoPemilihKeluarLayout.setHorizontalGroup(
+            infoPemilihKeluarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, infoPemilihKeluarLayout.createSequentialGroup()
                 .addContainerGap(38, Short.MAX_VALUE)
-                .addGroup(infoPemilih2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(infoPemilihKeluarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(mainInfo2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(subInfo2, javax.swing.GroupLayout.DEFAULT_SIZE, 190, Short.MAX_VALUE))
                 .addGap(39, 39, 39))
         );
-        infoPemilih2Layout.setVerticalGroup(
-            infoPemilih2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, infoPemilih2Layout.createSequentialGroup()
+        infoPemilihKeluarLayout.setVerticalGroup(
+            infoPemilihKeluarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, infoPemilihKeluarLayout.createSequentialGroup()
                 .addContainerGap(32, Short.MAX_VALUE)
                 .addComponent(mainInfo2, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -168,9 +203,9 @@ public class InfoTerkini extends javax.swing.JPanel {
                     .addGroup(mainLayout.createSequentialGroup()
                         .addComponent(infoPemilih, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 127, Short.MAX_VALUE)
-                        .addComponent(infoPemilih1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(infoPemilihMasuk, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(100, 100, 100)
-                        .addComponent(infoPemilih2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(infoPemilihKeluar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(56, 56, 56))
         );
         mainLayout.setVerticalGroup(
@@ -179,8 +214,8 @@ public class InfoTerkini extends javax.swing.JPanel {
                 .addContainerGap(78, Short.MAX_VALUE)
                 .addGroup(mainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(infoPemilih, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(infoPemilih1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(infoPemilih2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(infoPemilihMasuk, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(infoPemilihKeluar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(46, 46, 46)
                 .addComponent(roundPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(58, 58, 58))
@@ -192,8 +227,8 @@ public class InfoTerkini extends javax.swing.JPanel {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private com.sitardi.CustomComponents.RoundPanel infoPemilih;
-    private com.sitardi.CustomComponents.RoundPanel infoPemilih1;
-    private com.sitardi.CustomComponents.RoundPanel infoPemilih2;
+    private com.sitardi.CustomComponents.RoundPanel infoPemilihKeluar;
+    private com.sitardi.CustomComponents.RoundPanel infoPemilihMasuk;
     private javax.swing.JPanel main;
     private javax.swing.JLabel mainInfo;
     private javax.swing.JLabel mainInfo1;
@@ -203,4 +238,93 @@ public class InfoTerkini extends javax.swing.JPanel {
     private javax.swing.JLabel subInfo1;
     private javax.swing.JLabel subInfo2;
     // End of variables declaration//GEN-END:variables
+
+    private void kustomisasiKomponen() {
+        subInfo1.setText("Pemilih Masuk");
+        subInfo2.setText("Pemilih Keluar");
+    }
+
+    private void initDatabase() {
+        try {
+            // 1. Buat koneksi ke server MongoDB
+            String mongoURI = System.getProperty("MONGODB_URL");
+            // Jika menggunakan localhost, biarkan menggunakan: "mongodb://localhost:27017"
+
+            com.mongodb.client.MongoClient client = com.mongodb.client.MongoClients.create(mongoURI);
+
+            // 2. Ambil database (Ganti "sitardi_db" dengan nama database asli Anda jika berbeda)
+            String dbName = System.getProperty("DATABASE_NAME");
+            com.mongodb.client.MongoDatabase db = client.getDatabase(dbName);
+
+            // 3. Ambil nama koleksi pemilih dari System Property (atau fallback ke "pemilih")
+            String collPemilih = System.getProperty("COLLP");
+            String collLog = System.getProperty("COLLLA");
+
+            // 4. ISI VARIABEL GLOBAL (Ini yang paling krusial agar tidak bernilai null)
+            this.pemilihCollection = db.getCollection(collPemilih);
+            this.logCollection = db.getCollection(collLog); // <-- Ubah ke nama koleksi log absensi Anda
+
+            System.out.println("[SUCCESS] Berhasil terhubung ke MongoDB untuk Realtime Dashboard!");
+
+        } catch (Exception e) {
+            System.err.println("[ERROR] Gagal inisialisasi DB di InfoTerkini: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
+    private void initRealtimeUpdate() {
+        // Timer berjalan setiap 2000 milidetik (2 Detik)
+        realtimeTimer = new Timer(2000, e -> {
+            // Jalankan query MongoDB di dalam Worker Thread agar UI tidak patah-patah/freeze
+            new Thread(() -> {
+                try {
+                    // AMBIL DATA DARI DB (Silakan sesuaikan dengan method service Anda jika ada)
+                    long totalTerdaftar = dapatkanTotalTerdaftar();
+                    long totalMasuk = dapatkanLogHariIni("MASUK");
+                    long totalKeluar = dapatkanLogHariIni("KELUAR");
+
+                    // LEMPAR KEMBALI KE EDT (Event Dispatch Thread) UNTUK UPDATE UI
+                    SwingUtilities.invokeLater(() -> {
+                        mainInfo.setText(String.valueOf(totalTerdaftar));
+                        mainInfo1.setText(String.valueOf(totalMasuk));
+                        mainInfo2.setText(String.valueOf(totalKeluar));
+                    });
+
+                } catch (Exception ex) {
+                    System.err.println("Gagal sinkronisasi data realtime: " + ex.getMessage());
+                }
+            }).start();
+        });
+    }
+
+    // --- LOGIKA AGREGASI / QUERY COUNT ---
+    private long dapatkanTotalTerdaftar() {
+        // Jika menggunakan service bawaan: return new utils.GenericDAO<>(System.getProperty("COLLP"), utils.Pemilih.class).findAll().size();
+        // Atau via collection langsung:
+        if (pemilihCollection != null) {
+            return pemilihCollection.countDocuments();
+        }
+        return 0;
+    }
+
+    private long dapatkanLogHariIni(String status) {
+        if (logCollection == null) {
+            return 0;
+        }
+
+        // Ambil batas waktu awal hari ini (00:00:00) agar data log lama tidak terhitung
+        Date awalHariIni = Date.from(LocalDate.now().atStartOfDay(ZoneId.systemDefault()).toInstant());
+
+        // Menghitung dokumen berdasarkan status dan waktu di atas jam 00:00 hari ini
+        return logCollection.countDocuments(Filters.and(
+                Filters.eq("status", status),
+                Filters.gte("waktuTap", awalHariIni)
+        ));
+
+        // PENTING: Jika setelah perbaikan ini angka tetap 0 padahal datanya ada, 
+        // kemungkinan besar ada masalah di zona waktu (UTC vs Local).
+        // Anda bisa menguji (sementara) dengan menghapus filter waktu untuk melihat apakah datanya terbaca:
+        // return logCollection.countDocuments(Filters.eq("status", status));
+    }
+
 }

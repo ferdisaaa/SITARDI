@@ -38,9 +38,9 @@
                       <Group type="102" alignment="1" attributes="0">
                           <Component id="infoPemilih" min="-2" max="-2" attributes="0"/>
                           <EmptySpace pref="127" max="32767" attributes="0"/>
-                          <Component id="infoPemilih1" min="-2" max="-2" attributes="0"/>
+                          <Component id="infoPemilihMasuk" min="-2" max="-2" attributes="0"/>
                           <EmptySpace min="-2" pref="100" max="-2" attributes="0"/>
-                          <Component id="infoPemilih2" min="-2" max="-2" attributes="0"/>
+                          <Component id="infoPemilihKeluar" min="-2" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                   <EmptySpace min="-2" pref="56" max="-2" attributes="0"/>
@@ -53,8 +53,8 @@
                   <EmptySpace pref="78" max="32767" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Component id="infoPemilih" alignment="0" min="-2" max="-2" attributes="0"/>
-                      <Component id="infoPemilih1" alignment="0" min="-2" max="-2" attributes="0"/>
-                      <Component id="infoPemilih2" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Component id="infoPemilihMasuk" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Component id="infoPemilihKeluar" alignment="0" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace min="-2" pref="46" max="-2" attributes="0"/>
                   <Component id="roundPanel2" min="-2" max="-2" attributes="0"/>
@@ -109,7 +109,7 @@
                   <Color blue="fe" green="fe" red="fe" type="rgb"/>
                 </Property>
                 <Property name="horizontalAlignment" type="int" value="0"/>
-                <Property name="text" type="java.lang.String" value="10"/>
+                <Property name="text" type="java.lang.String" value="0"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JLabel" name="subInfo">
@@ -126,7 +126,7 @@
             </Component>
           </SubComponents>
         </Container>
-        <Container class="com.sitardi.CustomComponents.RoundPanel" name="infoPemilih1">
+        <Container class="com.sitardi.CustomComponents.RoundPanel" name="infoPemilihMasuk">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="0" green="2" red="60" type="rgb"/>
@@ -171,7 +171,7 @@
                   <Color blue="fe" green="fe" red="fe" type="rgb"/>
                 </Property>
                 <Property name="horizontalAlignment" type="int" value="0"/>
-                <Property name="text" type="java.lang.String" value="10"/>
+                <Property name="text" type="java.lang.String" value="0"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JLabel" name="subInfo1">
@@ -188,7 +188,7 @@
             </Component>
           </SubComponents>
         </Container>
-        <Container class="com.sitardi.CustomComponents.RoundPanel" name="infoPemilih2">
+        <Container class="com.sitardi.CustomComponents.RoundPanel" name="infoPemilihKeluar">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="0" green="2" red="60" type="rgb"/>
@@ -233,7 +233,7 @@
                   <Color blue="fe" green="fe" red="fe" type="rgb"/>
                 </Property>
                 <Property name="horizontalAlignment" type="int" value="0"/>
-                <Property name="text" type="java.lang.String" value="10"/>
+                <Property name="text" type="java.lang.String" value="0"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JLabel" name="subInfo2">

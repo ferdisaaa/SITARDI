@@ -1,9 +1,10 @@
 package utils;
 
 import java.util.Date;
+import org.bson.types.ObjectId;
 
 public class Pemilih {
-    
+    private ObjectId id;
     private String uidRfid;
     private String nik;
     private String nama_lengkap;
@@ -89,5 +90,13 @@ public class Pemilih {
 
     public void setUidRfid(String uidRfid) {
         this.uidRfid = uidRfid;
+    }
+
+    public ObjectId getId() {
+        return id;
+    }
+
+    public void setId(ObjectId id) {
+        this.id = id;
     }
 }
