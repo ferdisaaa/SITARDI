@@ -391,20 +391,42 @@ public class Presensi extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnCloseMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCloseMouseClicked
-        if (this.parentDashboard != null) {
-            this.parentDashboard.setVisible(true); // Memunculkan kembali dashboard admin
+
+        if (serialService != null && rfidHandler != null) {
+            serialService.removeHandler(rfidHandler);
         }
+
+        // 2. Munculkan kembali Dashboard Admin
+        if (this.parentDashboard != null) {
+            this.parentDashboard.setVisible(true);
+        }
+
+        // 3. Hancurkan form Presensi
         this.dispose();
         // TODO add your handling code here:
     }//GEN-LAST:event_btnCloseMouseClicked
 
     private void btnMasukActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMasukActionPerformed
+        // 1. Ambil teks dan hilangkan spasi berlebih
+        String nikInput = inptNIK.getText().trim();
 
+        // 2. Cek apakah tidak kosong
+        if (!nikInput.isEmpty()) {
+            if (serialService != null) {
+                // Masuk ke jalur pipeline absensi
+                serialService.broadcast(nikInput);
+            }
+            // Bersihkan field HANYA di sini
+            inptNIK.setText("");
+        } else {
+            // Tampilkan pesan error jika benar-benar kosong
+            updateUiWithDelay("INPUT KOSONG", "Silakan masukkan NIK Anda", "pada kolom yang tersedia.");
+        }
 // TODO add your handling code here:
     }//GEN-LAST:event_btnMasukActionPerformed
 
     private void btnTestActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTestActionPerformed
-        SerialService.getInstance().broadcast("115");
+        SerialService.getInstance().broadcast("333");
     }//GEN-LAST:event_btnTestActionPerformed
 
     /**
@@ -496,20 +518,6 @@ public class Presensi extends javax.swing.JFrame {
         serialService.addHandler(rfidHandler);
 
         // B. TOMBOL MANUAL (btnMasuk) SEKARANG IKUT MELAKUKAN BROADCAST
-        btnMasuk.addActionListener(new java.awt.event.ActionListener() {
-            @Override
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                String nikInput = inptNIK.getText().trim();
-                if (!nikInput.isEmpty()) {
-                    // Masuk ke jalur pipeline yang sama dengan RFID via Broadcast
-                    serialService.broadcast(nikInput);
-                    inptNIK.setText(""); // Bersihkan field
-                } else {
-                    updateUiWithDelay("INPUT KOSONG", "Silakan masukkan NIK Anda", "pada kolom yang tersedia.");
-                }
-            }
-        });
-
         // C. KONEKSIKAN KE PORT SCANNER
         String targetPort = "COM3";
         int baudRate = 9600;
