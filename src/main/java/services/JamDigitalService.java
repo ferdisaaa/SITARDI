@@ -8,6 +8,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Locale;
 import javax.swing.JLabel;
+import javax.swing.SwingUtilities; // Ditambahkan untuk kestabilan UI Thread Swing
 
 /**
  *
@@ -17,26 +18,31 @@ public class JamDigitalService {
     
     private final JLabel targetLabel;
     private final String pattern;
+    private final Locale locale; // 1. Tambahkan field Locale agar dinamis
 
-    public JamDigitalService(JLabel targetLabel, String pattern) {
+    // 2. Sesuaikan konstruktor untuk menerima objek Locale
+    public JamDigitalService(JLabel targetLabel, String pattern, Locale locale) {
         this.targetLabel = targetLabel;
         this.pattern = pattern;
+        this.locale = locale;
     }
 
     /**
      * Menyiapkan objek Thread tanpa langsung menjalankannya.
-     * @return Objek Thread dalam fase 'New' [3].
+     * @return Objek Thread dalam fase 'New'.
      */
     public Thread getThread() {
         Runnable clockTask = () -> {
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern(pattern, Locale.of("id", "ID"));
+            // 3. Gunakan variabel locale dari konstruktor, bukan hardcoded lagi
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern(pattern, locale);
             try {
                 while (!Thread.currentThread().isInterrupted()) {
                     LocalDateTime now = LocalDateTime.now();
                     String timeFormatted = now.format(formatter);
                     
-                    // Update label secara asinkron
-                    targetLabel.setText(timeFormatted);
+                    // 4. PENTING: Update UI Swing disarankan dibungkus dengan invokeLater
+                    // agar tidak terjadi tabrakan thread (Thread-safe)
+                    SwingUtilities.invokeLater(() -> targetLabel.setText(timeFormatted));
                     
                     Thread.sleep(1000);
                 }

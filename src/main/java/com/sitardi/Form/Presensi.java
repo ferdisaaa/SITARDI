@@ -5,6 +5,7 @@
 package com.sitardi.Form;
 
 import com.sitardi.Serial.SerialDtHandler;
+import services.I18nService;
 import services.JamDigitalService;
 import services.LogAbsensiService;
 import services.PemilihService;
@@ -36,7 +37,7 @@ public class Presensi extends javax.swing.JFrame {
     public Presensi(javax.swing.JFrame parentDashboard, boolean isMasukMode) {
         this.parentDashboard = parentDashboard;
         this.statusAbsensi = isMasukMode ? "MASUK" : "KELUAR";
-
+        updateLanguage();
         initComponents();
         initJamDigital();
         initAbsensiAndBroadcast();
@@ -60,20 +61,20 @@ public class Presensi extends javax.swing.JFrame {
         txtNama = new javax.swing.JLabel();
         txtKonfirmasi = new javax.swing.JLabel();
         txtSelamat = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
-        jLabel8 = new javax.swing.JLabel();
+        lblTips = new javax.swing.JLabel();
+        lblTips1 = new javax.swing.JLabel();
+        lblTips2 = new javax.swing.JLabel();
+        lblTips21 = new javax.swing.JLabel();
+        lblTips3 = new javax.swing.JLabel();
+        lblTips31 = new javax.swing.JLabel();
         pnlRealtime = new com.sitardi.CustomComponents.RoundPanel();
         lblTimeTitle = new javax.swing.JLabel();
         lblWaktu = new javax.swing.JLabel();
         lblHariTanggalBulan = new javax.swing.JLabel();
         lblTahun = new javax.swing.JLabel();
         pnlInputManual = new com.sitardi.CustomComponents.RoundPanel();
-        lblTitle1 = new javax.swing.JLabel();
-        lblTitle2 = new javax.swing.JLabel();
+        lblTitleManual = new javax.swing.JLabel();
+        lblMasukanNIK = new javax.swing.JLabel();
         inptNIK = new javax.swing.JTextField();
         btnMasuk = new com.sitardi.CustomComponents.RoundedButton();
         btnTest = new com.sitardi.CustomComponents.RoundedButton();
@@ -98,17 +99,17 @@ public class Presensi extends javax.swing.JFrame {
 
         jLabel9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/card.png"))); // NOI18N
 
-        txtNama.setFont(new java.awt.Font("Futura Md BT", 0, 18)); // NOI18N
+        txtNama.setFont(new java.awt.Font("SansSerif", 0, 18)); // NOI18N
         txtNama.setForeground(new java.awt.Color(254, 254, 254));
         txtNama.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         txtNama.setText("SCAN KARTU");
 
-        txtKonfirmasi.setFont(new java.awt.Font("Futura Bk BT", 0, 18)); // NOI18N
+        txtKonfirmasi.setFont(new java.awt.Font("SansSerif", 0, 18)); // NOI18N
         txtKonfirmasi.setForeground(new java.awt.Color(254, 254, 254));
         txtKonfirmasi.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         txtKonfirmasi.setText("Letakan kartumu mu pada alat scanner ");
 
-        txtSelamat.setFont(new java.awt.Font("Futura Bk BT", 0, 18)); // NOI18N
+        txtSelamat.setFont(new java.awt.Font("SansSerif", 0, 18)); // NOI18N
         txtSelamat.setForeground(new java.awt.Color(254, 254, 254));
         txtSelamat.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         txtSelamat.setText("untuk mencatat kehadiran");
@@ -139,7 +140,7 @@ public class Presensi extends javax.swing.JFrame {
                 .addComponent(txtKonfirmasi)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtSelamat)
-                .addContainerGap(79, Short.MAX_VALUE))
+                .addContainerGap(76, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout roundPanel1Layout = new javax.swing.GroupLayout(roundPanel1);
@@ -159,53 +160,46 @@ public class Presensi extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        jLabel3.setFont(new java.awt.Font("Futura Md BT", 0, 18)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(254, 254, 254));
-        jLabel3.setText("Tips:");
+        lblTips.setFont(new java.awt.Font("SansSerif", 0, 18)); // NOI18N
+        lblTips.setForeground(new java.awt.Color(254, 254, 254));
+        lblTips.setText("Tips:");
 
-        jLabel4.setFont(new java.awt.Font("Futura Md BT", 0, 16)); // NOI18N
-        jLabel4.setForeground(new java.awt.Color(254, 254, 254));
-        jLabel4.setText("1. Pastikan kartumu dalam keadaan bersih sebelum di scan");
+        lblTips1.setFont(new java.awt.Font("SansSerif", 0, 16)); // NOI18N
+        lblTips1.setForeground(new java.awt.Color(254, 254, 254));
+        lblTips1.setText("1. Pastikan kartumu dalam keadaan bersih sebelum di scan");
 
-        jLabel5.setFont(new java.awt.Font("Futura Md BT", 0, 16)); // NOI18N
-        jLabel5.setForeground(new java.awt.Color(254, 254, 254));
-        jLabel5.setText("2. Jika belum memiliki E-KTP bisa melakukan absensi manual ");
+        lblTips2.setFont(new java.awt.Font("SansSerif", 0, 16)); // NOI18N
+        lblTips2.setForeground(new java.awt.Color(254, 254, 254));
+        lblTips2.setText("2. Jika belum memiliki E-KTP bisa melakukan absensi manual ");
 
-        jLabel6.setFont(new java.awt.Font("Futura Md BT", 0, 16)); // NOI18N
-        jLabel6.setForeground(new java.awt.Color(254, 254, 254));
-        jLabel6.setText("dengan mengetikan NIK pada kolom sebelah.");
+        lblTips21.setFont(new java.awt.Font("SansSerif", 0, 16)); // NOI18N
+        lblTips21.setForeground(new java.awt.Color(254, 254, 254));
+        lblTips21.setText("dengan mengetikan NIK pada kolom sebelah.");
 
-        jLabel7.setFont(new java.awt.Font("Futura Md BT", 0, 16)); // NOI18N
-        jLabel7.setForeground(new java.awt.Color(254, 254, 254));
-        jLabel7.setText("3. Jika mengalami kesulitan segera meminta bantuan kepada ");
+        lblTips3.setFont(new java.awt.Font("SansSerif", 0, 16)); // NOI18N
+        lblTips3.setForeground(new java.awt.Color(254, 254, 254));
+        lblTips3.setText("3. Jika mengalami kesulitan segera meminta bantuan kepada ");
 
-        jLabel8.setFont(new java.awt.Font("Futura Md BT", 0, 16)); // NOI18N
-        jLabel8.setForeground(new java.awt.Color(254, 254, 254));
-        jLabel8.setText("panitia yang bertugas.");
+        lblTips31.setFont(new java.awt.Font("SansSerif", 0, 16)); // NOI18N
+        lblTips31.setForeground(new java.awt.Color(254, 254, 254));
+        lblTips31.setText("panitia yang bertugas.");
 
         javax.swing.GroupLayout sidePanelLayout = new javax.swing.GroupLayout(sidePanel);
         sidePanel.setLayout(sidePanelLayout);
         sidePanelLayout.setHorizontalGroup(
             sidePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(sidePanelLayout.createSequentialGroup()
-                .addGroup(sidePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(sidePanelLayout.createSequentialGroup()
-                        .addGap(51, 51, 51)
-                        .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 367, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(sidePanelLayout.createSequentialGroup()
-                        .addGap(33, 33, 33)
-                        .addGroup(sidePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel7)
-                            .addGroup(sidePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jLabel5)
-                                .addComponent(jLabel4)
-                                .addComponent(jLabel3)
-                                .addComponent(jLabel1)
-                                .addComponent(roundPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 415, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                    .addGroup(sidePanelLayout.createSequentialGroup()
-                        .addGap(52, 52, 52)
-                        .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 367, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(10, Short.MAX_VALUE))
+                .addGap(33, 33, 33)
+                .addGroup(sidePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(lblTips31, javax.swing.GroupLayout.PREFERRED_SIZE, 416, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblTips21, javax.swing.GroupLayout.PREFERRED_SIZE, 417, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblTips2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(lblTips, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(roundPanel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 415, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblTips1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(lblTips3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(27, Short.MAX_VALUE))
         );
         sidePanelLayout.setVerticalGroup(
             sidePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -215,37 +209,38 @@ public class Presensi extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(roundPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(43, 43, 43)
-                .addComponent(jLabel3)
+                .addComponent(lblTips)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel4)
+                .addComponent(lblTips1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel5)
+                .addComponent(lblTips2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel6)
+                .addComponent(lblTips21)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel7)
+                .addComponent(lblTips3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel8)
+                .addComponent(lblTips31)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pnlRealtime.setBackground(new java.awt.Color(150, 30, 31));
         pnlRealtime.setPreferredSize(new java.awt.Dimension(595, 185));
 
-        lblTimeTitle.setFont(new java.awt.Font("Futura Md BT", 1, 24)); // NOI18N
+        lblTimeTitle.setFont(new java.awt.Font("SansSerif", 1, 24)); // NOI18N
         lblTimeTitle.setForeground(new java.awt.Color(254, 254, 254));
         lblTimeTitle.setText("Waktu saat ini");
 
-        lblWaktu.setFont(new java.awt.Font("Futura Md BT", 1, 82)); // NOI18N
+        lblWaktu.setFont(new java.awt.Font("SansSerif", 1, 72)); // NOI18N
         lblWaktu.setForeground(new java.awt.Color(254, 254, 254));
-        lblWaktu.setText("07:24:34");
+        lblWaktu.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        lblWaktu.setText("07:24:34 AM");
 
-        lblHariTanggalBulan.setFont(new java.awt.Font("Futura Md BT", 1, 36)); // NOI18N
+        lblHariTanggalBulan.setFont(new java.awt.Font("SansSerif", 1, 32)); // NOI18N
         lblHariTanggalBulan.setForeground(new java.awt.Color(254, 254, 254));
         lblHariTanggalBulan.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         lblHariTanggalBulan.setText("Selasa, 30 September");
 
-        lblTahun.setFont(new java.awt.Font("Futura Md BT", 1, 36)); // NOI18N
+        lblTahun.setFont(new java.awt.Font("SansSerif", 1, 32)); // NOI18N
         lblTahun.setForeground(new java.awt.Color(254, 254, 254));
         lblTahun.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         lblTahun.setText("2026");
@@ -259,12 +254,12 @@ public class Presensi extends javax.swing.JFrame {
                 .addGroup(pnlRealtimeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lblTimeTitle)
                     .addGroup(pnlRealtimeLayout.createSequentialGroup()
-                        .addComponent(lblWaktu, javax.swing.GroupLayout.PREFERRED_SIZE, 387, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(lblWaktu)
+                        .addGap(18, 18, 18)
                         .addGroup(pnlRealtimeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lblTahun, javax.swing.GroupLayout.PREFERRED_SIZE, 394, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lblHariTanggalBulan, javax.swing.GroupLayout.PREFERRED_SIZE, 420, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addGap(31, 31, 31))
+                            .addComponent(lblHariTanggalBulan, javax.swing.GroupLayout.PREFERRED_SIZE, 357, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblTahun, javax.swing.GroupLayout.PREFERRED_SIZE, 357, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGap(57, 57, 57))
         );
         pnlRealtimeLayout.setVerticalGroup(
             pnlRealtimeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -272,25 +267,25 @@ public class Presensi extends javax.swing.JFrame {
                 .addGap(21, 21, 21)
                 .addComponent(lblTimeTitle)
                 .addGap(18, 18, 18)
-                .addGroup(pnlRealtimeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                .addGroup(pnlRealtimeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(pnlRealtimeLayout.createSequentialGroup()
                         .addComponent(lblHariTanggalBulan)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(lblTahun))
-                    .addComponent(lblWaktu, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(lblWaktu, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(37, Short.MAX_VALUE))
         );
 
         pnlInputManual.setBackground(new java.awt.Color(150, 30, 31));
         pnlInputManual.setPreferredSize(new java.awt.Dimension(595, 185));
 
-        lblTitle1.setFont(new java.awt.Font("Futura Md BT", 1, 21)); // NOI18N
-        lblTitle1.setForeground(new java.awt.Color(254, 254, 254));
-        lblTitle1.setText("CATAT PRESENSI MANUAL");
+        lblTitleManual.setFont(new java.awt.Font("SansSerif", 1, 21)); // NOI18N
+        lblTitleManual.setForeground(new java.awt.Color(254, 254, 254));
+        lblTitleManual.setText("CATAT PRESENSI MANUAL");
 
-        lblTitle2.setFont(new java.awt.Font("Futura Bk BT", 0, 18)); // NOI18N
-        lblTitle2.setForeground(new java.awt.Color(254, 254, 254));
-        lblTitle2.setText("Masukan NIK:");
+        lblMasukanNIK.setFont(new java.awt.Font("SansSerif", 0, 18)); // NOI18N
+        lblMasukanNIK.setForeground(new java.awt.Color(254, 254, 254));
+        lblMasukanNIK.setText("Masukan NIK:");
 
         inptNIK.setPreferredSize(new java.awt.Dimension(71, 40));
 
@@ -298,7 +293,7 @@ public class Presensi extends javax.swing.JFrame {
         btnMasuk.setForeground(new java.awt.Color(254, 254, 254));
         btnMasuk.setText("Masuk");
         btnMasuk.setBorderColor(new java.awt.Color(229, 178, 120));
-        btnMasuk.setFont(new java.awt.Font("Futura Bk BT", 1, 18)); // NOI18N
+        btnMasuk.setFont(new java.awt.Font("SansSerif", 1, 18)); // NOI18N
         btnMasuk.setRadius(15);
         btnMasuk.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -310,7 +305,7 @@ public class Presensi extends javax.swing.JFrame {
         btnTest.setForeground(new java.awt.Color(254, 254, 254));
         btnTest.setText("Tes Scan");
         btnTest.setBorderColor(new java.awt.Color(229, 178, 120));
-        btnTest.setFont(new java.awt.Font("Futura Bk BT", 1, 18)); // NOI18N
+        btnTest.setFont(new java.awt.Font("SansSerif", 1, 18)); // NOI18N
         btnTest.setRadius(15);
         btnTest.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -325,8 +320,8 @@ public class Presensi extends javax.swing.JFrame {
             .addGroup(pnlInputManualLayout.createSequentialGroup()
                 .addGap(44, 44, 44)
                 .addGroup(pnlInputManualLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(lblTitle2)
-                    .addComponent(lblTitle1)
+                    .addComponent(lblMasukanNIK)
+                    .addComponent(lblTitleManual)
                     .addComponent(inptNIK, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnMasuk, javax.swing.GroupLayout.DEFAULT_SIZE, 793, Short.MAX_VALUE)
                     .addComponent(btnTest, javax.swing.GroupLayout.DEFAULT_SIZE, 793, Short.MAX_VALUE))
@@ -336,16 +331,16 @@ public class Presensi extends javax.swing.JFrame {
             pnlInputManualLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlInputManualLayout.createSequentialGroup()
                 .addGap(30, 30, 30)
-                .addComponent(lblTitle1)
+                .addComponent(lblTitleManual)
                 .addGap(18, 18, 18)
-                .addComponent(lblTitle2)
+                .addComponent(lblMasukanNIK)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(inptNIK, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(33, 33, 33)
                 .addComponent(btnMasuk, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(btnTest, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(20, Short.MAX_VALUE))
+                .addContainerGap(15, Short.MAX_VALUE))
         );
 
         btnClose.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Close.png"))); // NOI18N
@@ -356,7 +351,7 @@ public class Presensi extends javax.swing.JFrame {
             }
         });
 
-        lblBtnClose.setFont(new java.awt.Font("Futura Md BT", 1, 18)); // NOI18N
+        lblBtnClose.setFont(new java.awt.Font("SansSerif", 1, 18)); // NOI18N
         lblBtnClose.setForeground(new java.awt.Color(96, 2, 0));
         lblBtnClose.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         lblBtnClose.setText("Keluar");
@@ -380,8 +375,8 @@ public class Presensi extends javax.swing.JFrame {
                             .addComponent(pnlRealtime, javax.swing.GroupLayout.PREFERRED_SIZE, 895, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(mainLayout.createSequentialGroup()
                                 .addComponent(btnClose, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(lblBtnClose, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(lblBtnClose, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(15, 15, 15))))
                     .addGroup(mainLayout.createSequentialGroup()
                         .addGap(525, 525, 525)
@@ -490,19 +485,19 @@ public class Presensi extends javax.swing.JFrame {
     private com.sitardi.CustomComponents.RoundedButton btnTest;
     private javax.swing.JTextField inptNIK;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JLabel lblBtnClose;
     private javax.swing.JLabel lblHariTanggalBulan;
+    private javax.swing.JLabel lblMasukanNIK;
     private javax.swing.JLabel lblTahun;
     private javax.swing.JLabel lblTimeTitle;
-    private javax.swing.JLabel lblTitle1;
-    private javax.swing.JLabel lblTitle2;
+    private javax.swing.JLabel lblTips;
+    private javax.swing.JLabel lblTips1;
+    private javax.swing.JLabel lblTips2;
+    private javax.swing.JLabel lblTips21;
+    private javax.swing.JLabel lblTips3;
+    private javax.swing.JLabel lblTips31;
+    private javax.swing.JLabel lblTitleManual;
     private javax.swing.JLabel lblWaktu;
     private javax.swing.JPanel main;
     private com.sitardi.CustomComponents.RoundPanel pnlInputManual;
@@ -516,16 +511,26 @@ public class Presensi extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
 
     private void initJamDigital() {
+        // 1. Dapatkan objek Locale yang sedang aktif saat ini
+        // Catatan: Jika I18nService Anda belum memiliki method ini, Anda bisa menggunakan `java.util.Locale.getDefault()`
+        java.util.Locale currentLocale = services.I18nService.getCurrentLocale();
+
+        // 2. Ambil pola format (pattern) dinamis dari file properties
+        String patternWaktu = services.I18nService.getLocale("date.format.time");
+        String patternTanggal = services.I18nService.getLocale("date.format.date");
+        String patternTahun = services.I18nService.getLocale("date.format.year");
+
+        // 3. Jalankan Thread dengan pattern dan locale yang sesuai
         // Thread untuk Jam (Format: Jam:Menit:Detik)
-        JamDigitalService jam = new JamDigitalService(lblWaktu, "HH:mm:ss");
+        JamDigitalService jam = new JamDigitalService(lblWaktu, patternWaktu, currentLocale);
         jam.getThread().start();
 
-        // Thread untuk Hari, Tanggal, dan Bulan (Format: Hari, Tanggal Bulan)
-        JamDigitalService tanggal = new JamDigitalService(lblHariTanggalBulan, "EEEE, dd MMMM");
+        // Thread untuk Hari, Tanggal, dan Bulan (Format menyesuaikan negara)
+        JamDigitalService tanggal = new JamDigitalService(lblHariTanggalBulan, patternTanggal, currentLocale);
         tanggal.getThread().start();
 
-        // Thread untuk Tahun (Format: Tahun 4 digit)
-        JamDigitalService tahun = new JamDigitalService(lblTahun, "yyyy");
+        // Thread untuk Tahun (Format menyesuaikan negara)
+        JamDigitalService tahun = new JamDigitalService(lblTahun, patternTahun, currentLocale);
         tahun.getThread().start();
     }
 
@@ -551,10 +556,6 @@ public class Presensi extends javax.swing.JFrame {
         serialService.connect(targetPort, baudRate);
     }
 
-    /**
-     * Jalur pemrosesan tunggal (Unified Pipeline) untuk mencatat log dan update
-     * UI
-     */
     private void prosesAbsensiSistem(String nomorIdentitas) {
         try {
             // 1. VALIDASI USER: Apakah terdaftar di sistem?
@@ -562,9 +563,9 @@ public class Presensi extends javax.swing.JFrame {
 
             if (pemilihTerdaftar == null) {
                 updateUiWithDelay(
-                        "TIDAK TERDAFTAR",
-                        "ID / NIK tidak dikenali.",
-                        "Silakan hubungi panitia/admin."
+                        services.I18nService.getLocale("absen.tdk_terdaftar.title"),
+                        services.I18nService.getLocale("absen.tdk_terdaftar.desc1"),
+                        services.I18nService.getLocale("absen.tdk_terdaftar.desc2")
                 );
                 return;
             }
@@ -578,9 +579,9 @@ public class Presensi extends javax.swing.JFrame {
             // SITUASI A: User sudah menyelesaikan kedua proses (MASUK & KELUAR)
             if (sudahAbsenMasuk && sudahAbsenKeluar) {
                 updateUiWithDelay(
-                        "AKSES DITOLAK",
+                        services.I18nService.getLocale("absen.akses_ditolak.title"),
                         namaUser,
-                        "Anda sudah selesai melakukan absensi!"
+                        services.I18nService.getLocale("absen.selesai.desc")
                 );
                 return;
             }
@@ -589,9 +590,9 @@ public class Presensi extends javax.swing.JFrame {
             if (this.statusAbsensi.equals("MASUK")) {
                 if (sudahAbsenMasuk) {
                     updateUiWithDelay(
-                            "SUDAH ABSEN",
+                            services.I18nService.getLocale("absen.sudah_absen.title"),
                             namaUser,
-                            "Anda sudah melakukan absensi MASUK."
+                            services.I18nService.getLocale("absen.sudah_masuk.desc")
                     );
                     return; // Blokir tap masuk berulang
                 }
@@ -599,17 +600,17 @@ public class Presensi extends javax.swing.JFrame {
             else if (this.statusAbsensi.equals("KELUAR")) {
                 if (!sudahAbsenMasuk) {
                     updateUiWithDelay(
-                            "AKSES DITOLAK",
+                            services.I18nService.getLocale("absen.akses_ditolak.title"),
                             namaUser,
-                            "Belum bisa ABSEN KELUAR karena Anda belum ABSEN MASUK."
+                            services.I18nService.getLocale("absen.belum_masuk.desc")
                     );
                     return; // Blokir jika langsung lompat ke absen keluar
                 }
                 if (sudahAbsenKeluar) {
                     updateUiWithDelay(
-                            "SUDAH ABSEN",
+                            services.I18nService.getLocale("absen.sudah_absen.title"),
                             namaUser,
-                            "Anda sudah melakukan absensi KELUAR."
+                            services.I18nService.getLocale("absen.sudah_keluar.desc")
                     );
                     return; // Blokir tap keluar berulang
                 }
@@ -619,17 +620,22 @@ public class Presensi extends javax.swing.JFrame {
             logAbsensiService.catatLog(nomorIdentitas, this.statusAbsensi);
 
             // 4. UPDATE UI: Berhasil
+            // Menentukan judul sukses secara dinamis berdasarkan mode alat
+            String titleSukses = this.statusAbsensi.equals("MASUK")
+                    ? services.I18nService.getLocale("absen.masuk_sukses.title")
+                    : services.I18nService.getLocale("absen.keluar_sukses.title");
+
             updateUiWithDelay(
-                    this.statusAbsensi + " SUKSES!",
+                    titleSukses,
                     namaUser,
-                    "Terima kasih, data berhasil disimpan."
+                    services.I18nService.getLocale("absen.sukses.desc")
             );
 
         } catch (Exception e) {
             updateUiWithDelay(
-                    "SISTEM GAGAL",
-                    "Gagal memproses absensi.",
-                    e.getMessage()
+                    services.I18nService.getLocale("absen.sistem_gagal.title"),
+                    services.I18nService.getLocale("absen.sistem_gagal.desc"),
+                    e.getMessage() // Exception message dibiarkan default untuk debugging
             );
         }
     }
@@ -659,9 +665,9 @@ public class Presensi extends javax.swing.JFrame {
 
                 // Kembalikan ke teks panduan default (Thread-Safe)
                 java.awt.EventQueue.invokeLater(() -> {
-                    txtNama.setText("SCAN KARTU");
-                    txtKonfirmasi.setText("Letakan kartumu pada alat scanner ");
-                    txtSelamat.setText("untuk mencatat kehadiran");
+                    txtNama.setText(I18nService.getLocale("lbl.scn.crd"));
+                    txtKonfirmasi.setText(I18nService.getLocale("lbl.order"));
+                    txtSelamat.setText(I18nService.getLocale("lbl.cause"));
                 });
 
             } catch (InterruptedException e) {
@@ -672,6 +678,27 @@ public class Presensi extends javax.swing.JFrame {
         delayThread.setName("KioskDelayThread");
         delayThread.setDaemon(true); // Agar thread mati otomatis saat aplikasi ditutup
         delayThread.start();
+    }
+
+    public void updateLanguage() {
+        // Jalankan di Event Dispatch Thread agar aman untuk UI Swing
+        javax.swing.SwingUtilities.invokeLater(() -> {
+            lblTimeTitle.setText(I18nService.getLocale("lbl.time.tittle"));
+            lblMasukanNIK.setText(I18nService.getLocale("lbl.input.nik"));
+            lblTitleManual.setText(I18nService.getLocale("lbl.manual.inpt"));
+            btnMasuk.setText(I18nService.getLocale("btn.checkin"));
+            btnTest.setText(I18nService.getLocale("btn.test.scan"));
+            lblBtnClose.setText(I18nService.getLocale("btn.exit"));
+            txtNama.setText(I18nService.getLocale("lbl.scn.crd"));
+            txtKonfirmasi.setText(I18nService.getLocale("lbl.order"));
+            txtSelamat.setText(I18nService.getLocale("lbl.cause"));
+            lblTips.setText(I18nService.getLocale("lbl.tips"));
+            lblTips1.setText(I18nService.getLocale("lbl.tips1"));
+            lblTips2.setText(I18nService.getLocale("lbl.tips2"));
+            lblTips21.setText(I18nService.getLocale("lbl.tips2.1"));
+            lblTips3.setText(I18nService.getLocale("lbl.tips3"));
+            lblTips31.setText(I18nService.getLocale("lbl.tips3.1"));
+        });
     }
 
 }
